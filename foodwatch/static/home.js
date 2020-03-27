@@ -1,6 +1,13 @@
 
 function get_data_today(){
-
+     /*
+     @description:
+        Gets all records of current day from the database.
+        Then it execute the function  proc_backend
+     @args:
+     return:
+        None
+     */
      fetch('/data_today')
       .then((response) => {
         return response.json();
@@ -12,21 +19,42 @@ function get_data_today(){
 }
 
 
-function proc_backend(data){
+function proc_backend(data,base_total=1600){
+    /*
+    @description:
+        Use the output from get_data_today() and processe the data.
+        After the data is processsed the data will be insert into the table today_food
+    @args:
+        data(array): from the function get_data_today()
+    @return:
+        None
+    */
+    // Update  pie chart the total_sum of the day:
+     current_angle = 2*Math.PI/base_total*data[0].total_sum_today
+     create_pieChart(current_angle,data[0].total_sum_today)
 
+    //Process every element of the data array. Every element is an record in the database
     data[0].food.forEach(function(el){
+        //1.Step: Get the table today_food by id
         table_today = document.querySelector("#today_food")
+        //2.Step: Insert a empty row
         row = table_today.insertRow(1);
-        var cell_Timestamp = row.insertCell(0);
+
+        //3.Step: Inject a cell into the empty row
+        //3.1.Step: Inject a cell with the timestampe (in unix)
+        let cell_Timestamp = row.insertCell(0);
         cell_Timestamp.innerHTML = el.timestamp_unix;
         cell_Timestamp.className="td_timestamp";
-        var cell_Time = row.insertCell(1);
+        //3.1.Step: Inject a cell with the timestampe (in unix)
+        let cell_Time = row.insertCell(1);
         cell_Time.innerHTML = convert_unix_datatime(el.timestamp_unix);
         cell_Time.className ="td_food_time";
-        var cell_Name = row.insertCell(2);
+        //3.2.Step: Inject a cell name of the food
+        let cell_Name = row.insertCell(2);
         cell_Name.innerHTML = el.name;
         cell_Name.className="td_food_name"
-        var cell_cal = row.insertCell(3);
+        //3.3.Step: Inject a cell name of the food
+        let cell_cal = row.insertCell(3);
         cell_cal.innerHTML = el.calorie;
         cell_cal.className = "td_food_amount";
 
@@ -36,55 +64,63 @@ function proc_backend(data){
 }
 
 function current_time_string(){
-  let currentdate = new Date();
-  let datetime =   currentdate.getHours() + ":"
-                  + currentdate.getMinutes()+ ":"
-                + currentdate.getSeconds();
+ /*
+ @description:
+ Return a string which contains the current time e.g. '13:15:16'
+ @args:
+    None
+ @return
+    datetime(string): current time e.g. '13:15:16'
+ */
+  let current_date = new Date();
+  let datetime =   current_date.getHours() + ":"
+                  + current_date.getMinutes()+ ":"
+                + current_date.getSeconds();
 
   return datetime
 
 }
 
 function convert_unix_datatime(unix_int){
+  /*
+  @description:
+    Converts unix timestampe into a string e.g. '13:13:40'. Is need because the data in the database is saved as
+    unix timestampe but javascript require epoch.
+  @args:
+    unix_int (int):
+
+  @return:
+    datetime_string (string): e.g. '13:13:40'
+  */
   let date_obj = new Date(unix_int*1000);
-  let converted_obj =   date_obj.getHours() + ":"
+  let datetime_string =   date_obj.getHours() + ":"
                   + date_obj.getMinutes()+ ":"
                 + date_obj.getSeconds();
 
-  return converted_obj
+  return datetime_string
 }
 
 
 
-function replaceAll(str, find, replace) {
-  //inspired by https://stackoverflow.com/questions/1144783/how-can-i-replace-all-occurrences-of-a-string
-  return str.replace(new RegExp(find, 'g'), replace);
+function replaceAll(original_string, find, replace) {
+  /*
+  @description:
+    Replaces in a given string(original_string) all occurrences for the key_word
+    inspired by https://stackoverflow.com/questions/1144783/how-can-i-replace-all-occurrences-of-a-string
+  @args:
+    original_string(string): is the string which will be changed
+    find (string): is the keyword which will be replaced
+    replace (string): is the string which will replace the find string in the original_string
+  @return:
+    modified_string(string): the modified original_string
+  */
+    modified_string = original_string.replace(new RegExp(find, 'g'), replace);
+    return modified_string
 }
 
 
-function insert_new_row(){
 
-  table_today =document.querySelector("#today_food")
-  newRow = table_today.insertRow(1);
-  let cell_current = newRow.insertCell(0);
-  cell_current.innerHTML = convert_unix_datatime(Date.now());
-  let cell_timestamp = newRow.insertCell(1);
-  cell_timestamp.innerHTML = Date.now();
-  cell_timestamp.className = "td_timestamp";
-  let cell_name = newRow.insertCell(2);
-  cell_name.innerHTML = document.querySelector("#input_name").value
-  let cell_cal = newRow.insertCell(3);
-  cell_cal.innerHTML = document.querySelector("#input_cal").value
-
-
-  post_data_today({
-      timestamp_epoch:Date.now(),
-      name:document.querySelector("#input_name").value,
-      calorie:document.querySelector("#input_cal").value
-  })
-}
-
-function create_pieChart(current_angle){
+function create_pieChart(current_angle,total_sum_today){
     //inspired by https://stackoverflow.com/questions/31912686/how-to-draw-gradient-arc-using-d3-js
 
     //Remove old svg
@@ -164,7 +200,7 @@ function arcTween(transition, newAngle) {
             d.endAngle = interpolate(t);
 
             percent.text(Math.round((d.endAngle/tau)*100)+'%');
-            total.text("19")
+            total.text(total_sum_today)
 
             return arc(d);
         };
@@ -196,6 +232,39 @@ function convert_table_array(){
 }
 
 
+function insert_new_row(){
+  /*
+  @description:
+  Convert the input from name and calorie to the row in the table #today_food
+  @args:
+  @return
+  */
+  table_today =document.querySelector("#today_food")
+  newRow = table_today.insertRow(1);
+  let cell_current = newRow.insertCell(0);
+  cell_current.innerHTML = convert_unix_datatime(Date.now());
+  let cell_timestamp = newRow.insertCell(1);
+  cell_timestamp.innerHTML = Date.now();
+  cell_timestamp.className = "td_timestamp";
+  let cell_name = newRow.insertCell(2);
+  cell_name.innerHTML = document.querySelector("#input_name").value
+  let cell_cal = newRow.insertCell(3);
+  //.Step: Calculate the input_cal
+  //.Step: Get the value
+  let input_value = document.querySelector("#input_cal").value
+  //.Step: Replace comma with .doit
+  //Step:Execute the input as cmd and convert to String
+  result_cal = String(Math.round(eval(input_value)))
+  cell_cal.innerHTML = result_cal
+
+
+  post_data_today({
+      timestamp_epoch:Date.now(),
+      name:document.querySelector("#input_name").value,
+      calorie:result_cal
+  })
+}
+
 function post_data_today(data_json){
 
     fetch("/data_today", {
@@ -219,3 +288,5 @@ function post_data_today(data_json){
     });
 
 }
+
+

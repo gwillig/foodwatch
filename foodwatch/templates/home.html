@@ -140,11 +140,9 @@ margin-bottom: 20%;
       <input class="input_name" list="list_name"  id="input_name" />
 
       <datalist id="list_name">
-          <option value="Chocolate">
-          <option value="Coconut">
-          <option value="Mint">
-          <option value="Strawberry">
-          <option value="Vanilla">
+         {% for name in datalist_name %}
+          <option value={{name}}>
+         {% endfor %}
       </datalist>
   </p>
   <p>

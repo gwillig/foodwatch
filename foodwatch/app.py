@@ -4,6 +4,8 @@ import os
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date,datetime, timedelta
+import pandas as pd
+
 
 def create_app(dbms="sql", test_config=None):
     # create and configure the app
@@ -25,7 +27,10 @@ def create_app(dbms="sql", test_config=None):
 
     @app.route("/")
     def home():
-        return render_template('home.html')
+        datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
+        extention=["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
+        datalist_name.extend(extention)
+        return render_template('home.html',datalist_name=datalist_name)
 
     @app.route("/history")
     def history():
@@ -40,12 +45,21 @@ def create_app(dbms="sql", test_config=None):
         '#1.Step: Get all records for the current day'
         today = date.today()
         yesterday = today - timedelta(days=1)
-        query = db.session.query(Food).filter(Food.timestamp_obj>yesterday).all()
+        query = db.session.query(Food).filter(Food.timestamp_obj > today).all()
         query_result = [convert_sqlalchemy_todict(x) for x in query]
-        '#2.Step: Get the current '
+        '#2.Step: Get the current sum of the day'
+        df = pd.DataFrame(query_result)
+        '#2.1.Step: Check if DataFrame is empty'
+        if len(df)!=0:
+            '#2.1.Step: Convert column calorie to int'
+            df['calorie'] = pd.to_numeric(df['calorie'], errors='coerce')
+            total_sum = str(df['calorie'].sum())
+        else:
+            total_sum = 0
         return jsonify({
             'success': True,
-            'food': query_result
+            'food': query_result,
+            'total_sum_today': total_sum
         }, 200)
 
 
