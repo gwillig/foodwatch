@@ -30,7 +30,7 @@ def create_app(dbms="sql", test_config=None):
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
         extention=["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
         datalist_name.extend(extention)
-        return render_template('home.html',datalist_name=datalist_name)
+        return render_template('home.html', datalist_name=datalist_name)
 
     @app.route("/history")
     def history():

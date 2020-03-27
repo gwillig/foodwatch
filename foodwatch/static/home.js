@@ -57,6 +57,11 @@ function proc_backend(data,base_total=1600){
         let cell_cal = row.insertCell(3);
         cell_cal.innerHTML = el.calorie;
         cell_cal.className = "td_food_amount";
+        //3.4.Step: Add red x
+        let cell_del = row.insertCell(4);
+        cell_del.outerHTML =`<td data-database-id="${el.id}"=>&#10060</td>`
+        cell_cal.className = "td_food_amount";
+
 
     });
 
@@ -101,7 +106,6 @@ function convert_unix_datatime(unix_int){
 }
 
 
-
 function replaceAll(original_string, find, replace) {
   /*
   @description:
@@ -117,7 +121,6 @@ function replaceAll(original_string, find, replace) {
     modified_string = original_string.replace(new RegExp(find, 'g'), replace);
     return modified_string
 }
-
 
 
 function create_pieChart(current_angle,total_sum_today){
