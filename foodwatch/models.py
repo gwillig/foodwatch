@@ -10,7 +10,6 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-
 def insert_data(db):
     a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1585243532711/1000),
               timestamp_unix=1585243532711,

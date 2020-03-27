@@ -17,8 +17,12 @@ def create_app(dbms="sql", test_config=None):
         project_dir = os.path.dirname(os.path.abspath(__file__))
         database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
         db = setup_db(app, database_path)
-
+    else:
+        database_name = "watchfood"
+        database_path = 'postgresql://root:admin@localhost:3306/' + database_name
+        db = setup_db(app, database_path)
     CORS(app)
+
     @app.route("/")
     def home():
         return render_template('home.html')
@@ -33,11 +37,12 @@ def create_app(dbms="sql", test_config=None):
 
     @app.route("/data_today", methods=["GET"])
     def get_data_today():
+        '#1.Step: Get all records for the current day'
         today = date.today()
         yesterday = today - timedelta(days=1)
         query = db.session.query(Food).filter(Food.timestamp_obj>yesterday).all()
         query_result = [convert_sqlalchemy_todict(x) for x in query]
-
+        '#2.Step: Get the current '
         return jsonify({
             'success': True,
             'food': query_result
