@@ -79,8 +79,18 @@ def create_app(dbms="sql", test_config=None):
 
         return jsonify({
             'success': True,
-        }, 244)
+        }, 204)
 
+    @app.route("/data_today", methods=["Delete"])
+    def delete_data_today():
+
+        db_id = request.get_json()["data"]
+        #Convert from epoch to unix
+        db.session.query(Food).filter_by(id=db_id).delete()
+        db.session.commit()
+        return jsonify({
+            'success': True,
+        }, 204)
 
     def convert_sqlalchemy_todict(obj):
         """

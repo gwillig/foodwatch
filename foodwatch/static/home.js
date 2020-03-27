@@ -59,7 +59,7 @@ function proc_backend(data,base_total=1600){
         cell_cal.className = "td_food_amount";
         //3.4.Step: Add red x
         let cell_del = row.insertCell(4);
-        cell_del.outerHTML =`<td data-database-id="${el.id}"=>&#10060</td>`
+        cell_del.outerHTML =`<td onclick="delete_current_row(this)" data-database-id="${el.id}"=>&#10060</td>`
         cell_cal.className = "td_food_amount";
 
 
@@ -203,7 +203,7 @@ function arcTween(transition, newAngle) {
             d.endAngle = interpolate(t);
 
             percent.text(Math.round((d.endAngle/tau)*100)+'%');
-            total.text(total_sum_today)
+            total.text(total_sum_today+" cal")
 
             return arc(d);
         };
@@ -272,11 +272,11 @@ function post_data_today(data_json){
 
     fetch("/data_today", {
         mode:"cors",
-      method: "post",
-      headers: {
+        method: "post",
+        headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-      },
+        },
 
       //make sure to serialize your JSON body
       body: JSON.stringify({
@@ -293,3 +293,27 @@ function post_data_today(data_json){
 }
 
 
+function delete_current_row(self){
+
+    //1.Step: Get the data-database-id
+    db_id = self.getAttribute("data-database-id")
+    //2.Step: delete in data base
+    fetch("/data_today", {
+        mode:"cors",
+        method: "delete",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        data:  db_id
+      })
+    })
+    .then( (response) => {
+        //Delete the row
+        self.parentElement.outerHTML="";
+    });
+
+}
