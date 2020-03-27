@@ -1,5 +1,88 @@
-var person = 3
 
+function get_data_today(){
+
+     fetch('/data_today')
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+          proc_backend(data)
+      });
+
+}
+
+
+function proc_backend(data){
+
+    data[0].food.forEach(function(el){
+        table_today = document.querySelector("#today_food")
+        row = table_today.insertRow(1);
+        var cell_Timestamp = row.insertCell(0);
+        cell_Timestamp.innerHTML = el.timestamp_unix;
+        cell_Timestamp.className="td_timestamp";
+        var cell_Time = row.insertCell(1);
+        cell_Time.innerHTML = convert_unix_datatime(el.timestamp_unix);
+        cell_Time.className ="td_food_time";
+        var cell_Name = row.insertCell(2);
+        cell_Name.innerHTML = el.name;
+        cell_Name.className="td_food_name"
+        var cell_cal = row.insertCell(3);
+        cell_cal.innerHTML = el.calorie;
+        cell_cal.className = "td_food_amount";
+
+    });
+
+
+}
+
+function current_time_string(){
+  let currentdate = new Date();
+  let datetime =   currentdate.getHours() + ":"
+                  + currentdate.getMinutes()+ ":"
+                + currentdate.getSeconds();
+
+  return datetime
+
+}
+
+function convert_unix_datatime(unix_int){
+  let date_obj = new Date(unix_int*1000);
+  let converted_obj =   date_obj.getHours() + ":"
+                  + date_obj.getMinutes()+ ":"
+                + date_obj.getSeconds();
+
+  return converted_obj
+}
+
+
+
+function replaceAll(str, find, replace) {
+  //inspired by https://stackoverflow.com/questions/1144783/how-can-i-replace-all-occurrences-of-a-string
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
+
+function insert_new_row(){
+
+  table_today =document.querySelector("#today_food")
+  newRow = table_today.insertRow(1);
+  let cell_current = newRow.insertCell(0);
+  cell_current.innerHTML = convert_unix_datatime(Date.now());
+  let cell_timestamp = newRow.insertCell(1);
+  cell_timestamp.innerHTML = Date.now();
+  cell_timestamp.className = "td_timestamp";
+  let cell_name = newRow.insertCell(2);
+  cell_name.innerHTML = document.querySelector("#input_name").value
+  let cell_cal = newRow.insertCell(3);
+  cell_cal.innerHTML = document.querySelector("#input_cal").value
+
+
+  post_data_today({
+      timestamp_epoch:Date.now(),
+      name:document.querySelector("#input_name").value,
+      calorie:document.querySelector("#input_cal").value
+  })
+}
 
 function create_pieChart(current_angle){
     //inspired by https://stackoverflow.com/questions/31912686/how-to-draw-gradient-arc-using-d3-js
@@ -90,3 +173,49 @@ function arcTween(transition, newAngle) {
 
 }
 
+function convert_table_array(){
+    table_array =[]
+    table_today =document.querySelector("#today_food")
+    var child = table_today.getElementsByTagName('tr');
+
+    for(el of child){
+        //To eleminate the headline
+        console.log("hllo")
+        if (isNaN(el.cells[0].innerText) == false &&
+            el.name!=""&typeof(el.name)!="undefined"){
+               table_array.push({"timestamp_epoch":el.cells[0].innerText,
+                   "name":el.cells[2].innerText,
+                    "calorie":el.cells[3].innerText})
+        }
+
+    }
+
+    return table_array
+
+
+}
+
+
+function post_data_today(data_json){
+
+    fetch("/data_today", {
+        mode:"cors",
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        data:  data_json
+      })
+    })
+    .then( (response) => {
+       console.log("data sent")
+       document.querySelector("#input_cal").value = ""
+       document.querySelector("#input_name").value = ""
+
+    });
+
+}

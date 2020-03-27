@@ -1,24 +1,23 @@
-from sqlalchemy import Table, Column, Integer, ForeignKey, Float
+from sqlalchemy import Table, Column, Integer, ForeignKey, Float,DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import relationship, backref
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+
 
 db = SQLAlchemy()
 
 
 def insert_data(db):
-    a1 = Actor(first_name="John", family_name="Doe")
-    a2 = Actor(first_name="Alice", family_name="Doe")
-    a3 = Actor(first_name="David", family_name="Schmid")
-    m1 = Movie(title="The live a John Doe")
-    m1.actors.append(a1)
-    m1.actors.append(a2)
-    db.session.add(m1)
-    db.session.add(a3)
+    a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1585243532711/1000),
+              timestamp_unix=1585243532711,
+              calorie=200)
+    print("data injected!")
+    db.session.add(a1)
     db.session.commit()
-
 
 def setup_db(app, database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
@@ -26,6 +25,9 @@ def setup_db(app, database_path):
     db.app = app
     db.init_app(app)
     db.create_all()
+    if len(db.session.query(Food).all())<1:
+        insert_data(db)
+
     return db
 
 
@@ -34,11 +36,12 @@ class Food(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    timestamp = db.Column(db.Float)
+    timestamp_unix = db.Column(db.Float)
+    timestamp_obj = db.Column(db.DateTime)
+    calorie = db.Column(Integer)
 
 
     def __repr__(self):
         '1.Step: Get all actors which were involved in move'
-        inv_actors = [f"{x.first_name}, { x.family_name}" for x in self.actors]
-        return f"{self.title}; feature: {', '.join(inv_actors)}"
+        return f"{self.name};{self.timestamp_obj}"
 

@@ -58,21 +58,50 @@ font-family: sans-serif;
     width:80%
 }
 
-.food_amount{
+.td_food_amount{
     width:25%
 }
 
-.food_time{
+.td_food_time{
   width:10%;
 }
 
 .td_timestamp{
   display:none;
 }
+.input_name{
+  width: 45%;
+  font-size: x-large;
+}
+
+.input_cal{
+  width: 45%;
+  font-size: x-large;
+}
+.block {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.block:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#today_food{
+margin-bottom: 20%;
+}
 </style>
 
 </head>
-<body  onload="create_pieChart(6)">
+<body  onload="create_pieChart(6);get_data_today()">
 
 <div class="chart-container">
 
@@ -105,69 +134,48 @@ font-family: sans-serif;
     <td>600</td>
   </tr>
 </table>
+<div id="input_fields">
+  <p>
+      <label for>Name</label>
+      <input class="input_name" list="list_name"  id="input_name" />
+
+      <datalist id="list_name">
+          <option value="Chocolate">
+          <option value="Coconut">
+          <option value="Mint">
+          <option value="Strawberry">
+          <option value="Vanilla">
+      </datalist>
+  </p>
+  <p>
+    <label>Calorie</label>
+    <input  class="input_cal" list="list_cal" id="input_cal"/>
+    <datalist id="list_cal">
+      <option value=50>
+      <option value=100>
+      <option value=150>
+      <option value=200>
+      <option value=250>
+      <option value=300>
+      <option value=350>
+      <option value=400>
+    </datalist>
+  </p>
+<input class="block" type="button" value="Add" onclick="insert_new_row()">
+</div>
 <table id="today_food">
   <tr>
-    <th class="food_time">Time</th>
+    <th class="td_timestamp">Timestamp</th>
+    <th class="td_food_time">Time</th>
     <th>Name</th>
     <th onclick="insert_new_row()">Calorie</th>
   </tr>
-  <tr>
-    <td class="td_timestamp">placeholder_timestampe</td>
-    <td class="food_time" >13:15</td>
-    <td>
-      <input class="td_food_name" list="food_name" />
 
-      <datalist id="food_name">
-          <option value="Chocolate">
-          <option value="Coconut">
-          <option value="Mint">
-          <option value="Strawberry">
-          <option value="Vanilla">
-      </datalist>
-    </td>
-    <td>
-    <input  class="food_amount" list="cal_amout" >
-      <datalist id="cal_name">
-        <option value=50>
-        <option value=100>
-        <option value=150>
-        <option value=200>
-        <option value=250>
-        <option value=300>
-        <option value=350>
-        <option value=400>
-
-    </datalist>
-    </td>
-  </tr>
   <tr>
     <td class="td_timestamp">pl_timestamp</td>
     <td class="current_time">placeholder</td>
-    <td>
-      <input class="td_food_name" list="placeholder_name" />
-
-      <datalist id="placeholder_name">
-          <option value="Chocolate">
-          <option value="Coconut">
-          <option value="Mint">
-          <option value="Strawberry">
-          <option value="Vanilla">
-      </datalist>
-    </td>
-    <td>
-    <input  class="food_amount" list="placeholder_amount" >
-      <datalist id="placeholder_amount">
-        <option value=50>
-        <option value=100>
-        <option value=150>
-        <option value=200>
-        <option value=250>
-        <option value=300>
-        <option value=350>
-        <option value=400>
-
-    </datalist>
-    </td>
+    <td></td>
+    <td></td>
 </table>
 </div>
 
@@ -175,31 +183,8 @@ font-family: sans-serif;
 {% include "footer.html" %}
 <script id="d3">
 
-function current_time_string(){
-  let currentdate = new Date();
-  let datetime =   currentdate.getHours() + ":"
-                  + currentdate.getMinutes()+ ":"
-                + currentdate.getSeconds();
-
-  return datetime
-
-}
 
 
-function replaceAll(str, find, replace) {
-  //inspired by https://stackoverflow.com/questions/1144783/how-can-i-replace-all-occurrences-of-a-string
-  return str.replace(new RegExp(find, 'g'), replace);
-}
-
-
-function insert_new_row(){
-  table_today =document.querySelector("#today_food")
-  row = table_today.insertRow(1);
-  var lastRow = table_today.rows.length-1;
-  row.innerHTML = replaceAll(table_today.rows[lastRow].innerHTML,"placeholder", current_time_string())
-  row.innerHTML = row.innerHTML.replace("pl_timestamp", Date.now())
-
-}
 </script>
 </body>
 </html>
