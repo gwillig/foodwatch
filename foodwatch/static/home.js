@@ -250,9 +250,9 @@ function insert_new_row(){
   cell_name.innerHTML = document.querySelector("#input_name").value
   let cell_cal = newRow.insertCell(3);
   //.Step: Calculate the input_cal
-  //.Step: Get the value
-  let input_value = document.querySelector("#input_cal").value
-  //.Step: Replace comma with .doit
+  //.Step: Get the value and replace comma with .dot
+  let input_value = document.querySelector("#input_cal").value.replace(",",".")
+
   //Step:Execute the input as cmd and convert to String
   result_cal = String(Math.round(eval(input_value)))
   cell_cal.innerHTML = result_cal
