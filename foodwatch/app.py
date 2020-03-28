@@ -1,17 +1,18 @@
-from flask import Flask,render_template, jsonify,request
-from foodwatch.models import setup_db,Food
+from flask import Flask, render_template, jsonify, request
+from foodwatch.models import setup_db, Food
 import os
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
-from datetime import date,datetime, timedelta
+from datetime import date, datetime, timedelta
 import pandas as pd
+import os
 
 
-def create_app(dbms="sql", test_config=None):
+def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
     app = Flask(__name__)
 
-    if dbms == "sql":
+    if dbms == "sqlite3":
         if test_config:
             database_filename = "database_test.db"
         else:
@@ -32,7 +33,7 @@ def create_app(dbms="sql", test_config=None):
     @app.route("/")
     def home():
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
-        extention=["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
+        extention = ["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
         datalist_name.extend(extention)
         return render_template('home.html', datalist_name=datalist_name)
 
@@ -54,7 +55,7 @@ def create_app(dbms="sql", test_config=None):
         '#2.Step: Get the current sum of the day'
         df = pd.DataFrame(query_result)
         '#2.1.Step: Check if DataFrame is empty'
-        if len(df)!=0:
+        if len(df) != 0:
             '#2.1.Step: Convert column calorie to int'
             df['calorie'] = pd.to_numeric(df['calorie'], errors='coerce')
             total_sum = str(df['calorie'].sum())
@@ -66,18 +67,17 @@ def create_app(dbms="sql", test_config=None):
             'total_sum_today': total_sum
         }, 200)
 
-
     @app.route("/data_today", methods=["POST"])
     def post_data_today():
 
         el = request.get_json()["data"]
-        #Convert from epoch to unix
-        el["timestamp_unix"] = round(int(el["timestamp_epoch"])/1000)
-        del(el["timestamp_epoch"])
+        # Convert from epoch to unix
+        el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
+        del (el["timestamp_epoch"])
         '#Check for double then inject'
-        if db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count()<1:
+        if db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1:
             el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
-            f1=Food(**el)
+            f1 = Food(**el)
             db.session.add(f1)
             db.session.commit()
 
@@ -89,7 +89,7 @@ def create_app(dbms="sql", test_config=None):
     def delete_data_today():
 
         db_id = request.get_json()["data"]
-        #Convert from epoch to unix
+        # Convert from epoch to unix
         db.session.query(Food).filter_by(id=db_id).delete()
         db.session.commit()
         return jsonify({
@@ -105,14 +105,15 @@ def create_app(dbms="sql", test_config=None):
         return {c.key: getattr(obj, c.key)
                 for c in inspect(obj).mapper.column_attrs}
 
-
-
-
-
     return app
 
 
-app = create_app(dbms="mysql")
+# Check if app runs on local computer:
+os.system('uname -a > tmp')
+if open('tmp', 'r').read()[:24] == "Linux wlg1fe-HP-Pavilion":
+    app = create_app(dbms="sqlite3")
+else:
+    app = create_app(dbms="mysql")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}?100"></script>
+
   <style>
 html,
 body {
@@ -37,16 +38,21 @@ font-family: sans-serif;
 
 }
 
-.customers td, .customers th {
-  border: 1px solid #ddd;
-  padding: 8px;
+.table_area {
+  margin: 2%;
 }
 
-.customers tr:nth-child(even){background-color: #f2f2f2;}
+.table_area td, .table_area th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  width: 9%;
+}
 
-.customers tr:hover {background-color: #ddd;}
+.table_area tr:nth-child(even){background-color: #f2f2f2;}
 
-.customers th {
+.table_area tr:hover {background-color: #ddd;}
+
+.table_area th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
@@ -78,19 +84,23 @@ font-family: sans-serif;
   width: 45%;
   font-size: x-large;
 }
-.block {
+.add_btn {
   display: block;
-  width: 100%;
+  width: 50%;
   border: none;
-  background-color: #4CAF50;
+  background-color: #E73B02;
   color: white;
   padding: 14px 28px;
   font-size: 16px;
   cursor: pointer;
   text-align: center;
+  border-radius: 10px;
+  margin-left: 15%;
+  font-weight: bold;
+  font-size: large;
 }
 
-.block:hover {
+.add_btn:hover {
   background-color: #ddd;
   color: black;
 }
@@ -107,7 +117,7 @@ margin-bottom: 20%;
 <div class="chart-container">
 
 </div>
-<div class="customers">
+<div class="table_area">
 
 <table id="part_day">
   <tr>
@@ -160,7 +170,7 @@ margin-bottom: 20%;
       <option value=400>
     </datalist>
   </p>
-<input class="block" type="button" value="Add" onclick="insert_new_row()">
+<input class="add_btn" type="button" value="Add" onclick="insert_new_row()">
 </div>
 <table id="today_food">
   <tr>
@@ -180,11 +190,6 @@ margin-bottom: 20%;
 
 
 {% include "footer.html" %}
-<script id="d3">
-
-
-
-</script>
 </body>
 </html>
 
