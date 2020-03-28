@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from foodwatch.models import setup_db, Food
+from foodwatch.models import setup_db, Food, Misc
 import os
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
@@ -41,6 +41,14 @@ def create_app(dbms="sqlite3", test_config=None):
     def history():
         return render_template('history.html')
 
+    @app.route("/misc")
+    def misc():
+        prev_data = []
+        for el in db.session.query(Misc).distinct().all():
+            el.timestamp_obj = el.timestamp_obj.strftime("%m/%d/%Y")
+            prev_data.append(convert_sqlalchemy_todict(el))
+        return render_template('misc1.html', prev_data=prev_data)
+
     @app.route("/analysis")
     def analysis():
         return render_template('analysis.html')
@@ -66,6 +74,24 @@ def create_app(dbms="sqlite3", test_config=None):
             'food': query_result,
             'total_sum_today': total_sum
         }, 200)
+
+    @app.route("/misc_data", methods=["POST"])
+    def misc_data():
+
+        el = request.get_json()["data"]
+        # Convert from epoch to unix
+        el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
+        del (el["timestamp_epoch"])
+        '#Check for double then inject'
+        if db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1:
+            el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
+            f1 = Food(**el)
+            db.session.add(f1)
+            db.session.commit()
+
+        return jsonify({
+            'success': True,
+        }, 204)
 
     @app.route("/data_today", methods=["POST"])
     def post_data_today():

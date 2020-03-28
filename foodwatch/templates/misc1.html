@@ -1,0 +1,164 @@
+<html class="" lang="en"><head>
+<meta charset="UTF-8">
+<title>Misc</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}?100"></script>
+<style class="INLINE_PEN_STYLESHEET_ID">
+.main{
+  width:98%;
+  margin:5px
+}
+    .table-editable {
+  position: relative;
+}
+
+.table {
+font-size: large;
+}
+
+.export_btn{
+  font-size: large;
+}
+.table-editable .glyphicon {
+  font-size: 25px;
+}
+
+.table-remove {
+  color: #700;
+  cursor: pointer;
+}
+.table-remove:hover {
+  color: #f00;
+}
+
+.table-up, .table-down {
+  color: #007;
+  cursor: pointer;
+}
+.table-up:hover, .table-down:hover {
+  color: #00f;
+}
+
+.table-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+}
+.table-add:hover {
+  color: #0b0;
+}
+
+  </style>
+</head>
+<body>
+<div class="main">
+<h1>Misco</h1>
+<button id="export-btn" class="btn btn-primary export_btn">Post</button>
+<p id="export"></p>
+<div id="table" class="table-editable">
+<span class="table-add glyphicon glyphicon-plus"></span>
+<table class="table">
+<tbody><tr>
+<th class="hide">database_id</th>
+<th>Date</th>
+<th>Steps</th>
+<th>Weight</th>
+<th></th>
+</tr>
+<tr>
+{% for name in prev_data %}
+  <td contenteditable="true" class="hide">{{name.id}}</td>
+  <td contenteditable="true">{{name.timestamp_obj}}</td>
+  <td contenteditable="true">{{name.amount_weight}}</td>
+  <td contenteditable="true">{{name.amount_steps}}</td>
+{% endfor %}
+
+<td>
+<span class="table-remove glyphicon glyphicon-remove"></span>
+</td>
+</tr>
+
+<tr id="row_hiden" class="hide">
+<td contenteditable="true" class="hide"> database_id </td>
+<td contenteditable="true"> placeholder </td>
+<td contenteditable="true">undefined</td>
+<td contenteditable="true">undefined</td>
+<td>
+<span class="table-remove glyphicon glyphicon-remove"></span>
+</td>
+</tr>
+</tbody></table>
+</div>
+
+
+
+</div>
+{% include "footer.html" %}
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
+<script id="INLINE_PEN_JS_ID">
+
+var $TABLE = $('#table');
+var $BTN = $('#export-btn');
+var $EXPORT = $('#export');
+
+$('.table-add').click(function () {
+  let current_date = new Date();
+  let date_str = `${current_date.getDate()}/${current_date.getMonth()}/${current_date.getFullYear()}`
+  //.Step: Set the current date
+  document.querySelector("#row_hiden").outerHTML = document.querySelector("#row_hiden").outerHTML.replace("placeholder",
+                                                                                                          date_str)
+  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line')
+
+
+  $TABLE.find('table').append($clone);
+});
+
+$('.table-remove').click(function () {
+  $(this).parents('tr').detach();
+});
+
+// A few jQuery helpers for exporting only
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
+
+$BTN.click(function () {
+  var $rows = $TABLE.find('tr:not(:hidden)');
+  var headers = [];
+  var data = [];
+
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
+    headers.push($(this).text().toLowerCase());
+  });
+
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    var $td = $(this).find('td');
+    var h = {};
+
+    // Use the headers from earlier to name our hash keys
+    headers.forEach(function (header, i) {
+      h[header] = $td.eq(i).text();
+    });
+
+    data.push(h);
+  });
+
+  // Output the result
+  $EXPORT.text(JSON.stringify(data));
+});
+    //# sourceURL=pen.js
+  </script>
+
+</body>
+
+</html>

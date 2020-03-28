@@ -14,11 +14,16 @@ def insert_data(db):
     a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1585243532711/1000),
               timestamp_unix=1585243532711,
               calorie=200)
+
+    m1 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1585243532711/1000),
+              timestamp_unix=1585243532711,amount_weight=89.2,
+              )
+
     print("data injected!")
-    db.session.add(a1)
+    db.session.bulk_save_objects([a1,m1])
     db.session.commit()
 
-def setup_db(app, database_path):
+def setup_db(app,database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
@@ -28,6 +33,14 @@ def setup_db(app, database_path):
         insert_data(db)
 
     return db
+
+class Misc(db.Model):
+    __table__name ='weights'
+    id = db.Column(db.Integer, primary_key=True)
+    timestamp_unix = db.Column(db.Float)
+    timestamp_obj = db.Column(db.DateTime)
+    amount_weight = db.Column(db.Float)
+    amount_steps = db.Column(Integer)
 
 
 class Food(db.Model):

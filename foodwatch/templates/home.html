@@ -46,6 +46,7 @@ font-family: sans-serif;
   border: 1px solid #ddd;
   padding: 8px;
   width: 9%;
+  border-radius: 5px;
 }
 
 .table_area tr:nth-child(even){background-color: #f2f2f2;}
@@ -75,9 +76,14 @@ font-family: sans-serif;
 .td_timestamp{
   display:none;
 }
-.input_name{
+
+.input_fields{
   width: 45%;
   font-size: x-large;
+}
+
+.p_name{
+  padding-right: 10px;
 }
 
 .input_cal{
@@ -108,6 +114,7 @@ font-family: sans-serif;
 #today_food{
 margin-bottom: 20%;
 }
+
 
 </style>
 
@@ -146,9 +153,9 @@ margin-bottom: 20%;
   </tr>
 </table>
 <div id="input_fields">
-  <p>
+  <p class="p_name">
       <label for>Name</label>
-      <input class="input_name" list="list_name"  id="input_name" />
+      <input  list="list_name"  id="input_name" />
 
       <datalist id="list_name">
          {% for name in datalist_name %}

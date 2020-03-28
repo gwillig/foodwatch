@@ -41,6 +41,7 @@ body {
   <a id="home_a" href="/" class="active">Home</a>
   <a id="history_a"  href="/history">History</a>
   <a id="analysis_a" href="/analysis">Analysis</a>
+  <a id="misc_a" href="/misc">Misc</a>
 </div>
 <script>
   function navbar_activate(){
@@ -55,6 +56,9 @@ body {
   }
   else if (index == "Analysis"){
       document.querySelector("#analysis_a").setAttribute("class","a_active")
+  }
+    else if (index == "Misc"){
+      document.querySelector("#misc_a").setAttribute("class","a_active")
   }
 
 }
