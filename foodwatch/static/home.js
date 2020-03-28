@@ -29,6 +29,8 @@ function proc_backend(data,base_total=1600){
     @return:
         None
     */
+
+
     // Update  pie chart the total_sum of the day:
      current_angle = 2*Math.PI/base_total*data[0].total_sum_today
      create_pieChart(current_angle,data[0].total_sum_today)

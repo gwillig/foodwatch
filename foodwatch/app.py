@@ -1,5 +1,5 @@
 from flask import Flask,render_template, jsonify,request
-from models import setup_db,Food
+from foodwatch.models import setup_db,Food
 import os
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
@@ -20,10 +20,14 @@ def create_app(dbms="sql", test_config=None):
         database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
         db = setup_db(app, database_path)
     else:
-        database_name = "watchfood"
-        database_path = 'postgresql://root:admin@localhost:3306/' + database_name
+        database_path = 'postgres://diyqhmcpqznxqh:6bfd76c3b1810ef06e06867d8806f0814b45bea09a3f1aa70f0e1fb81b3c2c4c@ec2-52-207-93-32.compute-1.amazonaws.com:5432/dc2cbh2ac1dp2p'
         db = setup_db(app, database_path)
+
     CORS(app)
+
+    @app.route("/hap")
+    def happy():
+        return render_template("test.html")
 
     @app.route("/")
     def home():
@@ -107,8 +111,8 @@ def create_app(dbms="sql", test_config=None):
 
     return app
 
-app = create_app()
 
+app = create_app(dbms="mysql")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",debug=True)
+    app.run(host="0.0.0.0", debug=True)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.cool_face {
+  width: 100px;
+  height: 100px;
+
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  font-size: 60px;
+
+}
+
+@keyframes example {
+  0%   {left:0px; top:0px;}
+  25%  {left:200px; top:0px;}
+  50%  {left:200px; top:200px;}
+  75%  {left:0px; top:200px;}
+  100% {left:0px; top:0px;font-size: 500px;}
+}
+</style>
+</head>
+<body>
+
+
+
+document.getElementById("parentID").innerHTML+= "<div class="cool_face">&#128526</div>"
+</body>
+</html>
+
+
