@@ -272,7 +272,7 @@ function insert_new_row(){
 
 function post_data_today(data_json){
 
-    fetch("/misc_data", {
+    fetch("/data_today", {
         mode:"cors",
         method: "post",
         headers: {
