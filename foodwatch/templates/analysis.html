@@ -3,10 +3,231 @@
 <head>
   <title>Analysis</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    #container {
+    height: 400px;
+}
 
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 310px;
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+    font-family: Verdana, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid #EBEBEB;
+    margin: 10px auto;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+
+</style>
 </head>
+
 <body>
-<h1> Analysis</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+</figure>
+<script>
+color=["#304f85","#b12f85","#e73b02"]
+
+Highcharts.chart('container', {
+    chart: {
+        zoomType: 'xy'
+    },
+    title: {
+        text: 'Average Monthly Weather Data for Tokyo',
+        align: 'left'
+    },
+    subtitle: {
+        text: 'Source: WorldClimate.com',
+        align: 'left'
+    },
+    xAxis: [{
+                type: 'datetime',
+                ordinal: true
+    }],
+    yAxis: [{ // Primary yAxis
+        labels: {
+            format: '{value} Calorie',
+            style: {
+                color: color[0]
+            }
+        },
+        title: {
+            text: 'Cal',
+            style: {
+                color: color[1]
+            }
+        },
+        opposite: true
+
+    }, { // Secondary yAxis
+        gridLineWidth: 0,
+        title: {
+            text: 'Weight',
+            style: {
+                color:color[2]
+            }
+        },
+        labels: {
+            format: '{value} kg',
+            style: {
+                color: color[2]
+            }
+        }
+
+    }, { // Tertiary yAxis
+        gridLineWidth: 0,
+        title: {
+            text: 'Steps',
+            style: {
+                color: color[1]
+            }
+        },
+        labels: {
+            format: '{value} Calorie',
+            style: {
+                color: color[1]
+            }
+        },
+        opposite: true
+    }],
+    tooltip: {
+        shared: true
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        x: 80,
+        verticalAlign: 'top',
+        y: 55,
+        floating: true,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || // theme
+            'rgba(255,255,255,0.25)'
+    },
+    series: [
+    {
+        name: 'Calorie',
+        type: 'column',
+        data: [[1329163200000,2000],
+[1329166800000,2500],
+[1329170400000,2300],
+[1329174000000,2000],
+[1329249600000,1800],
+[1329253200000,1700],
+[1329256800000,2400]],
+        tooltip: {
+            valueSuffix: 'Steps'
+        }
+    },    {
+        name: 'Steps',
+        type: 'spline',
+        color:color[1],
+        yAxis: 2,
+        data: [[1329163200000,15000],
+[1329166800000,16000],
+[1329170400000,17000],
+[1329174000000,14000],
+[1329249600000,13000],
+[1329253200000,12000],
+[1329256800000,16000]],
+        marker: {
+            enabled: false
+        },
+        dashStyle: 'spline',
+        tooltip: {
+            valueSuffix: ' Steps'
+        }
+
+    },{
+        name: 'Weight',
+        type: 'spline',
+        color:color[2],
+        yAxis: 1,
+        data: [[1329163200000,95],
+[1329166800000,94],
+[1329170400000,92],
+[1329174000000,90],
+[1329249600000,89],
+[1329253200000,91],
+[1329256800000,92]],
+        tooltip: {
+            valueSuffix: ' Kg'
+        }
+
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    floating: false,
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom',
+                    x: 0,
+                    y: 0
+                },
+                yAxis: [{
+                    labels: {
+                        align: 'right',
+                        x: 0,
+                        y: -6
+                    },
+                    showLastLabel: false
+                }, {
+                    labels: {
+                        align: 'left',
+                        x: 0,
+                        y: -6
+                    },
+                    showLastLabel: false
+                }, {
+                    visible: false
+                }]
+            }
+        }]
+    }
+});
+
+
+
+</script>
 {% include "footer.html" %}
 
 

@@ -15,12 +15,21 @@ def insert_data(db):
               timestamp_unix=1585243532711,
               calorie=200)
 
-    m1 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1585243532711/1000),
-              timestamp_unix=1585243532711,amount_weight=89.2,
+    m1 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1580558803000/1000),
+              timestamp_unix=1580558803000,amount_weight=89.2,
+              )
+    m2 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1580731603000/1000),
+              timestamp_unix=1580731603000,amount_weight=89.0,
+              )
+    m3 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1580818003000/1000),
+              timestamp_unix=1580818003000,amount_weight=89.5,
               )
 
+    m4 = Misc(amount_steps=1500, timestamp_obj=datetime.utcfromtimestamp(1580904403000/1000),
+              timestamp_unix=1580904403000,amount_weight=88.5,
+              )
     print("data injected!")
-    db.session.bulk_save_objects([a1,m1])
+    db.session.bulk_save_objects([a1,m1,m2,m3,m4])
     db.session.commit()
 
 def setup_db(app,database_path):

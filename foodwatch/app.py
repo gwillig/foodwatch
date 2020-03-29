@@ -46,7 +46,7 @@ def create_app(dbms="sqlite3", test_config=None):
         for el in db.session.query(Misc).distinct().all():
             el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y")
             prev_data.append(convert_sqlalchemy_todict(el))
-        return render_template('misc1.html', prev_data=prev_data)
+        return render_template('misc.html', prev_data=prev_data)
 
     @app.route("/analysis")
     def analysis():

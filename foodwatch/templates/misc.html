@@ -1,95 +1,196 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Misc</title>
-</head>
-<style>
-    }
+<html class="" lang="en"><head>
+<meta charset="UTF-8">
+<title>Misc</title>
 
-.table_area {
-  margin: 2%;
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}?100"></script>
+<style class="INLINE_PEN_STYLESHEET_ID">
+.main{
+  width:98%;
+  margin:5px
+}
+    .table-editable {
+  position: relative;
 }
 
-.table_area td, .table_area th {
-  border: 1px solid #ddd;
-  padding: 8px;
-  width: 9%;
-  border-radius: 5px;
+.table {
+font-size: large;
 }
 
-.table_area tr:nth-child(even){background-color: #f2f2f2;}
-
-.table_area tr:hover {background-color: #ddd;}
-
-.table_area th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #E78302;
-  color: white;
-}
-
-.td_food_name{
-    width:80%
-}
-
-.td_food_amount{
-    width:25%
-}
-
-.td_food_time{
-  width:10%;
-}
-
-.td_timestamp{
-  display:none;
-}
-
-.input_fields{
-  width: 45%;
-  font-size: x-large;
-}
-
-.p_name{
-  padding-right: 10px;
-}
-
-.input_cal{
-  width: 45%;
-  font-size: x-large;
-}
-.add_btn {
-  display: block;
-  width: 50%;
-  border: none;
-  background-color: #E73B02;
-  color: white;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  border-radius: 10px;
-  margin-left: 15%;
-  font-weight: bold;
+.export_btn{
   font-size: large;
 }
-
-.add_btn:hover {
-  background-color: #ddd;
-  color: black;
+.table-editable .glyphicon {
+  font-size: 25px;
 }
 
-#today_food{
-margin-bottom: 20%;
+.table-remove {
+  color: #700;
+  cursor: pointer;
 }
-</style>
+.table-remove:hover {
+  color: #f00;
+}
+
+.table-up, .table-down {
+  color: #007;
+  cursor: pointer;
+}
+.table-up:hover, .table-down:hover {
+  color: #00f;
+}
+
+.table-add {
+  color: #070;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 0;
+}
+.table-add:hover {
+  color: #0b0;
+}
+
+  </style>
+</head>
 <body>
+<div class="main">
+<h1>Misco</h1>
+<button id="export-btn" class="btn btn-primary export_btn">Post</button>
+<p id="export"></p>
+<div id="table" class="table-editable">
+<span class="table-add glyphicon glyphicon-plus"></span>
+<table class="table">
+<tbody><tr>
+<th class="hide">database_id</th>
+<th>Date</th>
+<th>Weight</th>
+<th>Steps</th>
+</tr>
+{% for name in prev_data %}
+<tr>
+  <td contenteditable="true" class="hide">{{name.id}}</td>
+  <td contenteditable="true">{{name.timestamp_obj}}</td>
+  <td contenteditable="true">{{name.amount_weight}}</td>
+  <td contenteditable="true">{{name.amount_steps}}</td>
+  <td>
+    <span class="table-remove glyphicon glyphicon-remove"></span>
+  </td>
+</tr>
+{% endfor %}
 
 
 
+<tr id="row_hiden" class="hide">
+<td contenteditable="true" class="hide"> database_id </td>
+<td contenteditable="true"> placeholder </td>
+<td contenteditable="true">undefined</td>
+<td contenteditable="true">undefined</td>
+<td>
+<span class="table-remove glyphicon glyphicon-remove"></span>
+</td>
+</tr>
+</tbody></table>
+</div>
 
 
+
+</div>
 {% include "footer.html" %}
+<script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
+<script id="INLINE_PEN_JS_ID">
+
+var $TABLE = $('#table');
+var $BTN = $('#export-btn');
+var $EXPORT = $('#export');
+
+$('.table-add').click(function () {
+  let current_date = new Date();
+  //An explanation for "current_date.getMonth()+1" can be found https://stackoverflow.com/questions/23161366/javascript-get-current-day-and-month-issue
+  let date_str = `${current_date.getDate()}/${current_date.getMonth()+1}/${current_date.getFullYear()}`
+  //.Step: Set the current date
+  document.querySelector("#row_hiden").outerHTML = document.querySelector("#row_hiden").outerHTML.replace("placeholder",
+                                                                                                          date_str)
+  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line')
+
+
+  $TABLE.find('table').append($clone);
+});
+
+$('.table-remove').click(function () {
+  $(this).parents('tr').detach();
+});
+
+// A few jQuery helpers for exporting only
+jQuery.fn.pop = [].pop;
+jQuery.fn.shift = [].shift;
+
+$BTN.click(function () {
+  var $rows = $TABLE.find('tr:not(:hidden)');
+  var headers = [];
+  var data = [];
+
+  // Get the headers (add special header logic here)
+  $($rows.shift()).find('th:not(:empty)').each(function () {
+    headers.push($(this).text().toLowerCase());
+  });
+
+  // Turn all existing rows into a loopable array
+  $rows.each(function () {
+    var $td = $(this).find('td');
+    var h = {};
+
+    // Use the headers from earlier to name our hash keys
+    headers.forEach(function (header, i) {
+      h[header] = $td.eq(i).text().trim();
+    });
+
+    data.push(h);
+  });
+
+  // Output the result
+  //$EXPORT.text(JSON.stringify(data));
+  post_misc_data(data)
+
+});
+
+function post_misc_data(data_json){
+
+    fetch("/misc_data", {
+        mode:"cors",
+        method: "post",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        data:  data_json
+      })
+    })
+    .then( (response) => {
+        console.log("data successfully sent")
+       $EXPORT.text("data successfully sent")
+       $EXPORT.css({'color': 'green','font-size':'x-large'})
+    })
+    .catch(function() {
+        $EXPORT.text(
+          "Network error; Try again"
+          )
+        $EXPORT.css({'color': 'red','font-size':'x-large'})
+    });
+
+}
+  </script>
+
+
 </body>
+
 </html>
