@@ -47,8 +47,11 @@
 
 <body>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/series-label.js"></script>
@@ -59,7 +62,123 @@
 <figure class="highcharts-figure">
     <div id="container"></div>
 </figure>
+<div id="container2"></div>
 <script>
+     $('#container2').highcharts('StockChart', {
+        chart: {
+
+          zoomType: 'x'
+        },
+
+        rangeSelector: {
+          buttons: [{
+            type: 'day',
+            count: 1,
+            text: '24h'
+          }, {
+            type: 'week',
+            count: 1,
+            text: '1w'
+          }, {
+            type: 'week',
+            count: 2,
+            text: '2w'
+          }, {
+            type: 'month',
+            count: 1,
+            text: '6m'
+          }, {
+            type: 'year',
+            count: 1,
+            text: '1y'
+          }, {
+            type: 'all',
+            text: 'All'
+          }],
+          selected: 5
+        },
+
+        xAxis: {
+          ordinal: false
+        },
+
+        yAxis: [
+        // Primary yAxis
+        {
+            title: {
+              text: 'Weight',
+              ordinal: false,
+              softMin: -10
+            }
+          },
+          // Secondary yAxis
+          {
+            title: {
+              text: 'Cal' //Define here
+            },
+          },
+          // Tertiary yAxis
+          {
+            title: {
+              text: 'Steps' //Define here
+            },
+          }
+        ],
+
+        title: {
+          text: 'Weight | Cal | Steps'
+        },
+        legend: {
+        enabled: true
+        },
+
+        series: [
+         {
+            name: 'Steps',
+            alignticks: false,
+            yAxis: 2,
+            type: 'column',
+            data:  [[1329163200000,15000],
+[1329166800000,16000],
+[1329170400000,17000],
+[1329174000000,14000],
+[1329249600000,13000],
+[1329253200000,12000],
+[1329256800000,16000]],
+          },
+        {
+            name: 'Cal',
+            alignticks: false,
+            yAxis: 1,
+            data: [[1329163200000,2000],
+[1329166800000,2500],
+[1329170400000,2300],
+[1329174000000,2000],
+[1329249600000,1800],
+[1329253200000,1700],
+[1329256800000,2400]],
+          },
+        {
+            name: 'Weight',
+            alignticks: false,
+            yAxis: 0,
+            type: 'spline',
+            data: [
+        [1329163200000,95],
+[1329166800000,94],
+[1329170400000,92],
+[1329174000000,90],
+[1329249600000,89],
+[1329253200000,91],
+[1329256800000,92]],
+          },
+
+
+        ]
+      });
+</script>
+<script>
+//https://jsfiddle.net/prm0tf51/
 color=["#304f85","#b12f85","#e73b02"]
 
 Highcharts.chart('container', {
@@ -67,12 +186,8 @@ Highcharts.chart('container', {
         zoomType: 'xy'
     },
     title: {
-        text: 'Average Monthly Weather Data for Tokyo',
-        align: 'left'
-    },
-    subtitle: {
-        text: 'Source: WorldClimate.com',
-        align: 'left'
+        text: ' Weight | Steps | Calories',
+        align: 'centre'
     },
     xAxis: [{
                 type: 'datetime',
@@ -109,6 +224,7 @@ Highcharts.chart('container', {
         }
 
     }, { // Tertiary yAxis
+        visible:false,
         gridLineWidth: 0,
         title: {
             text: 'Steps',
@@ -117,7 +233,7 @@ Highcharts.chart('container', {
             }
         },
         labels: {
-            format: '{value} Calorie',
+            format: '{value} Cal',
             style: {
                 color: color[1]
             }
