@@ -272,7 +272,7 @@ function insert_new_row(){
 
 function post_data_today(data_json){
 
-    fetch("/data_today", {
+    fetch("/misc_data", {
         mode:"cors",
         method: "post",
         headers: {
@@ -287,9 +287,6 @@ function post_data_today(data_json){
     })
     .then( (response) => {
        console.log("data sent")
-       document.querySelector("#input_cal").value = ""
-       document.querySelector("#input_name").value = ""
-
     });
 
 }

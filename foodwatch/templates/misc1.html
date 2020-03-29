@@ -66,22 +66,22 @@ font-size: large;
 <tbody><tr>
 <th class="hide">database_id</th>
 <th>Date</th>
-<th>Steps</th>
 <th>Weight</th>
-<th></th>
+<th>Steps</th>
 </tr>
-<tr>
 {% for name in prev_data %}
+<tr>
   <td contenteditable="true" class="hide">{{name.id}}</td>
   <td contenteditable="true">{{name.timestamp_obj}}</td>
   <td contenteditable="true">{{name.amount_weight}}</td>
   <td contenteditable="true">{{name.amount_steps}}</td>
+  <td>
+    <span class="table-remove glyphicon glyphicon-remove"></span>
+  </td>
+</tr>
 {% endfor %}
 
-<td>
-<span class="table-remove glyphicon glyphicon-remove"></span>
-</td>
-</tr>
+
 
 <tr id="row_hiden" class="hide">
 <td contenteditable="true" class="hide"> database_id </td>
@@ -112,7 +112,8 @@ var $EXPORT = $('#export');
 
 $('.table-add').click(function () {
   let current_date = new Date();
-  let date_str = `${current_date.getDate()}/${current_date.getMonth()}/${current_date.getFullYear()}`
+  //An explanation for "current_date.getMonth()+1" can be found https://stackoverflow.com/questions/23161366/javascript-get-current-day-and-month-issue
+  let date_str = `${current_date.getDate()}/${current_date.getMonth()+1}/${current_date.getFullYear()}`
   //.Step: Set the current date
   document.querySelector("#row_hiden").outerHTML = document.querySelector("#row_hiden").outerHTML.replace("placeholder",
                                                                                                           date_str)
@@ -147,17 +148,48 @@ $BTN.click(function () {
 
     // Use the headers from earlier to name our hash keys
     headers.forEach(function (header, i) {
-      h[header] = $td.eq(i).text();
+      h[header] = $td.eq(i).text().trim();
     });
 
     data.push(h);
   });
 
   // Output the result
-  $EXPORT.text(JSON.stringify(data));
+  //$EXPORT.text(JSON.stringify(data));
+  post_misc_data(data)
+
 });
-    //# sourceURL=pen.js
+
+function post_misc_data(data_json){
+
+    fetch("/misc_data", {
+        mode:"cors",
+        method: "post",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        data:  data_json
+      })
+    })
+    .then( (response) => {
+        console.log("data successfully sent")
+       $EXPORT.text("data successfully sent")
+       $EXPORT.css({'color': 'green','font-size':'x-large'})
+    })
+    .catch(function() {
+        $EXPORT.text(
+          "Network error; Try again"
+          )
+        $EXPORT.css({'color': 'red','font-size':'x-large'})
+    });
+
+}
   </script>
+
 
 </body>
 

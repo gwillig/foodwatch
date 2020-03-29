@@ -1,12 +1,11 @@
 from flask import Flask, render_template, jsonify, request
 from foodwatch.models import setup_db, Food, Misc
-import os
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date, datetime, timedelta
 import pandas as pd
 import os
-
+import time
 
 def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
@@ -45,7 +44,7 @@ def create_app(dbms="sqlite3", test_config=None):
     def misc():
         prev_data = []
         for el in db.session.query(Misc).distinct().all():
-            el.timestamp_obj = el.timestamp_obj.strftime("%m/%d/%Y")
+            el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y")
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('misc1.html', prev_data=prev_data)
 
@@ -78,16 +77,34 @@ def create_app(dbms="sqlite3", test_config=None):
     @app.route("/misc_data", methods=["POST"])
     def misc_data():
 
-        el = request.get_json()["data"]
+        el_json = request.get_json()["data"]
         # Convert from epoch to unix
-        el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
-        del (el["timestamp_epoch"])
-        '#Check for double then inject'
-        if db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1:
-            el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
-            f1 = Food(**el)
-            db.session.add(f1)
-            db.session.commit()
+        misc_mapping = []
+        for el in el_json:
+            if el["database_id"] == 'database_id':
+                "#If row hasn't a existing record in db, a new object will be created an added to the db"
+                timestamp_obj = datetime.strptime(el["date"], '%d/%M/%Y')
+                timestamp_unix = time.mktime(timestamp_obj.timetuple())
+                db.session.add(
+                    Misc(timestamp_unix=timestamp_unix, timestamp_obj=timestamp_obj,
+                         amount_steps=el["steps"], amount_weight=el["weight"])
+                         )
+                db.session.commit()
+            else:
+                '#Replace the existing record'
+                '# In order to make a bulk update, an array with dict (same key as Misc) need to be created'
+                timestamp_obj = datetime.strptime(el["date"], '%d/%M/%Y')
+                timestamp_unix = time.mktime(timestamp_obj.timetuple())
+                modify_el = {"timestamp_obj":timestamp_obj,
+                             "timestamp_unix": timestamp_unix,
+                             "amount_steps": el["steps"],
+                             "amount_weight": el["weight"],
+                             "id": el["database_id"]
+                             }
+                misc_mapping.append(modify_el)
+
+        db.session.bulk_update_mappings(Misc, misc_mapping)
+        db.session.commit()
 
         return jsonify({
             'success': True,
