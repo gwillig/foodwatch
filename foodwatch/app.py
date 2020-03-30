@@ -39,7 +39,11 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/history")
     def history():
-        return render_template('history.html')
+        prev_data = []
+        for el in db.session.query(Food).distinct().all():
+            el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y %a - %H:%M")
+            prev_data.append(convert_sqlalchemy_todict(el))
+        return render_template('history.html', prev_data=prev_data)
 
     @app.route("/misc")
     def misc():
