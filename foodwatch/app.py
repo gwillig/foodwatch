@@ -84,6 +84,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#3.2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
         '#3.3.Step: Convert from datetime64 to epoch'
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
+        df_merge = df_merge.dropna()
         data = {}
 
         for columns in ["amount_steps", "calorie", "amount_weight"]:
