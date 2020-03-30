@@ -7,6 +7,7 @@ import pandas as pd
 import os
 import time
 
+
 def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
     app = Flask(__name__)
@@ -50,30 +51,40 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/analysis")
     def analysis():
-
-        '#1.Step: Get all records for Food, Misc'
-        df_dict={}
-        for model_obj in [Food,Misc]:
+        """
+        Return the analysis.html with data
+        """
+        '#1.1.Step: Get all records for Food, Misc'
+        df_dict = {}
+        for model_obj in [Food, Misc]:
             query = db.session.query(model_obj).all()
             query_result = [convert_sqlalchemy_todict(x) for x in query]
             dict_key = str(model_obj.__table__.name)
             df_dict[dict_key] = pd.DataFrame(query_result)
 
-        '#2.Step: Merge the dataframe'
-        df_merge = pd.merge(df_dict["food"], df_dict["misc"], on='timestamp_obj', how='outer')
-        '#3.Step: Group by day to get the total sum of the cal for each day'
-        df_merge_group = df_merge.groupby(df_merge["timestamp_obj"].dt.day_name()).sum()
-        '#4.Step: Reset the index from day to int'
-        df_merge_group_index = df_merge_group.reset_index()
-        '#3.Step: Convert unix to timestampe'
-        df_merge_group_index["timestamp_obj"]=df_merge_group_index["timestamp_unix_y"].apply(lambda x:
-                                                                              datetime.utcfromtimestamp(x/1000)
-                                                                              )
-        '#4.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+            '#1.2.Step: Convert timestampe_obj to pandas datetime and round to day'
+            df_dict[dict_key]["timestamp_obj"] = pd.to_datetime((df_dict[dict_key]["timestamp_obj"])) \
+                .dt.floor('d')
+
+        '#2.Step: Group Foods by day and  reset_index'
+        df_dict["food_grouped_reset"] = df_dict["food"].groupby(by=df_dict["food"]['timestamp_obj'].dt.date)\
+            .sum() \
+            .reset_index()
+
+        '#2.2.Step: Convert timestampe_obj to pandas datetime (g=group;r=reset;t=transformed '
+        df_dict["food_grouped_reset"]["timestamp_obj"] = pd.to_datetime(df_dict["food_grouped_reset"]["timestamp_obj"]) \
+            .dt.floor('d')
+
+        '#3.1.Step: Merge the dataframe'
+        df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='outer')
+        '#3.2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        '#3.3.Step: Convert from datetime64 to epoch'
+        df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
         data = {}
+
         for columns in ["amount_steps", "calorie", "amount_weight"]:
-            '#4.1.Step: Sort the pd.serie for highchart'
-            df_sorted = df_merge_group_index[["timestamp_unix_y", columns]].sort_values(by=['timestamp_unix_y'])
+            '#3.4.Step: Sort the pd.serie for highchart'
+            df_sorted = df_merge[["timestamp_obj", columns]].sort_values(by=['timestamp_obj'])
             data[columns] = df_sorted.to_numpy().tolist()
 
         return render_template('analysis.html', data=data)
@@ -114,14 +125,14 @@ def create_app(dbms="sqlite3", test_config=None):
                 db.session.add(
                     Misc(timestamp_unix=timestamp_unix, timestamp_obj=timestamp_obj,
                          amount_steps=el["steps"], amount_weight=el["weight"])
-                         )
+                )
                 db.session.commit()
             else:
                 '#Replace the existing record'
                 '# In order to make a bulk update, an array with dict (same key as Misc) need to be created'
                 timestamp_obj = datetime.strptime(el["date"], '%d/%M/%Y')
                 timestamp_unix = time.mktime(timestamp_obj.timetuple())
-                modify_el = {"timestamp_obj":timestamp_obj,
+                modify_el = {"timestamp_obj": timestamp_obj,
                              "timestamp_unix": timestamp_unix,
                              "amount_steps": el["steps"],
                              "amount_weight": el["weight"],

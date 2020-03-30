@@ -11,35 +11,35 @@ from datetime import datetime
 db = SQLAlchemy()
 
 def insert_data(db):
-    a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580558803000/1000),
-              timestamp_unix=1580558803000,
+    a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580000003),
+              timestamp_unix=1580000003,
               calorie=200)
 
-    a2 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580731603000/1000),
-              timestamp_unix=1580731603000,
+    a2 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580100003),
+              timestamp_unix=1580100003,
               calorie=300)
-    a3 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580818003000/1000),
-              timestamp_unix=1580818003000,
+    a3 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580200003),
+              timestamp_unix=1580200003,
               calorie=400)
-    a4 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580904403000/1000),
-              timestamp_unix=1580904403000,
+    a4 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580300003),
+              timestamp_unix=1580300003,
               calorie=500)
-    a5 = Food(name="Banana", timestamp_obj=datetime.utcfromtimestamp(1580904403000/1000),
-              timestamp_unix=1580904403000,
+    a5 = Food(name="Banana", timestamp_obj=datetime.utcfromtimestamp(1580300003),
+              timestamp_unix=1580300003,
               calorie=500)
 
-    m1 = Misc(amount_steps=1000, timestamp_obj=datetime.utcfromtimestamp(1580558804000/1000),
-              timestamp_unix=1580558804000,amount_weight=89,
+    m1 = Misc(amount_steps=1000, timestamp_obj=datetime.utcfromtimestamp(1580000003),
+              timestamp_unix=1580000003,amount_weight=89,
               )
-    m2 = Misc(amount_steps=1100, timestamp_obj=datetime.utcfromtimestamp(1580731605000/1000),
-              timestamp_unix=1580731605000,amount_weight=90,
+    m2 = Misc(amount_steps=1100, timestamp_obj=datetime.utcfromtimestamp(1580100003),
+              timestamp_unix=1580100003,amount_weight=90,
               )
-    m3 = Misc(amount_steps=1200, timestamp_obj=datetime.utcfromtimestamp(1580818007000/1000),
-              timestamp_unix=1580818007000,amount_weight=91,
+    m3 = Misc(amount_steps=1200, timestamp_obj=datetime.utcfromtimestamp(1580200003),
+              timestamp_unix=1580200003,amount_weight=91,
               )
 
-    m4 = Misc(amount_steps=1300, timestamp_obj=datetime.utcfromtimestamp(1580904408000/1000),
-              timestamp_unix=1580904408000, amount_weight=92,
+    m4 = Misc(amount_steps=1300, timestamp_obj=datetime.utcfromtimestamp(1580300003),
+              timestamp_unix=1580300003, amount_weight=92,
               )
     print("data injected!")
     db.session.bulk_save_objects([a1,a2,a3,a4,a5,m1,m2,m3,m4])
