@@ -135,7 +135,7 @@ def create_app(dbms="sqlite3", test_config=None):
             else:
                 '#Replace the existing record'
                 '# In order to make a bulk update, an array with dict (same key as Misc) need to be created'
-                timestamp_obj = datetime.strptime(el["date"], '%d/%M/%Y')
+                timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')
                 timestamp_unix = time.mktime(timestamp_obj.timetuple())
                 modify_el = {"timestamp_obj": timestamp_obj,
                              "timestamp_unix": timestamp_unix,
