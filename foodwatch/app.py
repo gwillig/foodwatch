@@ -94,7 +94,7 @@ def create_app(dbms="sqlite3", test_config=None):
 
         df_merge["timestamp_obj"] = pd.to_datetime((df_merge["timestamp_obj"]*1e6))
         df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%Y')
-        list_sorted = list(df_merge.sort_values(by=['timestamp_obj']).T.to_dict().values())
+        list_sorted = list(df_merge.sort_values(by=['timestamp_obj'],ascending=False ).T.to_dict().values())
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
 
