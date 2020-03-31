@@ -87,7 +87,7 @@ font-family: sans-serif;
 }
 
 .input_cal{
-  width: 45%;
+  width: 80%;
   font-size: x-large;
 }
 .add_btn {
@@ -155,7 +155,7 @@ margin-bottom: 20%;
 <div id="input_fields">
   <p class="p_name">
       <label for>Name</label>
-      <input  list="list_name"  id="input_name" />
+      <input  class="input_fields" list="list_name"  id="input_name" />
 
       <datalist id="list_name">
          {% for name in datalist_name %}
@@ -165,7 +165,7 @@ margin-bottom: 20%;
   </p>
   <p>
     <label>Calorie</label>
-    <input  class="input_cal" list="list_cal" id="input_cal"/>
+    <input  class="input_fields" list="list_cal" id="input_cal"/>
     <datalist id="list_cal">
       <option value=50>
       <option value=100>

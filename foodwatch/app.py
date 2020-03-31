@@ -40,7 +40,7 @@ def create_app(dbms="sqlite3", test_config=None):
     @app.route("/history")
     def history():
         prev_data = []
-        for el in db.session.query(Food).distinct().all():
+        for el in db.session.query(Food).distinct().order_by(Food.timestamp_obj.desc()).all():
             el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y %a - %H:%M")
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('history.html', prev_data=prev_data)
@@ -85,14 +85,18 @@ def create_app(dbms="sqlite3", test_config=None):
         '#3.3.Step: Convert from datetime64 to epoch'
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
         df_merge = df_merge.dropna()
-        data = {}
+        data_chart = {}
 
         for columns in ["amount_steps", "calorie", "amount_weight"]:
             '#3.4.Step: Sort the pd.serie for highchart'
             df_sorted = df_merge[["timestamp_obj", columns]].sort_values(by=['timestamp_obj'])
-            data[columns] = df_sorted.to_numpy().tolist()
+            data_chart[columns] = df_sorted.to_numpy().tolist()
 
-        return render_template('analysis.html', data=data)
+        df_merge["timestamp_obj"] = pd.to_datetime((df_merge["timestamp_obj"]*1e6))
+        df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%Y')
+        list_sorted = list(df_merge.sort_values(by=['timestamp_obj']).T.to_dict().values())
+
+        return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
 
     @app.route("/data_today", methods=["GET"])
     def get_data_today():
