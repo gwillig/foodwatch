@@ -49,7 +49,8 @@
 <div id="input_fields">
   <p class="p_name">
       <label for>Name</label>
-      <input  class="input_fields" list="list_name"  id="input_name" />
+      <input  class="input_fields" list="list_name"  id="input_name" onclick="(function test(){var msg = new SpeechSynthesisUtterance('Hello Gustav, do you want a quick over view about the last day?');
+window.speechSynthesis.speak(msg);})()"/>
 
       <datalist id="list_name">
          {% for name in datalist_name %}
