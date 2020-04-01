@@ -28,7 +28,7 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/hap")
     def happy():
-        return render_template("test.html")
+        return render_template("octo.html")
 
     @app.route("/")
     def home():
