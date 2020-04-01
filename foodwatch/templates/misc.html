@@ -63,7 +63,7 @@
     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table">
       <tbody>
-      <tr>
+      <tr id="header_table">
         <th class="hide">database_id</th>
         <th>Date</th>
         <th>Weight</th>
@@ -82,9 +82,9 @@
       {% endfor %}
       <tr id="row_hiden" class="hide">
         <td contenteditable="true" class="hide"> database_id </td>
-        <td contenteditable="true"> placeholder </td>
-        <td contenteditable="true">undefined</td>
-        <td contenteditable="true">undefined</td>
+        <td contenteditable="true">placeholder</td>
+        <td contenteditable="true">NaN</td>
+        <td contenteditable="true">NaN</td>
         <td>
           <span class="table-remove glyphicon glyphicon-remove"></span>
         </td>
@@ -94,7 +94,7 @@
   </div>
 </div>
 {% include "footer.html" %}
-<script type="text/javascript" src="{{ url_for('static', filename = 'home.js') }}?100"></script>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/home.js') }}?100"></script>
 <script src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-157cd5b220a5c80d4ff8e0e70ac069bffd87a61252088146915e8726e5d9f147.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -115,8 +115,7 @@ $('.table-add').click(function () {
                                                                                                           date_str)
   var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line')
 
-
-  $TABLE.find('table').append($clone);
+  $clone.insertAfter('#header_table')
 });
 
 $('.table-remove').click(function () {
