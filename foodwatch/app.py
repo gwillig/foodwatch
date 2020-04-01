@@ -48,7 +48,8 @@ def create_app(dbms="sqlite3", test_config=None):
     @app.route("/misc")
     def misc():
         prev_data = []
-        for el in db.session.query(Misc).distinct().all():
+        '#Query all data from Misc and sort by date (desc)'
+        for el in db.session.query(Misc).order_by(Misc.timestamp_obj.desc()).all():
             el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y")
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('misc.html', prev_data=prev_data)
