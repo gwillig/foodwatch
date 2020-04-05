@@ -316,6 +316,3 @@ function delete_current_row(self){
     });
 
 }
-
-var msg = new SpeechSynthesisUtterance('Hello Gustav, do you want a quick over view about the last day?');
-window.speechSynthesis.speak(msg);
