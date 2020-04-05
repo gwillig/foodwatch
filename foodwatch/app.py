@@ -113,6 +113,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#2.Step: Get the current sum of the day'
         df = pd.DataFrame(query_result)
         '#2.1.Step: Check if DataFrame is empty'
+
         if len(df) != 0:
             '#2.1.Step: Convert column calorie to int'
             df['calorie'] = pd.to_numeric(df['calorie'], errors='coerce')
@@ -134,7 +135,7 @@ def create_app(dbms="sqlite3", test_config=None):
         for el in el_json:
             if el["database_id"] == 'database_id':
                 "#If row hasn't a existing record in db, a new object will be created an added to the db"
-                timestamp_obj = datetime.strptime(el["date"], '%d/%M/%Y')
+                timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')
                 timestamp_unix = time.mktime(timestamp_obj.timetuple())
                 db.session.add(
                     Misc(timestamp_unix=timestamp_unix, timestamp_obj=timestamp_obj,
