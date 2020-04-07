@@ -87,17 +87,25 @@ def create_app(dbms="sqlite3", test_config=None):
         rank_dict={}
         '#1.Step: Get all data'
         df_merge_raw = merge_food_misc()
-        '#1.1.Step: Exclude all day where calorie is below 1200'
+
+        '#2.1Step: Create a new column which is the ratio in hecto (calorie per steps)'
+        df_merge_raw["ratio_raw"] = (df_merge_raw["calorie"]/df_merge_raw["amount_steps"])*100
+        df_merge_raw["ratio"] = df_merge_raw["ratio_raw"].round(2)
+        '#2.2.Step: Exclude all day where calorie is below 1200'
         df_merge = df_merge_raw.loc[(df_merge_raw["calorie"]>1200)]
-        '#2.Step: Create a new column which is the ratio in hecto (calorie per steps)'
-        df_merge["ratio_raw"] = df_merge["calorie"]/df_merge["amount_steps"]*100
-        df_merge["ratio"] = df_merge["ratio_raw"].round(2)
         '#4.Step: Sort max'
         df_sorted = df_merge.sort_values(by="ratio").reset_index(drop=True)
         '#4.1.Step: Get the current day'
-        today = df_merge.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
-        '#4.2.Step: Select, and reset index to get the current rank as colum'
-        df_current= df_sorted.loc[(df_sorted.timestamp_obj == today)].reset_index()
+        today = df_merge_raw.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
+        '#4.3.Step: Check if the value is under 1200, if so then df_merge_raw need to be used'
+        current_cal  = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index().loc[0, "calorie"]
+        if current_cal<1200:
+            df_current = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index()
+            df_current["index"]=99
+        else:
+            today = df_merge.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
+            '#4.2.Step: Select, and reset index to get the current rank as colum'
+            df_current = df_sorted.loc[(df_sorted.timestamp_obj == today)].reset_index()
         df_current["timestamp_str"] = df_current["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
         '#4.3.Step: Convert to dict'
         rank_dict["current"]= df_current.T.to_dict()
