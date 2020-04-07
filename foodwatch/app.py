@@ -26,14 +26,6 @@ def create_app(dbms="sqlite3", test_config=None):
 
     CORS(app)
 
-    @app.route("/hap")
-    def happy():
-        return render_template("octo.html")
-
-    @app.route("/spe")
-    def spe():
-        return render_template("color.html")
-
     @app.route("/")
     def home():
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
