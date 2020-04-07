@@ -31,7 +31,11 @@ def create_app(dbms="sqlite3", test_config=None):
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
         extention = ["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
         datalist_name.extend(extention)
-        return render_template('home.html', datalist_name=datalist_name)
+        rank_dict = home_rank()
+        return render_template('home.html', datalist_name=datalist_name,
+                               current = rank_dict["current"],
+                               best_days = rank_dict["best"],
+                               worst_days= rank_dict["worst"])
 
     @app.route("/history")
     def history():
@@ -50,42 +54,21 @@ def create_app(dbms="sqlite3", test_config=None):
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('misc.html', prev_data=prev_data)
 
+
+
     @app.route("/analysis")
     def analysis():
         """
         Return the analysis.html with data
         """
-        '#1.1.Step: Get all records for Food, Misc'
-        df_dict = {}
-        for model_obj in [Food, Misc]:
-            query = db.session.query(model_obj).all()
-            query_result = [convert_sqlalchemy_todict(x) for x in query]
-            dict_key = str(model_obj.__table__.name)
-            df_dict[dict_key] = pd.DataFrame(query_result)
-
-            '#1.2.Step: Convert timestampe_obj to pandas datetime and round to day'
-            df_dict[dict_key]["timestamp_obj"] = pd.to_datetime((df_dict[dict_key]["timestamp_obj"])) \
-                .dt.floor('d')
-
-        '#2.Step: Group Foods by day and  reset_index'
-        df_dict["food_grouped_reset"] = df_dict["food"].groupby(by=df_dict["food"]['timestamp_obj'].dt.date)\
-            .sum() \
-            .reset_index()
-
-        '#2.2.Step: Convert timestampe_obj to pandas datetime (g=group;r=reset;t=transformed '
-        df_dict["food_grouped_reset"]["timestamp_obj"] = pd.to_datetime(df_dict["food_grouped_reset"]["timestamp_obj"]) \
-            .dt.floor('d')
-
-        '#3.1.Step: Merge the dataframe'
-        df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='outer')
-        '#3.2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
-        '#3.3.Step: Convert from datetime64 to epoch'
+        df_merge = merge_food_misc()
+        '#1.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        '#1.1.Step: Convert from datetime64 to epoch'
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
-        df_merge = df_merge.dropna()
         data_chart = {}
 
         for columns in ["amount_steps", "calorie", "amount_weight"]:
-            '#3.4.Step: Sort the pd.serie for highchart'
+            '#1.4.Step: Sort the pd.serie for highchart'
             df_sorted = df_merge[["timestamp_obj", columns]].sort_values(by=['timestamp_obj'])
             data_chart[columns] = df_sorted.to_numpy().tolist()
 
@@ -94,6 +77,39 @@ def create_app(dbms="sqlite3", test_config=None):
         list_sorted = list(df_merge.sort_values(by=['timestamp_obj'],ascending=False ).T.to_dict().values())
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
+
+    def home_rank():
+        '''
+        Calculates the figure for the table rank on the home.html.
+
+        :return (dict): The return value consist out of top 3, worst 3 and current value
+        '''
+        rank_dict={}
+        '#1.Step: Get all data'
+        df_merge_raw = merge_food_misc()
+        '#1.1.Step: Exclude all day where calorie is below 1200'
+        df_merge = df_merge_raw.loc[(df_merge_raw["calorie"]>1200)]
+        '#2.Step: Create a new column which is the ratio in hecto (calorie per steps)'
+        df_merge["ratio_raw"] = df_merge["calorie"]/df_merge["amount_steps"]*100
+        df_merge["ratio"] = df_merge["ratio_raw"].round(2)
+        '#4.Step: Sort max'
+        df_sorted = df_merge.sort_values(by="ratio").reset_index(drop=True)
+        '#4.1.Step: Get the current day'
+        today = df_merge.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
+        '#4.2.Step: Select, and reset index to get the current rank as colum'
+        df_current= df_sorted.loc[(df_sorted.timestamp_obj == today)].reset_index()
+        df_current["timestamp_str"] = df_current["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
+        '#4.3.Step: Convert to dict'
+        rank_dict["current"]= df_current.T.to_dict()
+        '#5.1.Step: Get the best and worst days, exclude the current day'
+        df_ex = df_sorted.loc[(df_sorted.timestamp_obj != today)].reset_index()
+        df_ex["timestamp_str"] = df_ex["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
+        rank_dict["best"] = df_ex.iloc[0:3, ].T.to_dict()
+        '5.2.Step: .iloc[::-1] is to reverse the order'
+        rank_dict["worst"] = df_ex.tail(3).iloc[::-1].reset_index().T.to_dict()
+
+        return rank_dict
+
 
     @app.route("/data_today", methods=["GET"])
     def get_data_today():
@@ -182,6 +198,37 @@ def create_app(dbms="sqlite3", test_config=None):
         return jsonify({
             'success': True,
         }, 204)
+
+    def merge_food_misc():
+        '''
+        Merge all Food and Misc records to one dataframe
+        :return (pandas.DataFrame): Contains all Food ans Misc records
+        '''
+        '#1.1.Step: Get all records for Food, Misc'
+        df_dict = {}
+        for model_obj in [Food, Misc]:
+            query = db.session.query(model_obj).all()
+            query_result = [convert_sqlalchemy_todict(x) for x in query]
+            dict_key = str(model_obj.__table__.name)
+            df_dict[dict_key] = pd.DataFrame(query_result)
+
+            '#1.2.Step: Convert timestampe_obj to pandas datetime and round to day'
+            df_dict[dict_key]["timestamp_obj"] = pd.to_datetime((df_dict[dict_key]["timestamp_obj"])) \
+                .dt.floor('d')
+
+        '#2.Step: Group Foods by day and  reset_index'
+        df_dict["food_grouped_reset"] = df_dict["food"].groupby(by=df_dict["food"]['timestamp_obj'].dt.date)\
+            .sum() \
+            .reset_index()
+
+        '#2.2.Step: Convert timestampe_obj to pandas datetime (g=group;r=reset;t=transformed '
+        df_dict["food_grouped_reset"]["timestamp_obj"] = pd.to_datetime(df_dict["food_grouped_reset"]["timestamp_obj"]) \
+            .dt.floor('d')
+
+        '#3.1.Step: Merge the dataframe'
+        df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='outer')
+        df_merge = df_merge.dropna()
+        return df_merge
 
     def convert_sqlalchemy_todict(obj):
         """

@@ -22,28 +22,75 @@
 
 <table id="part_day">
   <tr>
-    <th>Time</th>
-    <th>Amount</th>
-    <th>Yester.</th>
-    <th>Median</th>
+    <th>Rank</th>
+    <th>Date</th>
+    <th>Calorie</th>
+    <th>Steps</th>
+    <th>Calorie per step [hecto]</th>
   </tr>
   <tr>
-    <th>Morning</th>
-    <td>500</td>
-    <td>600</td>
-     <td>600</td>
+    <th>1</th>
+    <td>{{best_days[0]["timestamp_str"]}}</td>
+    <td>{{best_days[0]["calorie"]}}</td>
+    <td>{{best_days[0]["amount_steps"]}}</td>
+    <td>{{best_days[0]["ratio"]}}</td>
   </tr>
   <tr>
-    <th>After.</th>
-    <td>500</td>
-    <td>600</td>
-    <td>600</td>
+    <th>2</th>
+    <td>{{best_days[1]["timestamp_str"]}}</td>
+    <td>{{best_days[1]["calorie"]}}</td>
+    <td>{{best_days[1]["amount_steps"]}}</td>
+    <td>{{best_days[1]["ratio"]}}</td>
    </tr>
   <tr>
-    <th>Evening</th>
-    <td>500</td>
-    <td>600</td>
-    <td>600</td>
+    <th>3</th>
+    <td>{{best_days[2]["timestamp_str"]}}</td>
+    <td>{{best_days[2]["calorie"]}}</td>
+    <td>{{best_days[2]["amount_steps"]}}</td>
+    <td>{{best_days[2]["ratio"]}}</td>
+  <tr>
+  </tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <th>1</th>
+    <td>{{worst_days[0]["timestamp_str"]}}</td>
+    <td>{{worst_days[0]["calorie"]}}</td>
+    <td>{{worst_days[0]["amount_steps"]}}</td>
+    <td>{{worst_days[0]["ratio"]}}</td>
+  </tr>
+  <tr>
+    <th>2</th>
+    <td>{{worst_days[1]["timestamp_str"]}}</td>
+    <td>{{worst_days[1]["calorie"]}}</td>
+    <td>{{worst_days[1]["amount_steps"]}}</td>
+    <td>{{worst_days[1]["ratio"]}}</td>
+   </tr>
+  <tr>
+    <th>3</th>
+    <td>{{worst_days[2]["timestamp_str"]}}</td>
+    <td>{{worst_days[2]["calorie"]}}</td>
+    <td>{{worst_days[2]["amount_steps"]}}</td>
+    <td>{{worst_days[2]["ratio"]}}</td>
+  <tr>
+    </tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+    <tr>
+    <th>Cur</th>
+    <td>{{current[0]["timestamp_str"]}}</td>
+    <td>{{current[0]["calorie"]}}</td>
+    <td>{{current[0]["amount_steps"]}}</td>
+    <td>{{current[0]["ratio"]}}</td>
+    <td>{{current[0]["index"]+1}}</td>
   </tr>
 </table>
 <div id="input_fields">
