@@ -64,7 +64,6 @@ class Misc(db.Model):
     amount_weight = db.Column(db.Float)
     amount_steps = db.Column(Integer)
 
-
 class Food(db.Model):
     __tablename__ = 'food'
 

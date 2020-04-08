@@ -54,8 +54,6 @@ def create_app(dbms="sqlite3", test_config=None):
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('misc.html', prev_data=prev_data)
 
-
-
     @app.route("/analysis")
     def analysis():
         """

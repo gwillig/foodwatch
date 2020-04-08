@@ -3,6 +3,8 @@ Foodwatch is a private project which helps you to track the food you have eating
 
 
 
+#Licence:
 
+- Highchart: Non-commerical Licence (see licence/highchart_licence.pdf)
 ##Useful cmd
 chrome://inspect/#devices
