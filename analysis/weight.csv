@@ -1,0 +1,744 @@
+,_id,w_date,w_weight,w_fat,w_exer,w_drunk,w_val_a,w_val_b,w_val_c,w_check_a,w_check_b,w_check_c,w_memo
+0,1,2018-09-12,8310,0,false,false,0,0,0,false,false,false,
+1,2,2018-09-13,8240,0,false,false,0,0,0,false,false,false,
+2,3,2018-09-14,8270,0,false,false,0,0,0,false,false,false,
+3,4,2018-09-17,8300,0,false,false,0,0,0,false,false,false,
+4,5,2018-09-16,8400,0,false,false,0,0,0,false,false,false,
+5,6,2018-09-15,0,0,false,false,0,0,0,false,false,false,
+6,7,2018-09-18,8250,0,true,false,0,0,0,false,false,false,- 1 Stuck Apfelkuchen
+7,8,2018-09-19,8240,0,false,false,0,0,0,false,false,false,
+8,9,2018-09-20,8400,0,false,false,0,0,0,false,false,false,
+9,10,2018-09-21,8170,0,false,false,0,0,0,false,false,false,
+10,11,2018-09-24,8500,0,false,false,0,0,0,false,false,false,
+11,12,2018-09-23,0,0,false,false,0,0,0,false,false,false,
+12,13,2018-09-22,8350,0,false,false,0,0,0,false,false,false,
+13,14,2018-09-25,0,0,false,false,0,0,0,false,false,false,
+14,15,2018-09-27,8400,0,false,false,0,0,0,false,false,false,I
+15,16,2018-09-26,0,0,false,false,0,0,0,false,false,false,
+16,17,2018-09-28,8380,0,false,false,0,0,0,false,false,false,3 kuchen
+17,18,2018-09-29,8240,0,false,false,0,0,0,false,false,false,
+18,19,2018-10-05,0,0,false,false,0,0,0,false,false,false,
+19,20,2018-10-04,0,0,false,false,0,0,0,false,false,false,
+20,21,2018-10-03,0,0,false,false,0,0,0,false,false,false,
+21,22,2018-10-02,0,0,false,false,0,0,0,false,false,false,
+22,23,2018-10-01,0,0,false,false,0,0,0,false,false,false,
+23,24,2018-09-30,0,0,false,false,0,0,0,false,false,false,
+24,25,2018-10-14,0,0,false,false,0,0,0,false,false,false,
+25,26,2018-10-13,0,0,false,false,0,0,0,false,false,false,
+26,27,2018-10-12,0,0,false,false,0,0,0,false,false,false,
+27,28,2018-10-11,0,0,false,false,0,0,0,false,false,false,
+28,29,2018-10-10,0,0,false,false,0,0,0,false,false,false,
+29,30,2018-10-09,0,0,false,false,0,0,0,false,false,false,
+30,31,2018-10-08,0,0,false,false,0,0,0,false,false,false,
+31,32,2018-10-07,0,0,false,false,0,0,0,false,false,false,
+32,33,2018-10-06,0,0,false,false,0,0,0,false,false,false,
+33,34,2018-10-23,0,0,false,false,0,0,0,false,false,false,
+34,35,2018-10-22,0,0,false,false,0,0,0,false,false,false,
+35,36,2018-10-21,0,0,false,false,0,0,0,false,false,false,
+36,37,2018-10-20,0,0,false,false,0,0,0,false,false,false,
+37,38,2018-10-19,0,0,false,false,0,0,0,false,false,false,
+38,39,2018-10-18,0,0,false,false,0,0,0,false,false,false,
+39,40,2018-10-17,0,0,false,false,0,0,0,false,false,false,
+40,41,2018-10-16,0,0,false,false,0,0,0,false,false,false,
+41,42,2018-10-15,0,0,false,false,0,0,0,false,false,false,
+42,43,2018-11-04,0,0,false,false,0,0,0,false,false,false,
+43,44,2018-11-03,0,0,false,false,0,0,0,false,false,false,
+44,45,2018-11-02,0,0,false,false,0,0,0,false,false,false,
+45,46,2018-11-01,0,0,false,false,0,0,0,false,false,false,
+46,47,2018-10-31,0,0,false,false,0,0,0,false,false,false,
+47,48,2018-10-30,0,0,false,false,0,0,0,false,false,false,
+48,49,2018-10-29,0,0,false,false,0,0,0,false,false,false,
+49,50,2018-10-28,0,0,false,false,0,0,0,false,false,false,
+50,51,2018-10-27,0,0,false,false,0,0,0,false,false,false,
+51,52,2018-10-26,0,0,false,false,0,0,0,false,false,false,
+52,53,2018-10-25,0,0,false,false,0,0,0,false,false,false,
+53,54,2018-10-24,0,0,false,false,0,0,0,false,false,false,
+54,55,2018-11-05,8560,0,false,false,0,0,0,false,false,false,
+55,56,2018-11-08,8470,0,false,false,0,0,0,false,false,false,
+56,57,2018-11-07,0,0,false,false,0,0,0,false,false,false,
+57,58,2018-11-06,0,0,false,false,0,0,0,false,false,false,
+58,59,2018-11-09,8410,0,false,false,0,0,0,false,false,false,
+59,60,2018-11-10,8410,0,false,false,0,0,0,false,false,false,
+60,61,2018-11-12,0,0,false,false,0,0,0,false,false,false,
+61,62,2018-11-11,0,0,false,false,0,0,0,false,false,false,
+62,63,2018-11-13,0,0,false,false,0,0,0,false,false,false,
+63,64,2018-11-14,8490,0,false,false,0,0,0,false,false,false,
+64,65,2018-11-15,0,0,false,false,0,0,0,false,false,false,
+65,66,2018-11-16,8650,0,false,false,0,0,0,false,false,false,
+66,67,2018-11-17,8540,0,false,false,0,0,0,false,false,false,
+67,68,2018-11-18,8620,0,false,false,0,0,0,false,false,false,
+68,69,2018-11-22,8630,0,false,false,0,0,0,false,false,false,
+69,70,2018-11-21,0,0,false,false,0,0,0,false,false,false,
+70,71,2018-11-20,0,0,false,false,0,0,0,false,false,false,
+71,72,2018-11-19,0,0,false,false,0,0,0,false,false,false,
+72,73,2018-11-24,8420,0,false,false,0,0,0,false,false,false,
+73,74,2018-11-23,0,0,false,false,0,0,0,false,false,false,
+74,75,2018-11-25,0,0,false,false,0,0,0,false,false,false,
+75,76,2018-11-26,8470,0,false,false,0,0,0,false,false,false,
+76,77,2018-11-27,8370,0,false,false,0,0,0,false,false,false,
+77,78,2018-11-28,8420,0,false,false,0,0,0,false,false,false,
+78,79,2018-11-30,8550,0,false,false,0,0,0,false,false,false,
+79,80,2018-11-29,0,0,false,false,0,0,0,false,false,false,
+80,81,2018-12-01,0,0,false,false,0,0,0,false,false,false,
+81,82,2018-12-04,8560,0,false,false,0,0,0,false,false,false,
+82,83,2018-12-03,8650,0,false,false,0,0,0,false,false,false,
+83,84,2018-12-02,0,0,false,false,0,0,0,false,false,false,
+84,85,2018-12-05,8480,0,false,false,0,0,0,false,false,false,
+85,86,2018-12-08,8610,0,false,false,0,0,0,false,false,false,
+86,87,2018-12-07,0,0,false,false,0,0,0,false,false,false,
+87,88,2018-12-06,0,0,false,false,0,0,0,false,false,false,
+88,89,2018-12-10,8700,0,false,false,0,0,0,false,false,false,
+89,90,2018-12-09,0,0,false,false,0,0,0,false,false,false,
+90,91,2018-12-11,8510,0,false,false,0,0,0,false,false,false,
+91,92,2018-12-14,0,0,false,false,0,0,0,false,false,false,
+92,93,2018-12-13,0,0,false,false,0,0,0,false,false,false,
+93,94,2018-12-12,0,0,false,false,0,0,0,false,false,false,
+94,95,2018-12-16,0,0,false,false,0,0,0,false,false,false,
+95,96,2018-12-15,0,0,false,false,0,0,0,false,false,false,
+96,97,2018-12-17,0,0,false,false,0,0,0,false,false,false,
+97,98,2018-12-18,8700,0,false,false,0,0,0,false,false,false,
+98,99,2018-12-19,8650,0,false,false,0,0,0,false,false,false,
+99,100,2018-12-20,8610,0,false,false,0,0,0,false,false,false,
+100,101,2018-12-21,8500,0,false,false,0,0,0,false,false,false,
+101,102,2018-12-26,8640,0,false,false,0,0,0,false,false,false,
+102,103,2018-12-25,8720,0,false,false,0,0,0,false,false,false,
+103,104,2018-12-24,0,0,false,false,0,0,0,false,false,false,
+104,105,2018-12-23,0,0,false,false,0,0,0,false,false,false,
+105,106,2018-12-22,0,0,false,false,0,0,0,false,false,false,
+106,107,2018-12-27,8600,0,false,false,0,0,0,false,false,false,
+107,108,2018-12-29,8600,0,false,false,0,0,0,false,false,false,
+108,109,2018-12-28,8600,0,false,false,0,0,0,false,false,false,
+109,110,2019-01-02,8820,0,false,false,0,0,0,false,false,false,
+110,111,2019-01-01,8820,0,false,false,0,0,0,false,false,false,
+111,112,2018-12-31,8730,0,false,false,0,0,0,false,false,false,
+112,113,2018-12-30,0,0,false,false,0,0,0,false,false,false,
+113,114,2019-01-03,8650,0,false,false,0,0,0,false,false,false,
+114,115,2019-01-06,8810,0,false,false,0,0,0,false,false,false,
+115,116,2019-01-05,0,0,false,false,0,0,0,false,false,false,
+116,117,2019-01-04,0,0,false,false,0,0,0,false,false,false,
+117,118,2019-01-07,8810,0,false,false,0,0,0,false,false,false,
+118,119,2019-01-08,8720,0,false,false,0,0,0,false,false,false,"- 195 g Tunfisch
+- 200 g Bulgar
+- 250 g Spinat
+- 5 Stücke Schokolade
+- 1 Mini Knopers
+- 100 M und Ms
+- 200 g Schinken
+- 3 scheiben Brot
+- 4 Karotten
+- 3 Orangen"
+119,120,2019-01-09,8660,0,false,false,0,0,0,false,false,false,
+120,121,2019-01-11,8700,0,false,false,0,0,0,false,false,false,- 100 g Smarties
+121,122,2019-01-10,8700,0,false,false,0,0,0,false,false,false,
+122,123,2019-01-14,8900,0,false,false,0,0,0,false,false,false,"- 2 idina rollen: 250
+- 2 Schüsseln Gemüse: 250
+- 1 Suppe: 120
+- Thunfisch: 200
+- 200 g Kochschinken: 250
+- 3 Scheiben Puppernikel: 200 g"
+123,124,2019-01-13,0,0,false,false,0,0,0,false,false,false,
+124,125,2019-01-12,0,0,false,false,0,0,0,false,false,false,
+125,126,2019-01-15,8800,0,false,false,0,0,0,false,false,false,
+126,127,2019-01-16,8670,0,false,false,0,0,0,false,false,false,
+127,128,2019-01-17,8830,0,false,false,0,0,0,false,false,false,
+128,129,2019-01-18,8780,0,false,false,0,0,0,false,false,false,
+129,130,2019-01-19,8660,0,false,false,0,0,0,false,false,false,
+130,131,2019-01-20,8680,0,false,false,0,0,0,false,false,false,
+131,132,2019-01-21,8670,0,false,false,0,0,0,false,false,false,
+132,133,2019-01-22,8650,0,false,false,0,0,0,false,false,false,
+133,134,2019-01-23,8690,0,false,false,0,0,0,false,false,false,
+134,135,2019-01-24,0,0,false,false,0,0,0,false,false,false,
+135,136,2019-01-26,8720,0,false,false,0,0,0,false,false,false,
+136,137,2019-01-25,0,0,false,false,0,0,0,false,false,false,
+137,138,2019-01-28,8780,0,false,false,0,0,0,false,false,false,
+138,139,2019-01-27,0,0,false,false,0,0,0,false,false,false,
+139,140,2019-01-30,0,0,false,false,0,0,0,false,false,false,
+140,141,2019-01-29,0,0,false,false,0,0,0,false,false,false,
+141,142,2019-02-01,0,0,false,false,0,0,0,false,false,false,
+142,143,2019-01-31,0,0,false,false,0,0,0,false,false,false,
+143,144,2019-02-03,0,0,false,false,0,0,0,false,false,false,
+144,145,2019-02-02,0,0,false,false,0,0,0,false,false,false,
+145,146,2019-02-04,0,0,false,false,0,0,0,false,false,false,
+146,147,2019-02-05,8900,0,false,false,0,0,0,false,false,false,
+147,148,2019-02-07,0,0,false,false,0,0,0,false,false,false,
+148,149,2019-02-06,0,0,false,false,0,0,0,false,false,false,
+149,150,2019-02-08,8760,0,false,false,0,0,0,false,false,false,
+150,151,2019-02-10,0,0,false,false,0,0,0,false,false,false,
+151,152,2019-02-09,0,0,false,false,0,0,0,false,false,false,
+152,153,2019-02-12,8800,0,false,false,0,0,0,false,false,false,
+153,154,2019-02-11,0,0,false,false,0,0,0,false,false,false,
+154,155,2019-02-14,8770,0,false,false,0,0,0,false,false,false,
+155,156,2019-02-13,0,0,false,false,0,0,0,false,false,false,
+156,157,2019-02-15,8840,0,false,false,0,0,0,false,false,false,
+157,158,2019-02-16,8640,0,false,false,0,0,0,false,false,false,
+158,159,2019-02-18,8860,0,false,false,0,0,0,false,false,false,
+159,160,2019-02-17,0,0,false,false,0,0,0,false,false,false,
+160,161,2019-02-19,0,0,false,false,0,0,0,false,false,false,
+161,162,2019-02-22,9000,0,false,false,0,0,0,false,false,false,
+162,163,2019-02-21,0,0,false,false,0,0,0,false,false,false,
+163,164,2019-02-20,0,0,false,false,0,0,0,false,false,false,
+164,165,2019-02-25,8900,0,false,false,0,0,0,false,false,false,
+165,166,2019-02-24,0,0,false,false,0,0,0,false,false,false,
+166,167,2019-02-23,0,0,false,false,0,0,0,false,false,false,
+167,168,2019-02-27,0,0,false,false,0,0,0,false,false,false,
+168,169,2019-02-26,0,0,false,false,0,0,0,false,false,false,
+169,170,2019-02-28,0,0,false,false,0,0,0,false,false,false,
+170,171,2019-03-01,0,0,false,false,0,0,0,false,false,false,
+171,172,2019-03-03,8650,0,false,false,0,0,0,false,false,false,
+172,173,2019-03-02,8670,0,false,false,0,0,0,false,false,false,
+173,174,2019-03-04,8650,0,false,false,0,0,0,false,false,false,
+174,175,2019-03-05,8660,0,false,false,0,0,0,false,false,false,
+175,176,2019-03-06,8660,0,false,false,0,0,0,false,false,false,
+176,177,2019-03-07,0,0,false,false,0,0,0,false,false,false,
+177,178,2019-03-09,0,0,false,false,0,0,0,false,false,false,
+178,179,2019-03-08,0,0,false,false,0,0,0,false,false,false,
+179,180,2019-03-12,8590,0,false,false,0,0,0,false,false,false,
+180,181,2019-03-11,8700,0,false,false,0,0,0,false,false,false,
+181,182,2019-03-10,0,0,false,false,0,0,0,false,false,false,
+182,183,2019-03-13,8610,0,false,false,0,0,0,false,false,false,
+183,184,2019-03-14,8610,0,false,false,0,0,0,false,false,false,
+184,185,2019-03-16,8700,0,false,false,0,0,0,false,false,false,
+185,186,2019-03-15,0,0,false,false,0,0,0,false,false,false,
+186,187,2019-03-17,8670,0,false,false,0,0,0,false,false,false,
+187,188,2019-03-18,8730,0,false,false,0,0,0,false,false,false,
+188,189,2019-03-19,8690,0,false,false,0,0,0,false,false,false,
+189,190,2019-03-20,8570,0,false,false,0,0,0,false,false,false,
+190,191,2019-03-21,8800,0,false,false,0,0,0,false,false,false,
+191,192,2019-03-23,8710,0,false,false,0,0,0,false,false,false,
+192,193,2019-03-22,0,0,false,false,0,0,0,false,false,false,
+193,194,2019-03-25,8730,0,false,false,0,0,0,false,false,false,
+194,195,2019-03-24,0,0,false,false,0,0,0,false,false,false,
+195,196,2019-03-26,8630,0,false,false,0,0,0,false,false,false,
+196,197,2019-03-27,8570,0,false,false,0,0,0,false,false,false,
+197,198,2019-03-28,8500,0,false,false,0,0,0,false,false,false,
+198,199,2019-03-29,8570,0,false,false,0,0,0,false,false,false,
+199,200,2019-03-30,8500,0,false,false,0,0,0,false,false,false,
+200,201,2019-03-31,8560,0,false,false,0,0,0,false,false,false,
+201,202,2019-04-01,8600,0,false,false,0,0,0,false,false,false,
+202,203,2019-04-02,8500,0,false,false,0,0,0,false,false,false,
+203,204,2019-04-03,0,0,false,false,0,0,0,false,false,false,
+204,205,2019-04-05,8630,0,false,false,0,0,0,false,false,false,
+205,206,2019-04-04,0,0,false,false,0,0,0,false,false,false,
+206,207,2019-04-06,8420,0,false,false,0,0,0,false,false,false,
+207,208,2019-04-08,8720,0,true,false,0,0,0,false,false,false,
+208,209,2019-04-07,0,0,false,false,0,0,0,false,false,false,
+209,210,2019-04-09,8540,0,false,false,0,0,0,false,false,false,
+210,211,2019-04-10,8480,0,false,false,0,0,0,false,false,false,
+211,212,2019-04-11,8430,0,false,false,0,0,0,false,false,false,
+212,213,2019-04-12,8500,0,false,false,0,0,0,false,false,false,
+213,214,2019-04-15,8630,0,false,false,0,0,0,false,false,false,
+214,215,2019-04-14,0,0,false,false,0,0,0,false,false,false,
+215,216,2019-04-13,0,0,false,false,0,0,0,false,false,false,
+216,217,2019-04-16,8540,0,false,false,0,0,0,false,false,false,
+217,218,2019-04-17,8500,0,false,false,0,0,0,false,false,false,
+218,219,2019-04-18,8510,0,false,false,0,0,0,false,false,false,
+219,220,2019-04-20,8610,0,false,false,0,0,0,false,false,false,
+220,221,2019-04-19,0,0,false,false,0,0,0,false,false,false,
+221,222,2019-04-22,0,0,true,false,0,0,0,false,false,false,
+222,223,2019-04-21,0,0,false,false,0,0,0,false,false,false,
+223,224,2019-04-23,8650,0,false,false,0,0,0,false,false,false,
+224,225,2019-04-24,8640,0,false,false,0,0,0,false,false,false,
+225,226,2019-04-25,8560,0,false,false,0,0,0,false,false,false,
+226,227,2019-04-26,8530,0,false,false,0,0,0,false,false,false,
+227,228,2019-04-28,8480,0,false,false,0,0,0,false,false,false,
+228,229,2019-04-27,8420,0,false,false,0,0,0,false,false,false,
+229,230,2019-04-29,8570,0,false,false,0,0,0,false,false,false,
+230,231,2019-04-30,8610,0,false,false,0,0,0,false,false,false,
+231,232,2019-05-02,0,0,false,false,0,0,0,false,false,false,
+232,233,2019-05-01,0,0,false,false,0,0,0,false,false,false,
+233,234,2019-05-03,8800,0,false,false,0,0,0,false,false,false,
+234,235,2019-05-04,0,0,false,false,0,0,0,false,false,false,
+235,236,2019-05-12,0,0,false,false,0,0,0,false,false,false,
+236,237,2019-05-11,0,0,false,false,0,0,0,false,false,false,
+237,238,2019-05-10,0,0,false,false,0,0,0,false,false,false,
+238,239,2019-05-09,0,0,false,false,0,0,0,false,false,false,
+239,240,2019-05-08,0,0,false,false,0,0,0,false,false,false,
+240,241,2019-05-07,0,0,false,false,0,0,0,false,false,false,
+241,242,2019-05-06,0,0,false,false,0,0,0,false,false,false,
+242,243,2019-05-05,0,0,false,false,0,0,0,false,false,false,
+243,244,2019-05-14,0,0,false,false,0,0,0,false,false,false,
+244,245,2019-05-13,0,0,false,false,0,0,0,false,false,false,
+245,246,2019-05-17,8770,0,false,false,0,0,0,false,false,false,
+246,247,2019-05-16,0,0,false,false,0,0,0,false,false,false,
+247,248,2019-05-15,0,0,false,false,0,0,0,false,false,false,
+248,249,2019-05-20,8870,0,false,false,0,0,0,false,false,false,
+249,250,2019-05-19,0,0,false,false,0,0,0,false,false,false,
+250,251,2019-05-18,0,0,false,false,0,0,0,false,false,false,
+251,252,2019-05-21,8820,0,false,false,0,0,0,false,false,false,
+252,253,2019-05-29,8900,0,false,false,0,0,0,false,false,false,
+253,254,2019-05-28,0,0,false,false,0,0,0,false,false,false,
+254,255,2019-05-27,0,0,false,false,0,0,0,false,false,false,
+255,256,2019-05-26,0,0,false,false,0,0,0,false,false,false,
+256,257,2019-05-25,0,0,false,false,0,0,0,false,false,false,
+257,258,2019-05-24,0,0,false,false,0,0,0,false,false,false,
+258,259,2019-05-23,0,0,false,false,0,0,0,false,false,false,
+259,260,2019-05-22,0,0,false,false,0,0,0,false,false,false,
+260,261,2019-05-31,8990,0,false,false,0,0,0,false,false,false,
+261,262,2019-05-30,8900,0,false,false,0,0,0,false,false,false,
+262,263,2019-06-01,8830,0,false,false,0,0,0,false,false,false,
+263,264,2019-06-02,8750,0,false,false,0,0,0,false,false,false,
+264,265,2019-06-03,8830,0,false,false,0,0,0,false,false,false,
+265,266,2019-06-04,8740,0,false,false,0,0,0,false,false,false,200
+266,267,2019-06-06,8830,0,false,false,0,0,0,false,false,false,
+267,268,2019-06-05,0,0,false,false,0,0,0,false,false,false,
+268,269,2019-06-08,0,0,false,false,0,0,0,false,false,false,
+269,270,2019-06-07,0,0,false,false,0,0,0,false,false,false,
+270,271,2019-06-09,0,0,false,false,0,0,0,false,false,false,
+271,272,2019-06-10,0,0,false,false,0,0,0,false,false,false,
+272,273,2019-06-11,8930,0,false,false,0,0,0,false,false,false,
+273,274,2019-06-13,8930,0,false,false,0,0,0,false,false,false,"Frühstück: 
+-- 200 g Hinterschenken: 250 kcal
+-- 2 Weckle: 300 kcal
+==={500 kcal"
+274,275,2019-06-12,8900,0,false,false,0,0,0,false,false,false,
+275,276,2019-06-14,8910,0,false,false,0,0,0,false,false,false,"Summe 2400 
+Frühstück
+-- 150 Schibkrn: 300 kval
+-- 2 Eier : 150 kcal
+===== 450 kcal
+Mittagessen
+--200 g fisch: 300 kcal
+-- 300 g kartofelpUree: 600 kcal
+--- 250 g mais: 200 kcal
+==== 1100 kcal
+--- Abendessen
+- 2 Maultaschen: 200 kval
+- Sandwicheis: 170 kcal
+- Meloneneis: 108 kval
+- Brezelen: 250 kca"
+276,277,2019-06-15,8910,0,false,false,0,0,0,false,false,false,"Summe: 1500
+----Frühstück
+--- 200 g Fleisch: 300 kcal
+--- 2 Schalen Müsli: 500 kval
+
+--- Mittagessen
+-- 1 Tellrr: 400 kcal
+-- 2 Hände Nudeln mit Schmelz:300 kcal"
+277,278,2019-06-16,8830,0,false,false,0,0,0,false,false,false,"Summe: 2900
+-Frühstück: 1350
+-- Sandwicheseis: 500 kcal
+--Bubble Gum Eis: 250 kcal
+-- 350 g Fleisch, Soße: 600 kcal
+Mittagessen: 600
+--- 300 g Pute : 600 kcal
+Abendessen: 1000 kcal
+--- 25 Nüsse: 250 kcal
+--- 3 Keks 225 kcal
+---- 1 Suppe: 150 kcal
+---- Bub Gum Eis: 150 kcal
+---- Käseknecke 225"
+278,279,2019-06-17,8930,0,false,false,0,0,0,false,false,false,"----Frühstück:1100
+-- 2 Schüsseln Müsli: 600 kcal
+-- 2 Brote mit Wurst: 500 kcal"
+279,280,2019-06-18,8830,0,false,false,0,0,0,false,false,false,
+280,281,2019-06-19,8860,0,false,false,0,0,0,false,false,false,"Summe: 2000 kcal
+---+Frühstück: 800
+-- 150 g Hinterschenken: 300
+--- 2 Schussln Müsli: : 500
+Mittagessen: 800 g
+---  200 g Thunfisch: 250 g
+--- 3 Bananen: 250 kcal
+--- 1 kg Wassermelone:  300 kcal
+Abendessen: 610
+--  Suppe 240 kcal
+-- 250 g Hähnchen: 300 kcal
+-- 3 Wassereis: 60 kcal"
+281,282,2019-06-20,8790,0,false,false,0,0,0,false,false,false,"Summe: 2300 kval
+Frühstück:
+--- 1 Bubble Eis: 150 kcal
+--- 0,5 Mars: 101 kcal
+--- 1 Schussle Musli: 300 kcal
+---150 G Fleisch: 250 kcal
+--- 1 Kakruseis: 150
+--- 1 Meloneneis: 100 kval
+--- 1 Maultaschen: 360 kcal
+Mittagessen
+nichts
+Abendessen990
+-- Tuhnfisch 200
+--- 700"
+282,283,2019-06-21,8820,0,false,false,0,0,0,false,false,false,"FrUhstuck: 1330
+-- 1 Bubble Ris 120
+-- Pizza 250
+--2 Schussel musli 300
+-- 2 Kekse : 150
+-- 2 Brot 250 kcal
+-- 250 Hintrrschinken 250 kcal"
+283,284,2019-06-22,8830,0,false,false,0,0,0,false,false,false,
+284,285,2019-06-23,8880,0,true,false,0,0,0,false,false,false,"Summe: 1600 kcal
+Frühstück
+- 200 g Fleisch 300 kval
+- 1 Weckle: 200 kval
+
+Mittagessen:
+-- 400 g Fleiwch: 500 kval
+-- 10 Pommis: 200 kcal
+- Kuchen 400 kcal"
+285,286,2019-06-24,8720,0,false,false,0,0,0,false,false,false,"Summe: 1750 kcal
+Frühstück
+- 200 g Fleisch 400 kval
+- 150 g Honigmelone; 100 kcal
+- 1 Butterfinger: 250 kcal
+
+Mittagessen: 850
+- 200 g Thunfisch: 250
+- Suppe: 250 kcal
+- Melonw: 100 kcal
+- Butterfinger: 250 kval
+
+Abendessen
+- Thunfisch 200 kcal
+- Suppe : 210 jcal"
+286,287,2019-06-25,8770,0,false,false,0,0,0,false,false,false,"Summe: 1050 
+Frühstück
+-- 200 g Schweinerücken mit Soße 250 kcal
+-- Halbes Brötchen: 100 kcal
+Mittagessen: 700 kcL
+-- 200 g Tunfisch 250 kcal
+-- Salat: 250 kcal
+--- Suppe: 200 kcal"
+287,288,2019-06-26,8830,0,false,false,0,0,0,false,false,false,
+288,289,2019-06-27,8830,0,false,false,0,0,0,false,false,false,Kein Abendessen
+289,290,2019-06-28,8740,0,false,false,0,0,0,false,false,false,"Summe: 1850 kcal 
+Fruhstuck: 850
+ -- 200 g Tortellini: 250 kcal
+-- 100 g Käse: 400 kval
+--- 150 g RINDFLEISCH: 200 KCAL
+----
+Mittagessen: 1000
+-- Tuhnfisch: 250 kcal
+-- Salad: 300kcal
+-- 500 g Kirschdn: 350 kcal
+-- Rafoell 70 kcL
+-- Minimary: 130 kcal"
+290,291,2019-06-29,0,0,false,false,0,0,0,false,false,false,
+291,292,2019-07-01,0,0,false,false,0,0,0,false,false,false,
+292,293,2019-06-30,0,0,false,false,0,0,0,false,false,false,
+293,294,2019-07-02,0,0,false,false,0,0,0,false,false,false,
+294,295,2019-07-04,0,0,false,false,0,0,0,false,false,false,
+295,296,2019-07-03,0,0,false,false,0,0,0,false,false,false,
+296,297,2019-07-05,0,0,false,false,0,0,0,false,false,false,
+297,298,2019-07-06,0,0,false,false,0,0,0,false,false,false,
+298,299,2019-07-07,0,0,false,false,0,0,0,false,false,false,
+299,300,2019-07-08,0,0,false,false,0,0,0,false,false,false,
+300,301,2019-07-10,0,0,false,false,0,0,0,false,false,false,
+301,302,2019-07-09,0,0,false,false,0,0,0,false,false,false,
+302,303,2019-07-11,0,0,false,false,0,0,0,false,false,false,
+303,304,2019-07-13,0,0,false,false,0,0,0,false,false,false,
+304,305,2019-07-12,0,0,false,false,0,0,0,false,false,false,
+305,306,2019-07-16,0,0,false,false,0,0,0,false,false,false,
+306,307,2019-07-15,0,0,false,false,0,0,0,false,false,false,
+307,308,2019-07-14,0,0,false,false,0,0,0,false,false,false,
+308,309,2019-07-17,0,0,false,false,0,0,0,false,false,false,
+309,310,2019-07-18,0,0,false,false,0,0,0,false,false,false,
+310,311,2019-07-19,0,0,false,false,0,0,0,false,false,false,
+311,312,2019-07-21,0,0,false,false,0,0,0,false,false,false,
+312,313,2019-07-20,0,0,false,false,0,0,0,false,false,false,
+313,314,2019-07-22,0,0,false,false,0,0,0,false,false,false,
+314,315,2019-07-23,0,0,false,false,0,0,0,false,false,false,
+315,316,2019-07-24,8860,0,false,false,0,0,0,false,false,false,
+316,317,2019-07-25,0,0,false,false,0,0,0,false,false,false,
+317,318,2019-07-27,8920,0,false,false,0,0,0,false,false,false,
+318,319,2019-07-26,0,0,false,false,0,0,0,false,false,false,
+319,320,2019-07-29,0,0,false,false,0,0,0,false,false,false,
+320,321,2019-07-28,0,0,false,false,0,0,0,false,false,false,
+321,322,2019-07-30,0,0,false,false,0,0,0,false,false,false,
+322,323,2019-07-31,0,0,false,false,0,0,0,false,false,false,
+323,324,2019-08-01,8960,0,false,false,0,0,0,false,false,false,"Summe: 600 kcal 
+Frühstück:
+- 200 g Schweinefleisch:  350 kcal
+- Ein Brötchen 240 kcal"
+324,325,2019-08-03,0,0,false,false,0,0,0,false,false,false,
+325,326,2019-08-02,0,0,false,false,0,0,0,false,false,false,
+326,327,2019-08-04,9060,0,false,false,0,0,0,false,false,false,Pizza zum Frühstück
+327,328,2019-08-05,8960,0,false,false,0,0,0,false,false,false,"Sumne: 950 kcL 
+Frühstück: 
+-- 200 g Hinterschinken: 300 kcL
+Mittagessen
+-- 200 g Schweinefleisch 500 kcal
+--- 300 g Sauerkraut: 150 kca"
+328,329,2019-08-06,8970,0,false,true,0,0,0,false,false,false,"Großes Abendessen ( 3 Steak, 1 Bubble Eis, 300 g Wassermelone, 40 g Rosien,"
+329,330,2019-08-07,8960,0,false,false,0,0,0,false,false,false,"Summe: 750
+# Breakfast:
+-- 300 g Steak: 600 kcal
+--- 0,5 Beagle: 150 kcal
++++ 750"
+330,331,2019-08-09,0,0,false,false,0,0,0,false,false,false,
+331,332,2019-08-08,0,0,false,false,0,0,0,false,false,false,
+332,333,2019-08-12,0,0,false,false,0,0,0,false,false,false,
+333,334,2019-08-11,0,0,false,false,0,0,0,false,false,false,
+334,335,2019-08-10,0,0,false,false,0,0,0,false,false,false,
+335,336,2019-08-13,9060,0,false,false,0,0,0,false,false,false,
+336,337,2019-08-14,8970,0,false,false,0,0,0,false,false,false,"Sum: 3530
+ +++Breakfast: 633
+- BumBum Ice: 150 kval
+- Schokolade: 150 kcal
+- Schaschlik: 333 kcal
++++ Mittagessen:1400
+-- Schnitzel: 400 
+-- Tuhnfisch: 250 
+--- 2 warps: 600 
+-- 🥗 200 
+Ab.: 1300
+- 1 Scheibe Leberkäse: 250 
+- 1 wurst: 250 
+-  Nudelsalat: 250 
+- Stockbrot 250
+-- schussle eis 300"
+337,338,2019-08-15,8980,0,false,false,0,0,0,false,false,false,
+338,339,2019-08-16,8900,0,false,false,0,0,0,false,false,false,
+339,340,2019-08-17,8860,0,false,false,0,0,0,false,false,false,"Summe: 2300 kcal
+- 3* 160 kcal toasty: 480 
+- Bunle gum eis: 200 kal
+- Kaktuseis: 200
+- Kalematie: 250 
+- Schokolade: 160
+Mittagessen:
+-- 300 g chickem : 700 kcAl
+- chines leftover 400 kcal"
+340,341,2019-08-18,8820,0,false,false,0,0,0,false,false,false,
+341,342,2019-08-19,8790,0,false,false,0,0,0,false,false,false,"Summe: 1500 
+Frühstück:
+- 350*3,5 Kassler: 525 kcal
+- Spagetti: 275 kcal
+Mittagessen:
+-1 Dose Thunfisch: 200 kcal
+- 2 kleine Schusselb Mais: 500 kcal"
+342,343,2019-08-20,8950,0,false,false,0,0,0,false,false,false,"Summe 900 kcal
+Frühstück:
+-- 300 G Fleisch: 450 kcal
+--- 200 g Nudel mit Schmelz: 500 kcal"
+343,344,2019-08-21,8800,0,false,false,0,0,0,false,false,false,
+344,345,2019-08-26,9120,0,false,false,0,0,0,false,false,false,
+345,346,2019-08-25,0,0,false,false,0,0,0,false,false,false,
+346,347,2019-08-24,0,0,false,false,0,0,0,false,false,false,
+347,348,2019-08-23,0,0,false,false,0,0,0,false,false,false,
+348,349,2019-08-22,0,0,false,false,0,0,0,false,false,false,
+349,350,2019-08-27,8950,0,false,false,0,0,0,false,false,false,
+350,351,2019-08-28,8860,0,false,false,0,0,0,false,false,false,
+351,352,2019-08-29,8790,0,false,false,0,0,0,false,false,false,
+352,353,2019-08-30,8860,0,false,false,0,0,0,false,false,false,
+353,354,2019-08-31,8770,0,false,false,0,0,0,false,false,false,
+354,355,2019-09-01,8920,0,false,false,0,0,0,false,false,false,
+355,356,2019-09-02,9000,0,false,false,0,0,0,false,false,false,
+356,357,2019-09-03,8930,0,false,false,0,0,0,false,false,false,
+357,358,2019-09-04,8860,0,false,false,0,0,0,false,false,false,
+358,359,2019-09-05,8810,0,false,false,0,0,0,false,false,false,
+359,360,2019-09-06,8910,0,false,false,0,0,0,false,false,false,
+360,361,2019-09-07,8750,0,false,false,0,0,0,false,false,false,
+361,362,2019-09-09,9000,0,false,false,0,0,0,false,false,false,
+362,363,2019-09-08,8910,0,false,false,0,0,0,false,false,false,
+363,364,2019-09-10,8860,0,false,false,0,0,0,false,false,false,
+364,365,2019-09-11,8820,0,false,false,0,0,0,false,false,false,
+365,366,2019-09-12,8820,0,false,false,0,0,0,false,false,false,
+366,367,2019-09-13,8770,0,false,false,0,0,0,false,false,false,
+367,368,2019-09-17,8920,0,false,false,0,0,0,false,false,false,
+368,369,2019-09-16,0,0,false,false,0,0,0,false,false,false,
+369,370,2019-09-15,0,0,false,false,0,0,0,false,false,false,
+370,371,2019-09-14,0,0,false,false,0,0,0,false,false,false,
+371,372,2019-09-18,9020,0,false,false,0,0,0,false,false,false,
+372,373,2019-09-20,8780,0,false,false,0,0,0,false,false,false,
+373,374,2019-09-19,0,0,false,false,0,0,0,false,false,false,
+374,375,2019-09-22,8910,0,false,false,0,0,0,false,false,false,
+375,376,2019-09-21,0,0,false,false,0,0,0,false,false,false,
+376,377,2019-09-24,8830,0,false,false,0,0,0,false,false,false,
+377,378,2019-09-23,8930,0,false,false,0,0,0,false,false,false,
+378,379,2019-09-25,8750,0,false,false,0,0,0,false,false,false,
+379,380,2019-09-26,8770,0,false,false,0,0,0,false,false,false,
+380,381,2019-09-27,8820,0,false,false,0,0,0,false,false,false,
+381,382,2019-09-28,8920,0,false,false,0,0,0,false,false,false,
+382,383,2019-09-29,8870,0,false,false,0,0,0,false,false,false,
+383,384,2019-09-30,8910,0,false,false,0,0,0,false,false,false,
+384,385,2019-10-02,8910,0,false,false,0,0,0,false,false,false,
+385,386,2019-10-01,8910,0,false,false,0,0,0,false,false,false,
+386,387,2019-10-03,8950,0,false,false,0,0,0,false,false,false,
+387,388,2019-10-04,8950,0,false,false,0,0,0,false,false,false,
+388,389,2019-10-05,0,0,false,false,0,0,0,false,false,false,
+389,390,2019-10-07,8970,0,false,false,0,0,0,false,false,false,
+390,391,2019-10-06,0,0,false,false,0,0,0,false,false,false,
+391,392,2019-10-08,9050,0,false,false,0,0,0,false,false,false,
+392,393,2019-10-09,9120,0,false,false,0,0,0,false,false,false,
+393,394,2019-10-10,9050,0,false,false,0,0,0,false,false,false,
+394,395,2019-10-11,9050,0,false,false,0,0,0,false,false,false,
+395,396,2019-10-13,9000,0,false,false,0,0,0,false,false,false,
+396,397,2019-10-12,0,0,false,false,0,0,0,false,false,false,
+397,398,2019-10-14,9050,0,false,false,0,0,0,false,false,false,
+398,399,2019-10-15,0,0,false,false,0,0,0,false,false,false,
+399,400,2019-10-19,0,0,false,false,0,0,0,false,false,false,
+400,401,2019-10-18,0,0,false,false,0,0,0,false,false,false,
+401,402,2019-10-17,0,0,false,false,0,0,0,false,false,false,
+402,403,2019-10-16,0,0,false,false,0,0,0,false,false,false,
+403,404,2019-10-23,0,0,false,false,0,0,0,false,false,false,
+404,405,2019-10-22,0,0,false,false,0,0,0,false,false,false,
+405,406,2019-10-21,0,0,false,false,0,0,0,false,false,false,
+406,407,2019-10-20,0,0,false,false,0,0,0,false,false,false,
+407,408,2019-10-26,0,0,false,false,0,0,0,false,false,false,
+408,409,2019-10-25,0,0,false,false,0,0,0,false,false,false,
+409,410,2019-10-24,0,0,false,false,0,0,0,false,false,false,
+410,411,2019-10-27,0,0,false,false,0,0,0,false,false,false,
+411,412,2019-10-28,0,0,false,false,0,0,0,false,false,false,
+412,413,2019-10-29,9000,0,false,false,0,0,0,false,false,false,
+413,414,2019-10-30,8950,0,false,false,0,0,0,false,false,false,
+414,415,2019-10-31,8920,0,false,false,0,0,0,false,false,false,
+415,416,2019-11-01,8870,0,false,false,0,0,0,false,false,false,
+416,417,2019-11-05,8890,0,false,false,0,0,0,false,false,false,
+417,418,2019-11-04,0,0,false,false,0,0,0,false,false,false,
+418,419,2019-11-03,9000,0,false,false,0,0,0,false,false,false,
+419,420,2019-11-02,9100,0,false,false,0,0,0,false,false,false,
+420,421,2019-11-06,8830,0,false,false,0,0,0,false,false,false,
+421,422,2019-11-07,8830,0,false,false,0,0,0,false,false,false,
+422,423,2019-11-09,8930,0,false,false,0,0,0,false,false,false,
+423,424,2019-11-08,8900,0,false,false,0,0,0,false,false,false,
+424,425,2019-11-10,8940,0,false,false,0,0,0,false,false,false,
+425,426,2019-11-11,8830,0,false,false,0,0,0,false,false,false,
+426,427,2019-11-12,8790,0,false,false,0,0,0,false,false,false,
+427,428,2019-11-13,8890,0,false,false,0,0,0,false,false,false,
+428,429,2019-11-14,8870,0,false,false,0,0,0,false,false,false,
+429,430,2019-11-15,8870,0,false,false,0,0,0,false,false,false,
+430,431,2019-11-16,8910,0,false,false,0,0,0,false,false,false,
+431,432,2019-11-17,8670,0,false,false,0,0,0,false,false,false,
+432,433,2019-11-18,8790,0,false,false,0,0,0,false,false,false,
+433,434,2019-11-19,8930,0,false,false,0,0,0,false,false,false,
+434,435,2019-11-27,8900,0,false,false,0,0,0,false,false,false,
+435,436,2019-11-26,0,0,false,false,0,0,0,false,false,false,
+436,437,2019-11-25,0,0,false,false,0,0,0,false,false,false,
+437,438,2019-11-24,0,0,false,false,0,0,0,false,false,false,
+438,439,2019-11-23,0,0,false,false,0,0,0,false,false,false,
+439,440,2019-11-22,0,0,false,false,0,0,0,false,false,false,
+440,441,2019-11-21,0,0,false,false,0,0,0,false,false,false,
+441,442,2019-11-20,0,0,false,false,0,0,0,false,false,false,
+442,443,2019-12-05,8830,0,false,false,0,0,0,false,false,false,
+443,444,2019-12-04,0,0,false,false,0,0,0,false,false,false,
+444,445,2019-12-03,0,0,false,false,0,0,0,false,false,false,
+445,446,2019-12-02,0,0,false,false,0,0,0,false,false,false,
+446,447,2019-12-01,0,0,false,false,0,0,0,false,false,false,
+447,448,2019-11-30,0,0,false,false,0,0,0,false,false,false,
+448,449,2019-11-29,0,0,false,false,0,0,0,false,false,false,
+449,450,2019-11-28,0,0,false,false,0,0,0,false,false,false,
+450,451,2019-12-06,8890,0,false,false,0,0,0,false,false,false,
+451,452,2019-12-10,0,0,false,false,0,0,0,false,false,false,
+452,453,2019-12-09,0,0,false,false,0,0,0,false,false,false,
+453,454,2019-12-08,0,0,false,false,0,0,0,false,false,false,
+454,455,2019-12-07,0,0,false,false,0,0,0,false,false,false,
+455,456,2019-12-22,9060,0,false,false,0,0,0,false,false,false,
+456,457,2019-12-21,0,0,false,false,0,0,0,false,false,false,
+457,458,2019-12-20,0,0,false,false,0,0,0,false,false,false,
+458,459,2019-12-19,0,0,false,false,0,0,0,false,false,false,
+459,460,2019-12-18,0,0,false,false,0,0,0,false,false,false,
+460,461,2019-12-17,0,0,false,false,0,0,0,false,false,false,
+461,462,2019-12-16,0,0,false,false,0,0,0,false,false,false,
+462,463,2019-12-15,0,0,false,false,0,0,0,false,false,false,
+463,464,2019-12-14,0,0,false,false,0,0,0,false,false,false,
+464,465,2019-12-13,0,0,false,false,0,0,0,false,false,false,
+465,466,2019-12-12,0,0,false,false,0,0,0,false,false,false,
+466,467,2019-12-11,0,0,false,false,0,0,0,false,false,false,
+467,468,2019-12-23,9020,0,false,false,0,0,0,false,false,false,
+468,469,2019-12-28,9122,0,false,false,0,0,0,false,false,false,
+469,470,2019-12-27,0,0,false,false,0,0,0,false,false,false,
+470,471,2019-12-26,0,0,false,false,0,0,0,false,false,false,
+471,472,2019-12-25,0,0,false,false,0,0,0,false,false,false,
+472,473,2019-12-24,0,0,false,false,0,0,0,false,false,false,
+473,474,2019-12-29,9050,0,false,false,0,0,0,false,false,false,
+474,475,2019-12-30,8970,0,false,false,0,0,0,false,false,false,
+475,476,2020-01-03,9030,0,false,false,0,0,0,false,false,false,
+476,477,2020-01-02,9060,0,false,false,0,0,0,false,false,false,
+477,478,2020-01-01,9120,0,false,false,0,0,0,false,false,false,
+478,479,2019-12-31,9020,0,false,false,0,0,0,false,false,false,
+479,480,2020-01-04,8940,0,false,false,0,0,0,false,false,false,
+480,481,2020-01-05,8890,0,false,false,0,0,0,false,false,false,
+481,482,2020-01-06,9000,0,false,false,0,0,0,false,false,false,
+482,483,2020-01-07,9000,0,false,false,0,0,0,false,false,false,
+483,484,2020-01-08,8970,0,false,false,0,0,0,false,false,false,
+484,485,2020-01-09,8860,0,false,false,0,0,0,false,false,false,
+485,486,2020-01-10,8890,0,false,false,0,0,0,false,false,false,
+486,487,2020-01-11,8820,0,false,false,0,0,0,false,false,false,
+487,488,2020-01-12,8940,0,false,false,0,0,0,false,false,false,
+488,489,2020-01-14,9020,0,false,false,0,0,0,false,false,false,
+489,490,2020-01-13,0,0,false,false,0,0,0,false,false,false,
+490,491,2020-01-15,8950,0,false,false,0,0,0,false,false,false,
+491,492,2020-01-17,8940,0,false,false,0,0,0,false,false,false,
+492,493,2020-01-16,0,0,false,false,0,0,0,false,false,false,
+493,494,2020-01-19,8980,0,false,false,0,0,0,false,false,false,
+494,495,2020-01-18,0,0,false,false,0,0,0,false,false,false,
+495,496,2020-01-20,8900,0,false,false,0,0,0,false,false,false,
+496,497,2020-01-21,8880,0,false,false,0,0,0,false,false,false,
+497,498,2020-01-22,8800,0,false,false,0,0,0,false,false,false,
+498,499,2020-01-23,8810,0,false,false,0,0,0,false,false,false,
+499,500,2020-01-24,8870,0,false,false,0,0,0,false,false,false,
+500,501,2020-01-25,8720,0,false,false,0,0,0,false,false,false,
+501,502,2020-01-28,9000,0,false,false,0,0,0,false,false,false,
+502,503,2020-01-27,9050,0,false,false,0,0,0,false,false,false,
+503,504,2020-01-26,8850,0,false,false,0,0,0,false,false,false,
+504,505,2020-01-29,8880,0,false,false,0,0,0,false,false,false,
+505,506,2020-01-30,8830,0,false,false,0,0,0,false,false,false,
+506,507,2020-01-31,8870,0,false,false,0,0,0,false,false,false,
+507,508,2020-02-02,8790,0,false,false,0,0,0,false,false,false,
+508,509,2020-02-01,0,0,false,false,0,0,0,false,false,false,
+509,510,2020-02-03,8990,0,false,false,0,0,0,false,false,false,
+510,511,2020-02-04,8920,0,false,false,0,0,0,false,false,false,
+511,512,2020-02-05,8910,0,false,false,0,0,0,false,false,false,
+512,513,2020-02-06,8890,0,false,false,0,0,0,false,false,false,
+513,514,2020-02-08,8850,0,false,false,0,0,0,false,false,false,
+514,515,2020-02-07,0,0,false,false,0,0,0,false,false,false,
+515,516,2020-02-11,8830,0,false,false,0,0,0,false,false,false,
+516,517,2020-02-10,8910,0,false,false,0,0,0,false,false,false,
+517,518,2020-02-09,8960,0,false,false,0,0,0,false,false,false,
+518,519,2020-02-12,8870,0,false,false,0,0,0,false,false,false,
+519,520,2020-02-13,8870,0,false,false,0,0,0,false,false,false,
+520,521,2020-02-15,0,0,false,false,0,0,0,false,false,false,
+521,522,2020-02-14,0,0,false,false,0,0,0,false,false,false,
+522,523,2020-02-18,8820,0,false,false,0,0,0,false,false,false,
+523,524,2020-02-17,0,0,false,false,0,0,0,false,false,false,
+524,525,2020-02-16,0,0,false,false,0,0,0,false,false,false,
+525,526,2020-02-25,8950,0,false,false,0,0,0,false,false,false,
+526,527,2020-02-24,8950,0,false,false,0,0,0,false,false,false,
+527,528,2020-02-23,0,0,false,false,0,0,0,false,false,false,
+528,529,2020-02-22,0,0,false,false,0,0,0,false,false,false,
+529,530,2020-02-21,0,0,false,false,0,0,0,false,false,false,
+530,531,2020-02-20,0,0,false,false,0,0,0,false,false,false,
+531,532,2020-02-19,0,0,false,false,0,0,0,false,false,false,
+532,533,2020-02-26,8850,0,false,false,0,0,0,false,false,false,
+533,534,2020-02-27,8840,0,false,false,0,0,0,false,false,false,
+534,535,2020-02-28,8790,0,false,false,0,0,0,false,false,false,
+535,536,2020-02-29,8780,0,false,false,0,0,0,false,false,false,
+536,537,2020-03-01,8960,0,false,false,0,0,0,false,false,false,
+537,538,2020-03-02,9000,0,false,false,0,0,0,false,false,false,
+538,539,2020-03-03,8940,0,false,false,0,0,0,false,false,false,
+539,540,2020-03-04,8890,0,false,false,0,0,0,false,false,false,
+540,541,2020-03-05,8900,0,false,false,0,0,0,false,false,false,
+541,542,2020-03-08,8860,0,false,false,0,0,0,false,false,false,
+542,543,2020-03-07,9050,0,false,false,0,0,0,false,false,false,
+543,544,2020-03-06,8990,0,false,false,0,0,0,false,false,false,
+544,545,2020-03-09,8900,0,false,false,0,0,0,false,false,false,
+545,546,2020-03-10,8850,0,false,false,0,0,0,false,false,false,
+546,547,2020-03-11,8820,0,false,false,0,0,0,false,false,false,
+547,548,2020-03-12,8820,0,false,false,0,0,0,false,false,false,
+548,549,2020-03-13,8800,0,false,false,0,0,0,false,false,false,
+549,550,2020-03-17,8930,0,false,false,0,0,0,false,false,false,
+550,551,2020-03-16,8930,0,false,false,0,0,0,false,false,false,
+551,552,2020-03-15,8930,0,false,false,0,0,0,false,false,false,
+552,553,2020-03-14,0,0,false,false,0,0,0,false,false,false,
+553,554,2020-03-25,8920,0,false,false,0,0,0,false,false,false,
+554,555,2020-03-24,0,0,false,false,0,0,0,false,false,false,
+555,556,2020-03-23,0,0,false,false,0,0,0,false,false,false,
+556,557,2020-03-22,8920,0,false,false,0,0,0,false,false,false,
+557,558,2020-03-21,0,0,false,false,0,0,0,false,false,false,
+558,559,2020-03-20,0,0,false,false,0,0,0,false,false,false,
+559,560,2020-03-19,0,0,false,false,0,0,0,false,false,false,
+560,561,2020-03-18,0,0,false,false,0,0,0,false,false,false,
+561,562,2020-03-26,8870,0,false,false,0,0,0,false,false,false,
+562,563,2020-03-27,8830,0,false,false,0,0,0,false,false,false,
+563,564,2020-03-28,8920,0,false,false,0,0,0,false,false,false,
+564,565,2020-03-29,8930,0,false,false,0,0,0,false,false,false,
+565,566,2020-03-30,8970,0,false,false,0,0,0,false,false,false,
+566,567,2020-03-31,8770,0,false,false,0,0,0,false,false,false,
+567,568,2020-04-01,8710,0,false,false,0,0,0,false,false,false,
+568,569,2020-04-02,8710,0,false,false,0,0,0,false,false,false,
+569,570,2020-04-03,8710,0,false,false,0,0,0,false,false,false,
+570,571,2020-04-05,8830,0,false,false,0,0,0,false,false,false,
+571,572,2020-04-04,8790,0,false,false,0,0,0,false,false,false,
+572,573,2020-04-06,8830,0,false,false,0,0,0,false,false,false,
+573,574,2020-04-07,8790,0,false,false,0,0,0,false,false,false,
+574,575,2020-04-08,8770,0,false,false,0,0,0,false,false,false,
+575,576,2020-04-10,0,0,false,false,0,0,0,false,false,false,
+576,577,2020-04-09,0,0,false,false,0,0,0,false,false,false,

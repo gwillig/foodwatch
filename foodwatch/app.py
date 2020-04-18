@@ -89,7 +89,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#2.1Step: Create a new column which is the ratio in hecto (calorie per steps)'
         df_merge_raw["ratio_raw"] = (df_merge_raw["calorie"]/df_merge_raw["amount_steps"])*100
         df_merge_raw["ratio"] = df_merge_raw["ratio_raw"].round(2)
-        '#2.3.Step: Calculate the current diff. Shift(-1) is there to shift column by one '
+        '#2.3.Step: Calculate the current diff. Shift(-1) is there to shift row by one '
         df_merge_raw["diff"]=df_merge_raw["amount_weight"].diff().shift(-1).round(2)
         '#2.2.Step: Exclude all day where calorie is below 1200'
         df_merge = df_merge_raw.loc[(df_merge_raw["calorie"]>1200)]
