@@ -163,6 +163,14 @@ var percent = svg.append("text")
     .attr("dy",fontSize/3)
     .attr("dx",2);
 
+var remaining = svg.append("text")
+    .text('1600 cal')
+    .attr("id","remaining")
+    .attr("text-anchor", "middle")
+    .style("font-size",fontSize_amout/1.2+'px')
+    .attr("dy",110+fontSize_amout/3)
+    .attr("dx",2);
+
 var total = svg.append("text")
     .text('0%')
     .attr("id","absolut")
@@ -206,7 +214,7 @@ function arcTween(transition, newAngle) {
 
             percent.text(Math.round((d.endAngle/tau)*100)+'%');
             total.text(total_sum_today+" cal")
-
+            remaining.text(1600-total_sum_today +" cal")
             return arc(d);
         };
     });
