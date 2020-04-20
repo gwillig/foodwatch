@@ -382,10 +382,10 @@ function show_motivation_div(id){
          "Sondern nur noch 4 kg!",
         `
         Warum jetzt ?
-        Damit ich endlich den Kreislauf aus Diäten durchbreche!
-        Es muss endlich ein Ende haben! Seit rund 360 Tagen
-        machen ich jetzt schon erfolgslos Diet!
-        Das ist das erste Mal das ich wieder unter 85 kg bin!
+        Damit ich endlich den Kreislauf aus Diäten durchbreche!<br />
+        Es muss endlich ein Ende haben! Seit rund 360 Tagen<br />
+        machen ich jetzt schon erfolgslos Diet!<br />
+        Das ist das erste Mal das ich wieder unter 85 kg bin!<br />
         `,
         "Endlich neue Kleider kaufen können!",
         "Schlankes Gesicht, meinte mein Papa",
