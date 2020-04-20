@@ -1,7 +1,7 @@
 
       // Source: https://jsfiddle.net/u3zk1rtm/2/
       // Create the chart
-      	color=["#304f85","#b12f85","#e73b02"]
+      	color=["#304f85","#b12f85","#e73b02","green","orange"]
       $('#container').highcharts('StockChart', {
         chart: {
 
@@ -42,7 +42,7 @@
 
         yAxis: [
           {
-           // 2. yAxis
+           // 0. yAxis
             visible: false,
             title: {
               text: 'Steps' //Define here
@@ -55,13 +55,24 @@
               text: 'Cal' //Define here
             },
           },
-          {//1.Axsis
+          {//2.Axsis
         	opposite: false,
             title: {
               ordinal: false,
               color:color[0],
               softMin: -10
             }
+          },
+          {//3.Axsis: Weight diff
+            min: -2,
+            max: 1,
+        	opposite: false,
+        	visible: false,
+          },
+          {//4.Axsis: Weight ratio
+        	opposite: false,
+        	visible: false,
+
           }
         ],
 
@@ -94,6 +105,22 @@
             type: 'spline',
             color:color[1],
             data: data_weight,
+          },
+           {
+            name: 'Diff',
+            alignticks: false,
+            yAxis: 3,
+            type: 'spline',
+            color:color[3],
+            data: data_diff,
+          },
+          {
+            name: 'Ratio',
+            alignticks: false,
+            yAxis: 4,
+            type: 'spline',
+            color:color[4],
+            data: data_ratio,
           },
 
 

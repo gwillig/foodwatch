@@ -74,12 +74,17 @@ def create_app(dbms="sqlite3", test_config=None):
         df_merge["diff"]=df_merge["amount_weight"].diff().shift(-1).round(2)
 
         '#2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        df_merge["timestamp_ep"] = df_merge["timestamp_obj"].astype("int64") / 1e6
+        '#2.1.Step: Replace NAN in the column diff because for the current day there is no diff'
+        df_merge['diff'] = df_merge['diff'].fillna(0)
+        '#2.1.Step: Pre-process extrem points for ratio'
+        df_merge.ratio.loc[df_merge.ratio>15]=15
         data_chart = {}
-        for columns in ["amount_steps", "calorie", "amount_weight"]:
+        for columns in ["amount_steps", "calorie", "amount_weight","diff","ratio"]:
             '#1.4.Step: Sort the pd.serie for highchart'
-            df_sorted = df_merge[["timestamp_obj", columns]].sort_values(by=['timestamp_obj'])
+            df_sorted = df_merge[["timestamp_ep", columns]].sort_values(by=['timestamp_ep'])
             data_chart[columns] = df_sorted.to_numpy().tolist()
-        list_sorted = list(df_merge.sort_values(by=['timestamp_obj'],ascending=False ).T.to_dict().values())
+        list_sorted = list(df_merge.sort_values(by=['timestamp_ep'],ascending=False ).T.to_dict().values())
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
 
