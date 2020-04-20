@@ -19,6 +19,37 @@
 
 </div>
 <div class="table_area">
+<div id="cal_ratio">
+  <p class="p_name">
+      <label for>Total calories</label>
+      <input  value="{{total_calories[0]}}" class="input_fields" id="total_calorie" />
+  </p>
+  <p class="p_name">
+      <label for>Total steps</label>
+      <input  value="30000" class="input_fields" id="total_steps" />
+  </p>
+  <p id="cal_output" class="p_name" ></p>
+  <p  class="p_name" >Ratio shoulb between 4.8 and 5.6</p>
+  </p>
+
+<input class="add_btn" type="button" value="Calculate ratio" onclick="calculate_ratio(this)">
+</div>
+<table id="part_day">
+  <tr>
+    <th>No.</th>
+    <th>Date</th>
+    <th>Calorie</th>
+    <th>Steps</th>
+    <th>C/S</th>
+  </tr>
+    <tr>
+    <th>Cur</th>
+    <td>{{current[0]["timestamp_str"]}}</td>
+    <td>{{current[0]["calorie"]}}</td>
+    <td>{{current[0]["amount_steps"]}}</td>
+    <td>{{current[0]["ratio"]}}</td>
+  </tr>
+</table>
 <div id="input_fields">
   <p class="p_name">
       <label for>Name</label>
@@ -60,22 +91,7 @@
     <td></td>
     <td></td>
 </table>
-<table id="part_day">
-  <tr>
-    <th>No.</th>
-    <th>Date</th>
-    <th>Calorie</th>
-    <th>Steps</th>
-    <th>C/S</th>
-  </tr>
-    <tr>
-    <th>Cur</th>
-    <td>{{current[0]["timestamp_str"]}}</td>
-    <td>{{current[0]["calorie"]}}</td>
-    <td>{{current[0]["amount_steps"]}}</td>
-    <td>{{current[0]["ratio"]}}</td>
-  </tr>
-</table>
+
 
 </div>
 

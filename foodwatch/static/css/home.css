@@ -104,5 +104,12 @@ font-family: sans-serif;
 }
 
 #today_food{
-margin-bottom: 20%;
+    margin-bottom: 20%;
+}
+
+#part_day{
+    margin-bottom: 10%;
+}
+#cal_output{
+    font-size: x-large;
 }

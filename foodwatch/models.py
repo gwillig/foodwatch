@@ -54,7 +54,16 @@ def setup_db(app,database_path):
     if len(db.session.query(Food).all())<1:
         insert_data(db)
 
+    if len(db.session.query(Home_misc).all())<1:
+        hm1 = Home_misc(total_calories=1600)
+        db.session.add(hm1)
+        db.session.commit()
     return db
+
+class Home_misc(db.Model):
+    __table__name="home_misc"
+    id = db.Column(db.Integer, primary_key=True)
+    total_calories= db.Column(Integer)
 
 class Misc(db.Model):
     __table__name ='weights'

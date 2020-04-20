@@ -19,7 +19,7 @@ function get_data_today(){
 }
 
 
-function proc_backend(data,base_total=1600){
+function proc_backend(data){
     /*
     @description:
         Use the output from get_data_today() and processe the data.
@@ -29,7 +29,7 @@ function proc_backend(data,base_total=1600){
     @return:
         None
     */
-
+    let base_total = data[0].total_calories_plan;
 
     // Update  pie chart the total_sum of the day:
      current_angle = 2*Math.PI/base_total*data[0].total_sum_today
@@ -272,9 +272,10 @@ function insert_new_row(){
 
 
   post_data_today({
-      timestamp_epoch:Date.now(),
-      name:document.querySelector("#input_name").value,
-      calorie:result_cal
+      timestamp_epoch: Date.now(),
+      name: document.querySelector("#input_name").value,
+      calorie: result_cal,
+      total_calorie_plan: document.querySelector("#total_calorie").value
   })
 }
 
@@ -300,10 +301,10 @@ function post_data_today(data_json){
 }
 
 
-function delete_current_row(self){
+function delete_current_row(self_row){
 
     //1.Step: Get the data-database-id
-    db_id = self.getAttribute("data-database-id")
+    db_id = self_row.getAttribute("data-database-id")
     //2.Step: delete in data base
     fetch("/data_today", {
         mode:"cors",
@@ -320,7 +321,40 @@ function delete_current_row(self){
     })
     .then( (response) => {
         //Delete the row
-        self.parentElement.outerHTML="";
+        self_row.parentElement.outerHTML="";
     });
+
+}
+
+function calculate_ratio(self_btn){
+    /*
+    Calculate the ratio between total steps and calories
+    @args:
+       self_btn(html-object)
+    */
+     '#1.Step: The parent element of self_btn'
+     let parent = self_btn.closest("div");
+     '#2.Step: The the current value of total_calorie and total_steps'
+     let total_calorie_plan = parent.querySelector("#total_calorie").value;
+     '#3.Step: Calculate the ratio'
+     let total_steps = parent.querySelector("#total_steps").value;;
+     let ratio = Math.round(total_calorie_plan/total_steps*10000,2)/100
+
+     let cal_output = document.querySelector("#cal_output")
+     '3.1.Step: Check ratio'
+     if(ratio>5.6){
+
+        cal_output.style.color="red"
+        cal_output.innerHTML = ratio +" Over 5.6. BAD, go more steps!!"
+     }
+     else if (ratio>4.8){
+             cal_output.style.color="green"
+        cal_output.innerHTML = ratio +" very good!"
+     }
+     else if (ratio<4.8){
+             cal_output.style.color="red"
+        cal_output.innerHTML = ratio +" Lower then 4.8, eat more!!"
+     }
+
 
 }

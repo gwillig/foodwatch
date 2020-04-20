@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from foodwatch.models import setup_db, Food, Misc
+from foodwatch.models import setup_db, Food, Misc, Home_misc
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date, datetime, timedelta
@@ -32,10 +32,10 @@ def create_app(dbms="sqlite3", test_config=None):
         extention = ["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
         datalist_name.extend(extention)
         rank_dict = home_rank()
+        total_calories = db.session.query(Home_misc.total_calories).first()
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
-                               best_days = rank_dict["best"],
-                               worst_days= rank_dict["worst"])
+                               total_calories=total_calories)
 
     @app.route("/history")
     def history():
@@ -150,10 +150,12 @@ def create_app(dbms="sqlite3", test_config=None):
             total_sum = str(df['calorie'].sum())
         else:
             total_sum = 0
+        total_calories_plan = db.session.query(Home_misc.total_calories).first()
         return jsonify({
             'success': True,
             'food': query_result,
-            'total_sum_today': total_sum
+            'total_sum_today': total_sum,
+            'total_calories_plan':total_calories_plan[0]
         }, 200)
     @app.route("/misc", methods=["Delete"])
     def delete_misc():
@@ -203,8 +205,17 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/data_today", methods=["POST"])
     def post_data_today():
-
+        """
+        Save new added food rows to the data base and also the planed total cal amount for the day
+        :return:
+        """
+        '#1.Step: Get all the data'
         el = request.get_json()["data"]
+        '#2.Step: Oerwrite the current total cal amount'
+        el
+        hm1 = db.session.query(Home_misc).first()
+        hm1.total_calories = el.pop("total_calorie_plan")
+        '#3.Step: Save the new food row to the database'
         # Convert from epoch to unix
         el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
         del (el["timestamp_epoch"])
