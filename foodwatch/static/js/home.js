@@ -358,3 +358,42 @@ function calculate_ratio(self_btn){
 
 
 }
+
+function hide_motivation_div(self_div){
+    /*
+    Hide the motivation div
+    */
+    self_div.style.display="none"
+
+
+}
+
+function show_motivation_div(id){
+    /*
+    Show the motivation div
+    */
+
+     document.querySelector("#"+id).style.display="block"
+
+
+
+    let mot_content=[
+        "Traumgewicht: 80 kg=> NICHT MEHR 10 kg!"+
+         "Sondern nur noch 4 kg!",
+        `
+        Warum jetzt ?
+        Damit ich endlich den Kreislauf aus Diäten durchbreche!
+        Es muss endlich ein Ende haben! Seit rund 360 Tagen
+        machen ich jetzt schon erfolgslos Diet!
+        Das ist das erste Mal das ich wieder unter 85 kg bin!
+        `,
+        "Endlich neue Kleider kaufen können!",
+        "Schlankes Gesicht, meinte mein Papa",
+        "Schlaffe Haut!",
+    ]
+    let rand_int = Math.floor((Math.random() * mot_content.length))
+
+    let motivation_txt = document.querySelector("#motivation_txt")
+    motivation_txt.innerHTML = mot_content[rand_int]
+
+}

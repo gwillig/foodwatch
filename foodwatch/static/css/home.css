@@ -113,3 +113,40 @@ font-family: sans-serif;
 #cal_output{
     font-size: x-large;
 }
+
+.nav_mo_ca {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.nav_mo_ca li {
+  float: left;
+}
+
+.nav_input{
+    width: 100%;
+    border: none;
+    background-color: #E73B02;
+    color: white;
+    padding: 14px 28px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 15%;
+    font-weight: bold;
+    font-size: large;
+}
+
+.motivation_div{
+    z-index: 1000;
+    position: absolute;
+    display:none;
+    width: 100%;
+    height: 100%;
+    background-color: aliceblue;
+    top: 10%;
+}
+}
