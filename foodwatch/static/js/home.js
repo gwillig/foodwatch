@@ -168,7 +168,7 @@ var remaining = svg.append("text")
     .attr("id","remaining")
     .attr("text-anchor", "middle")
     .style("font-size",fontSize_amout/1.2+'px')
-    .attr("dy",110+fontSize_amout/3)
+    .attr("dy",80+fontSize_amout/3)
     .attr("dx",2);
 
 var total = svg.append("text")
@@ -176,7 +176,7 @@ var total = svg.append("text")
     .attr("id","absolut")
     .attr("text-anchor", "middle")
     .style("font-size",fontSize_amout+'px')
-    .attr("dy",60+fontSize_amout/3)
+    .attr("dy",50+fontSize_amout/3)
     .attr("dx",2);
 
 var description = svg.append("text")
