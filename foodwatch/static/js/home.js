@@ -33,7 +33,7 @@ function proc_backend(data,base_total=1600){
 
     // Update  pie chart the total_sum of the day:
      current_angle = 2*Math.PI/base_total*data[0].total_sum_today
-     create_pieChart(current_angle,data[0].total_sum_today)
+     create_pieChart(current_angle,data[0].total_sum_today,base_total)
 
     //Process every element of the data array. Every element is an record in the database
     data[0].food.forEach(function(el){
@@ -125,7 +125,7 @@ function replaceAll(original_string, find, replace) {
 }
 
 
-function create_pieChart(current_angle,total_sum_today){
+function create_pieChart(current_angle,total_sum_today,base_total){
     //inspired by https://stackoverflow.com/questions/31912686/how-to-draw-gradient-arc-using-d3-js
 
     //Remove old svg
@@ -214,7 +214,7 @@ function arcTween(transition, newAngle) {
 
             percent.text(Math.round((d.endAngle/tau)*100)+'%');
             total.text(total_sum_today+" cal")
-            remaining.text(1600-total_sum_today +" cal")
+            remaining.text(base_total-total_sum_today +" cal")
             return arc(d);
         };
     });

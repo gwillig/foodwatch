@@ -60,18 +60,25 @@ def create_app(dbms="sqlite3", test_config=None):
         Return the analysis.html with data
         """
         df_merge = merge_food_misc()
-        '#1.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+
         '#1.1.Step: Convert from datetime64 to epoch'
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
-        data_chart = {}
 
+        df_merge["timestamp_obj"] = pd.to_datetime((df_merge["timestamp_obj"]*1e6))
+        df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%Y')
+
+        '#2.1Step: Create a new column which is the ratio in hecto (calorie per steps)'
+        df_merge["ratio_raw"] = ((df_merge["calorie"]/df_merge["amount_steps"])*100).round(2)
+        df_merge["ratio"] = df_merge["ratio_raw"].round(2)
+        '#2.3.Step: Calculate the current diff. Shift(-1) is there to shift row by one '
+        df_merge["diff"]=df_merge["amount_weight"].diff().shift(-1).round(2)
+
+        '#2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        data_chart = {}
         for columns in ["amount_steps", "calorie", "amount_weight"]:
             '#1.4.Step: Sort the pd.serie for highchart'
             df_sorted = df_merge[["timestamp_obj", columns]].sort_values(by=['timestamp_obj'])
             data_chart[columns] = df_sorted.to_numpy().tolist()
-
-        df_merge["timestamp_obj"] = pd.to_datetime((df_merge["timestamp_obj"]*1e6))
-        df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%Y')
         list_sorted = list(df_merge.sort_values(by=['timestamp_obj'],ascending=False ).T.to_dict().values())
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
@@ -91,6 +98,7 @@ def create_app(dbms="sqlite3", test_config=None):
         df_merge_raw["ratio"] = df_merge_raw["ratio_raw"].round(2)
         '#2.3.Step: Calculate the current diff. Shift(-1) is there to shift row by one '
         df_merge_raw["diff"]=df_merge_raw["amount_weight"].diff().shift(-1).round(2)
+
         '#2.2.Step: Exclude all day where calorie is below 1200'
         df_merge = df_merge_raw.loc[(df_merge_raw["calorie"]>1200)]
         '#4.Step: Sort max'
@@ -142,7 +150,16 @@ def create_app(dbms="sqlite3", test_config=None):
             'food': query_result,
             'total_sum_today': total_sum
         }, 200)
+    @app.route("/misc", methods=["Delete"])
+    def delete_misc():
 
+        db_id = request.get_json()["data"]
+        # Convert from epoch to unix
+        db.session.query(Misc).filter_by(id=db_id).delete()
+        db.session.commit()
+        return jsonify({
+            'success': True,
+        }, 204)
     @app.route("/misc_data", methods=["POST"])
     def misc_data():
 
@@ -235,7 +252,7 @@ def create_app(dbms="sqlite3", test_config=None):
             .dt.floor('d')
 
         '#3.1.Step: Merge the dataframe'
-        df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='outer')
+        df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='inner')
         df_merge = df_merge.dropna()
         return df_merge
 

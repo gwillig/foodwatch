@@ -19,7 +19,47 @@
 
 </div>
 <div class="table_area">
+<div id="input_fields">
+  <p class="p_name">
+      <label for>Name</label>
+      <input  class="input_fields" list="list_name"  id="input_name" />
 
+      <datalist id="list_name">
+         {% for name in datalist_name %}
+          <option value={{name}}>
+         {% endfor %}
+      </datalist>
+  </p>
+  <p>
+    <label>Calorie</label>
+    <input  class="input_fields" list="list_cal" id="input_cal"/>
+    <datalist id="list_cal">
+      <option value=50>
+      <option value=100>
+      <option value=150>
+      <option value=200>
+      <option value=250>
+      <option value=300>
+      <option value=350>
+      <option value=400>
+    </datalist>
+  </p>
+<input class="add_btn" type="button" value="Add" onclick="insert_new_row()">
+</div>
+<table id="today_food">
+  <tr>
+    <th class="td_timestamp">Timestamp</th>
+    <th class="td_food_time">Time</th>
+    <th>Name</th>
+    <th onclick="insert_new_row()">Calorie</th>
+  </tr>
+
+  <tr>
+    <td class="td_timestamp">pl_timestamp</td>
+    <td class="current_time"></td>
+    <td></td>
+    <td></td>
+</table>
 <table id="part_day">
   <tr>
     <th>No.</th>
@@ -100,47 +140,7 @@
     <td>{{current[0]["index"]+1}}</td>
   </tr>
 </table>
-<div id="input_fields">
-  <p class="p_name">
-      <label for>Name</label>
-      <input  class="input_fields" list="list_name"  id="input_name" />
 
-      <datalist id="list_name">
-         {% for name in datalist_name %}
-          <option value={{name}}>
-         {% endfor %}
-      </datalist>
-  </p>
-  <p>
-    <label>Calorie</label>
-    <input  class="input_fields" list="list_cal" id="input_cal"/>
-    <datalist id="list_cal">
-      <option value=50>
-      <option value=100>
-      <option value=150>
-      <option value=200>
-      <option value=250>
-      <option value=300>
-      <option value=350>
-      <option value=400>
-    </datalist>
-  </p>
-<input class="add_btn" type="button" value="Add" onclick="insert_new_row()">
-</div>
-<table id="today_food">
-  <tr>
-    <th class="td_timestamp">Timestamp</th>
-    <th class="td_food_time">Time</th>
-    <th>Name</th>
-    <th onclick="insert_new_row()">Calorie</th>
-  </tr>
-
-  <tr>
-    <td class="td_timestamp">pl_timestamp</td>
-    <td class="current_time"></td>
-    <td></td>
-    <td></td>
-</table>
 </div>
 
 

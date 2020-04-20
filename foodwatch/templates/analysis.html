@@ -62,15 +62,21 @@
   <tr>
     <th>Date</th>
     <th>Weight</th>
+     <th>Diff</th>
+    <th>C/S</th>
     <th>Steps.</th>
     <th>Calorie</th>
+
   </tr>
       {% for name in list_sorted %}
         <tr>
           <td>{{name["timestamp_str"]}}</td>
           <td>{{name["amount_weight"]}}</td>
+          <td>{{name["diff"]}}</td>
+          <td>{{name["ratio_raw"]}}</td>
           <td>{{name["amount_steps"]}}</td>
-           <td>{{name["calorie"]}}</td>
+          <td>{{name["calorie"]}}</td>
+
         </tr>
       {% endfor %}
   <tr>

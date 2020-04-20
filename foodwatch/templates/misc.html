@@ -71,12 +71,12 @@
       </tr>
       {% for name in prev_data %}
       <tr>
-        <td contenteditable="true" class="hide">{{name.id}}</td>
+        <td contenteditable="true" class="hide db_id">{{name.id}}</td>
         <td contenteditable="true">{{name.timestamp_obj}}</td>
         <td contenteditable="true">{{name.amount_weight}}</td>
         <td contenteditable="true">{{name.amount_steps}}</td>
         <td>
-          <span class="table-remove glyphicon glyphicon-remove"></span>
+          <span onclick="remove(this)"class="table-remove glyphicon glyphicon-remove"></span>
         </td>
       </tr>
       {% endfor %}
@@ -182,6 +182,40 @@ function post_misc_data(data_json){
         $EXPORT.css({'color': 'red','font-size':'x-large'})
     });
 
+}
+
+function remove(x){
+  /*
+  args:
+    x(html-element)
+  Removes the clicked data row from the database
+  */
+  let db_id = $(x).parent().parent()[0].querySelector(".db_id").innerText
+
+      fetch("/misc", {
+        mode:"cors",
+        method: "delete",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        data:  db_id
+      })
+    })
+    .then( (response) => {
+        console.log("row successfully deleted")
+       $EXPORT.text("row successfully deleted")
+       $EXPORT.css({'color': 'green','font-size':'x-large'})
+    })
+    .catch(function() {
+        $EXPORT.text(
+          "Network error; Try again"
+          )
+        $EXPORT.css({'color': 'red','font-size':'x-large'})
+    });
 }
 </script>
 
