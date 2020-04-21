@@ -49,7 +49,7 @@ font-family: sans-serif;
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #E78302;
+  background-color: #3C6B9E;
   color: white;
 }
 
@@ -86,7 +86,7 @@ font-family: sans-serif;
   display: block;
   width: 50%;
   border: none;
-  background-color: #E73B02;
+  background-color: #34A7C1;
   color: white;
   padding: 14px 28px;
   font-size: 16px;
@@ -128,7 +128,7 @@ font-family: sans-serif;
 .nav_input{
     width: 100%;
     border: none;
-    background-color: #E73B02;
+    background-color: #34A7C1;
     color: white;
     padding: 14px 28px;
     font-size: 16px;

@@ -125,7 +125,7 @@ function replaceAll(original_string, find, replace) {
 }
 
 
-function create_pieChart(current_angle,total_sum_today,base_total){
+function create_pieChart(current_angle,total_sum_today,base_total,color_pie="#3C6B9E"){
     //inspired by https://stackoverflow.com/questions/31912686/how-to-draw-gradient-arc-using-d3-js
 
     //Remove old svg
@@ -195,7 +195,7 @@ var background = svg.append("path")
 
 var foreground = svg.append("path")
     .datum({endAngle: 0 * tau})
-    .style("fill", "#E73B02")
+    .style("fill", color_pie)
     .attr("d", arc);
 
 foreground.transition()
