@@ -36,9 +36,9 @@ def create_app(dbms="sqlite3", test_config=None):
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
                                total_calories=total_calories)
-
-    @app.route("/history")
-    def history():
+    #<path:path> is just for safe view "
+    @app.route("/histor<path:path>")
+    def history(path):
         prev_data = []
         for el in db.session.query(Food).distinct().order_by(Food.timestamp_obj.desc()).all():
             el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y %a - %H:%M")
@@ -54,10 +54,11 @@ def create_app(dbms="sqlite3", test_config=None):
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('misc.html', prev_data=prev_data)
 
-    @app.route("/analysis")
-    def analysis():
+    @app.route("/analysi<path:path>")
+    def analysis(path):
         """
         Return the analysis.html with data
+
         """
         df_merge = merge_food_misc()
 
@@ -65,7 +66,7 @@ def create_app(dbms="sqlite3", test_config=None):
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
 
         df_merge["timestamp_obj"] = pd.to_datetime((df_merge["timestamp_obj"]*1e6))
-        df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%Y')
+        df_merge["timestamp_str"] = df_merge["timestamp_obj"].dt.strftime('%d/%m/%y')
 
         '#2.1Step: Create a new column which is the ratio in hecto (calorie per steps)'
         df_merge["ratio_raw"] = ((df_merge["calorie"]/df_merge["amount_steps"])*100).round(2)
@@ -87,6 +88,8 @@ def create_app(dbms="sqlite3", test_config=None):
         list_sorted = list(df_merge.sort_values(by=['timestamp_ep'],ascending=False ).T.to_dict().values())
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
+
+
 
     def home_rank():
         '''

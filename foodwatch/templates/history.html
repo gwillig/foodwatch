@@ -4,7 +4,9 @@
   <meta harset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
   <title>History</title>
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
-  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{url_for('static',filename='css/jquery-ui.css')}}?100">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/bootstrap.min.css')}}?100">
+
   <style>
   .main{
     width:98%;
@@ -56,10 +58,32 @@
   .table-add:hover {
     color: #0b0;
   }
+.view_btn {
+  position:absolute;
+  top:10px;
+  z-index: 1000;
+  right:10px;
+  border: none;
+  background-color: #4394E1;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: large;
+  text-decoration: none;
+  width:50px
+}
 
+.view_btn:hover {
+  background-color: #ddd;
+  color: black;
+}
     </style>
 </head>
-<body>
+<body onload="check_url()">
+ <a href="/history/view" class="view_btn">View</a>
 <div class="main">
   <h1>History</h1>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
@@ -191,6 +215,24 @@ function post_misc_data(data_json){
         $EXPORT.css({'color': 'red','font-size':'x-large'})
     });
 
+}
+
+function check_url(){
+    /*
+    Checks the current url, if it contains the word safe it hides the footer for navigation
+    */
+
+
+    if (window.location.href.includes('view')){
+
+        document.querySelector(".navbar").style.display="none"
+
+      // Remove all remove icons
+      var allElements = document.getElementsByClassName('table-remove');
+      while (allElements.length) {
+        allElements[0].classList = "";
+      }
+    }
 }
 </script>
 
