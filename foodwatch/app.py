@@ -27,6 +27,10 @@ def create_app(dbms="sqlite3", test_config=None):
     CORS(app)
 
     @app.route("/")
+    def login():
+        return render_template('index.html')
+
+    @app.route("/home")
     def home():
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
         extention = ["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
@@ -36,6 +40,7 @@ def create_app(dbms="sqlite3", test_config=None):
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
                                total_calories=total_calories)
+
     #<path:path> is just for safe view "
     @app.route("/histor<path:path>")
     def history(path):

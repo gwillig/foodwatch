@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Foodwatchgw Login</title>
+    <style>
+    .background_gif{
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+    }
+
+    .header{
+        position:absolute;
+        color: white;
+        background-color: #0d2183;
+        width:100%;
+        font-size:xx-large;
+
+    }
+    .header p{
+        margin: 10px;
+        font-weight: bold;
+    }
+
+    .login{
+        bottom: 0px;
+        position: absolute;
+        color: white;
+        background-color: #0d2183c2;
+        border-radius: 0 15px 15px 0;
+        width:40%;
+        padding-left: 60px;
+        font-size: xx-large;
+
+        }
+
+
+    .login a{
+        color: white;
+        text-decoration: none;
+        padding-left: 60px;
+    }
+    body{
+        margin:0px;
+    }
+    </style>
+</head>
+
+<body>
+    <img class="background_gif" src="{{ url_for('static', filename = 'img/login.gif') }}">
+    <div class="header">
+        <p >Welcome to Foodwatch</p>
+    </div>
+    <div class="login">
+        <a  onclick="change_redirect()" id="loginlink" href='https://gwillig.eu.auth0.com/authorize?audience=casting_agency&response_type=token&client_id=QYmuoakhbPDjAmRDPyfpgLilzcpWFAAK&redirect_uri=https://foodwatchgw.herokuapp.com/home'>
+        Login
+        </a>
+    </div>
+    <script>
+        function change_redirect(){
+            /*
+            @description:
+                Change the auth0 redirect. If the url contain localhost it change it to localhost
+            */
+
+            let current_url = window.location.href
+            let href='https://gwillig.eu.auth0.com/authorize?audience=foodwatchgw&response_type=token&client_id=YwBpDwZuXEuTNS5NKDJ54HR6DTOQN04l'
+
+            if (current_url.includes("localhost:")){
+                document.querySelector("#loginlink").href = href + "&redirect_uri=http://localhost:5000/home"
+            }
+            else {
+                document.querySelector("#loginlink").href = href + "&redirect_uri=https://foodwatchgw.herokuapp.com/home"
+            }
+        }
+
+    </script>
+</body>
+</html>
