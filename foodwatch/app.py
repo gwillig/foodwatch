@@ -288,11 +288,12 @@ def create_app(dbms="sqlite3", test_config=None):
 
 
 # Check if app runs on local computer:
-os.system('uname -a > tmp')
-if open('tmp', 'r').read()[:24] == "Linux wlg1fe-HP-Pavilion":
-    app = create_app(dbms="sqlite3")
-else:
-    app = create_app(dbms="mysql")
+os.system('hostnamectl > tmp')
+with open('tmp', 'r') as temp_var:
+    if "gwillig" in temp_var.read():
+        app = create_app(dbms="sqlite3")
+    else:
+        app = create_app(dbms="mysql")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

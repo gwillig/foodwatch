@@ -262,11 +262,11 @@ function insert_new_row(){
   let cell_name = newRow.insertCell(2);
   cell_name.innerHTML = document.querySelector("#input_name").value
   let cell_cal = newRow.insertCell(3);
-  //.Step: Calculate the input_cal
-  //.Step: Get the value and replace comma with .dot
+  //1.Step: Calculate the input_cal
+  //1.1.Step: Get the value and replace comma with .dot
   let input_value = document.querySelector("#input_cal").value.replace(",",".")
 
-  //Step:Execute the input as cmd and convert to String
+  //1.2.Step:Execute the input as cmd and convert to String
   result_cal = String(Math.round(eval(input_value)))
   cell_cal.innerHTML = result_cal
 
