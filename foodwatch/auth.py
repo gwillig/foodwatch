@@ -4,6 +4,8 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 import os
+import sys
+sys.path.append('foodwatch')
 import base64
 
 AUTH0_DOMAIN = 'gwillig.eu.auth0.com'
@@ -15,7 +17,7 @@ API_AUDIENCE = 'foodwatchgw'
 if "jwt_foodwatch" in os.environ.keys():
     secret = os["jwt_foodwatch"]
 else:
-    with open('env.json','r') as env_file:
+    with open('foodwatch/env.json','r') as env_file:
         env_dict = json.load(env_file)
         secret = env_dict["jwt_foodwatch"]
 

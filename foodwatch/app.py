@@ -191,12 +191,17 @@ def create_app(dbms="sqlite3", test_config=None):
     @app.route("/misc_data", methods=["POST"])
     @requires_auth('post')
     def misc_data(payload):
-
+        """
+        Save all data from the tab misc to the database
+        :param payload:
+        :return:
+        """
         el_json = request.get_json()["data"]
         # Convert from epoch to unix
         misc_mapping = []
         for el in el_json:
-            if el["database_id"] == 'database_id':
+            if (el["database_id"] == 'database_id') and \
+                isinstance(el["weight"],int) and isinstance(el["steps"],int):
                 "#If row hasn't a existing record in db, a new object will be created an added to the db"
                 timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')
                 timestamp_unix = time.mktime(timestamp_obj.timetuple())
@@ -205,7 +210,7 @@ def create_app(dbms="sqlite3", test_config=None):
                          amount_steps=el["steps"], amount_weight=el["weight"])
                 )
                 db.session.commit()
-            else:
+            elif isinstance(el["weight"],int) and isinstance(el["steps"],int):
                 '#Replace the existing record'
                 '# In order to make a bulk update, an array with dict (same key as Misc) need to be created'
                 timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')

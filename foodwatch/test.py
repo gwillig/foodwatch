@@ -6,12 +6,30 @@ import json
 import os
 import pandas as pd
 
+"""
+Test user with no permissions:
+user:  unauthorizeduser017@gmail.com
+pw: Test123!
+
+"""
 class Foodwatchgw(unittest.TestCase):
     """This class represents the trivia test case"""
 
     @classmethod
     def setUpClass(cls):
         """Define test variables and initialize app."""
+        if "jwt_bearer" in os.environ.keys():
+            cls.jwt_bearer = os.environ["jwt_bearer"]
+        else:
+            with open('foodwatch/env.json', 'r') as env_file:
+                env_dict = json.load(env_file)
+                cls.jwt_bearer = env_dict["jwt_bearer"]
+        if "jwt_bearer_unauthorized" in os.environ.keys():
+            cls.jwt_bearer_unauthorized = os.environ["jwt_bearer_unauthorized"]
+        else:
+            with open('foodwatch/env.json', 'r') as env_file:
+                env_dict = json.load(env_file)
+                cls.jwt_bearer_unauthorized = env_dict["jwt_bearer_unauthorized"]
 
         cls.app = create_app(dbms="sqlite3",test_config=True)
         project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -53,17 +71,29 @@ class Foodwatchgw(unittest.TestCase):
 
     #Need to be redone!
     def test_get_data_today(self):
+
         response = self.client().get('/data_today')
         # Check response
         self.assertEqual(response.status_code, 200)
 
     def test_delete_misc(self):
-        response = self.client().delete('/misc', json={"data":1},headers={'Content-Type': 'application/json'},content_type='application/json')
-        # Check response
-        self.assertEqual(response.status_code, 200)
+        """
+        Test delete misc for authorized user and unauthorized user
+
+        """
+        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+            with self.subTest(k):
+                response = self.client().delete('/misc', json={"data":1},headers={'Content-Type': 'application/json',
+                                                                                  "Authorization": "Bearer " +v[0]},
+                                                 content_type='application/json')
+                # Check response
+                self.assertEqual(response.status_code, v[1])
 
     def test_post_misc_data(self):
+        """
+        Test post misc for authorized user and unauthorized user
 
+        """
         data = {"data": [
                           {
                             "database_id": "database_id",
@@ -79,11 +109,19 @@ class Foodwatchgw(unittest.TestCase):
                           },
                         ]
            }
-        response = self.client().post('/misc_data',headers={'Content-Type': 'application/json'},content_type='application/json',  json=data)
-        # Check response
-        self.assertEqual(response.status_code, 200)
+        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+            with self.subTest(k):
+                response = self.client().post('/misc_data',headers={'Content-Type': 'application/json',
+                                                                    "Authorization": "Bearer " +v[0]},
+                                              content_type='application/json',  json=data)
+                # Check response
+                self.assertEqual(response.status_code, v[1])
 
     def test_post_data_today(self):
+        """
+        Test post data today for authorized user and unauthorized user
+
+        """
         data = {"data":
                     {
                         "timestamp_epoch": 1587987510119,
@@ -92,14 +130,26 @@ class Foodwatchgw(unittest.TestCase):
                         "total_calorie_plan": "1600"
                     }
                 }
-        response = self.client().post('/data_today', json=data,headers={'Content-Type': 'application/json'},content_type='application/json')
-        # Check response
-        self.assertEqual(response.status_code, 200)
+        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+            with self.subTest(k):
+                response = self.client().post('/data_today', json=data,headers={'Content-Type': 'application/json',
+                                                                                "Authorization": "Bearer " +v[0]},
+                                              content_type='application/json')
+                # Check response
+                self.assertEqual(response.status_code, v[1])
 
     def test_delete_data_today(self):
-        response = self.client().delete('/data_today', json={"data":1},headers={'Content-Type': 'application/json'},content_type='application/json')
-        # Check response
-        self.assertEqual(response.status_code, 200)
+
+        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+            with self.subTest(k):
+                response = self.client().delete('/data_today', json={"data":1},headers={'Content-Type': 'application/json',
+                                                                                        "Authorization": "Bearer " +v[0]}
+                                                ,content_type='application/json')
+                # Check response
+                self.assertEqual(response.status_code, v[1])
+
+
+
 
     def test_merge_food_misc(self):
         df_merge= self.app.merge_food_misc(self.db)
@@ -109,3 +159,4 @@ class Foodwatchgw(unittest.TestCase):
         df_test["amount_weight"] = df_test["amount_weight"].astype("float64")
         pd._testing.assert_frame_equal(df_test[['timestamp_obj','amount_weight', 'amount_steps','calorie']],
                                        df_merge[['timestamp_obj','amount_weight', 'amount_steps','calorie']])
+
