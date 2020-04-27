@@ -6,6 +6,7 @@ from datetime import date, datetime, timedelta
 import pandas as pd
 import os
 import time
+import json
 
 
 def create_app(dbms="sqlite3", test_config=None):
@@ -21,7 +22,13 @@ def create_app(dbms="sqlite3", test_config=None):
         database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
         db = setup_db(app, database_path)
     else:
-        database_path = 'postgres://diyqhmcpqznxqh:6bfd76c3b1810ef06e06867d8806f0814b45bea09a3f1aa70f0e1fb81b3c2c4c@ec2-52-207-93-32.compute-1.amazonaws.com:5432/dc2cbh2ac1dp2p'
+        if "jwt_foodwatch" in os.environ.keys():
+            database_path = os["database_path"]
+        else:
+            with open('env.json', 'r') as env_file:
+                env_dict = json.load(env_file)
+                database_path = env_dict["database_path"]
+
         db = setup_db(app, database_path)
 
     CORS(app)

@@ -5,71 +5,122 @@
     <meta charset="UTF-8">
     <title>Foodwatchgw Login</title>
     <style>
-    .background_div{
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        z-index: -1;
-        overflow:hidden;
-    }
+        .background_div{
+            position: absolute;
+            z-index: -1;
+            overflow:hidden;
+        }
 
-    .background_div img{
-        position: absolute;
-        left: -70px;
-        height: 620px;
-    }
-
-
-    .header{
-        position:absolute;
-        color: white;
-        background-color: #3c6b9eed;
-        width:100%;
-        font-size:185%
-
-    }
-    .header p{
-        margin: 10px;
-        font-weight: bold;
-    }
-
-    .login{
-        bottom: 15px;
-        position: absolute;
-        color: white;
-        background-color: #004897b8;
-        border-radius: 0 15px 15px 0;
-        width:40%;
-        padding-left: 60px;
-        font-size: xx-large;
-
+        .background_div img{
+            position: absolute;
+            left: -70px;
         }
 
 
-    .login a{
-        color: white;
-        text-decoration: none;
-        display: block;
+        .header{
+            position:absolute;
+            color: white;
+            background-color: #3c6b9eed;
+            font-size:185%
+
+        }
+        .header p{
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        .login{
+            bottom: 15px;
+            position: absolute;
+            color: white;
+            background-color: #004897b8;
+            border-radius: 0 15px 15px 0;
+            width:40%;
+            padding-left: 60px;
+            font-size: xx-large;
+
+            }
+
+
+        .login a{
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+        body{
+            margin:0px;
+        }
+    @media screen and (max-width: 600px) {
+        .background_div{
+            width: 100vw;
+            height: 100vh;
+        }
+        .login{
+            bottom: 15px;
+            width:40%;
+        }
+        .header{
+            width:100%;
+        }
+        .background_div img{
+            position: absolute;
+            left: -70px;
+            height: 620px;
+        }
     }
-    body{
-        margin:0px;
+@media screen and (min-width: 600px) {
+
+        .background_div {
+            width: 650px;
+            height: 62vh;
+            border-radius: 30px 30px;
+        }
+
+        .background_div img{
+            border-radius: 30px 30px 30px 30px;
+        }
+
+        .body{
+            background-color: #800028;
+        }
+
+        .desktop{
+            margin-top: 5%;
+            margin-left: 30%;
+        }
+
+        .header{
+            width: 650px;
+            border-radius: 30px 30px 0 0;
+        }
+        .login{
+
+            width:150px;
+            bottom: 30%;
+            }
+         .login a{
+            cursor: pointer;
+         }
+
     }
     </style>
 </head>
 
 <body>
-    <div class="background_div">
-        <img src="{{ url_for('static', filename = 'img/login.gif') }}">
-    </div>
+    <div class="desktop">
+        <div class="background_div">
+            <img src="{{ url_for('static', filename = 'img/login.gif') }}">
+        </div>
 
-    <div class="header">
-        <p >Welcome to Foodwatch</p>
-    </div>
-    <div class="login">
-        <a  onclick="change_redirect()" id="loginlink" >
-        Login
-        </a>
-    </div>
+        <div class="header">
+            <p >Welcome to Foodwatch</p>
+        </div>
+        <div class="login">
+            <a  onclick="change_redirect()" id="loginlink" >
+            Login
+            </a>
+        </div>
+        </div>
     <script>
         function change_redirect(){
             /*

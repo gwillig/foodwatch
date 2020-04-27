@@ -15,8 +15,9 @@ API_AUDIENCE = 'food_watchgw'
 if "jwt_foodwatch" in os.environ.keys():
     secret = os["jwt_foodwatch"]
 else:
-    with open('.env','r') as env_file:
-        secret = env_file.read()
+    with open('env.json','r') as env_file:
+        env_dict = json.load(env_file)
+        secret = env_dict["jwt_foodwatch"]
 
 ## AuthError Exception
 '''
