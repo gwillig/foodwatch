@@ -280,38 +280,80 @@ function insert_new_row(){
 }
 
 function post_data_today(data_json){
-
+    /*
+    @description:
+        Function posts food data to the back end
+    */
+    let bearer_str  = get_jwt();
     fetch("/data_today", {
         mode:"cors",
         method: "post",
         headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
         },
 
       //make sure to serialize your JSON body
       body: JSON.stringify({
         data:  data_json
       })
-    })
-    .then( (response) => {
-       console.log("data sent")
-    });
+    }).then(function(response){
+            //Check status code
+            if(response.ok==false){
+                return response.text()
+            }
+            else{
+               return "ok"
+            }
+        })
+      .then(body=>process_fetch_body(body));
 
 }
 
+function process_fetch_body(body){
+        /*
+        Process the reponse of a fetch, because a fetch is a pending promise it is not
+        possible to simple access the response
+        See: https://stackoverflow.com/questions/49784371/fetch-api-get-error-messages-from-server-rather-than-generic-messages/49794801
+        */
+        let p_msg_db= document.querySelector("#msg_db")
+        if(body!="ok"){
+            //Parse the response string to an html object
+            let parser = new DOMParser()
+            let doc = parser.parseFromString(body, "text/html");
+            let error_details_raw = doc.querySelector(".errormsg").innerText;
+            let error_details_msg_raw = error_details_raw.split("foodwatch.auth.AuthError: (")[1]
+            //remove Error code
+            let error_details = error_details_msg_raw.split(", 401)")[0]
+            let error_detail_str = replaceAll(error_details,"'",'"')
+            let error_json = JSON.parse(error_detail_str)
 
+            //Show error msg
+
+            p_msg_db.innerHTML=error_detail_str;
+            p_msg_db.style.cssText += 'color:red;font-size: large;';
+
+        }
+        else{
+           p_msg_db.innerHTML="Successfully submitted to database";
+           p_msg_db.style.cssText += 'color:green;font-size: large;';
+        }
+
+      }
 function delete_current_row(self_row){
 
     //1.Step: Get the data-database-id
     db_id = self_row.getAttribute("data-database-id")
     //2.Step: delete in data base
+    let bearer_str  = get_jwt();
     fetch("/data_today", {
         mode:"cors",
         method: "delete",
         headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
         },
 
       //make sure to serialize your JSON body
@@ -319,10 +361,17 @@ function delete_current_row(self_row){
         data:  db_id
       })
     })
-    .then( (response) => {
-        //Delete the row
-        self_row.parentElement.outerHTML="";
-    });
+    .then(function(response){
+            //Check status code
+            if(response.ok==false){
+                return response.text()
+            }
+            else{
+               self_row.parentElement.outerHTML="";
+               return "ok"
+            }
+        })
+      .then(body=>process_fetch_body(body));
 
 }
 
@@ -395,5 +444,29 @@ function show_motivation_div(id){
 
     let motivation_txt = document.querySelector("#motivation_txt")
     motivation_txt.innerHTML = mot_content[rand_int]
+
+}
+
+function replaceAll(str, find, replace) {
+  //Source: https://stackoverflow.com/questions/1144783/how-to-replace-all-occurrences-of-a-string
+  return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function get_jwt(){
+    /*
+    @describe:
+        Gets the jwt from url and return as string with Bearer
+    @return:
+        str:(str)
+    */
+        let url_string  = window.location.href
+        const fragment = window.location.hash.substr(1).split('&')[0].split('=');
+        access_token = fragment[1]
+        return `bearer ${access_token}`
+
+
+
+
+
 
 }

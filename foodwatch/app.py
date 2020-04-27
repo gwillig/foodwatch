@@ -3,6 +3,7 @@ from foodwatch.models import setup_db, Food, Misc, Home_misc
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date, datetime, timedelta
+from foodwatch.auth import requires_auth
 import pandas as pd
 import os
 import time
@@ -101,8 +102,6 @@ def create_app(dbms="sqlite3", test_config=None):
 
         return render_template('analysis.html', data_chart=data_chart,list_sorted=list_sorted)
 
-
-
     def home_rank():
         '''
         Calculates the figure for the table rank on the home.html.
@@ -172,8 +171,10 @@ def create_app(dbms="sqlite3", test_config=None):
             'total_sum_today': total_sum,
             'total_calories_plan':total_calories_plan[0]
         }, 200)
+
     @app.route("/misc", methods=["Delete"])
-    def delete_misc():
+    @requires_auth('delete')
+    def delete_misc(payload):
 
         db_id = request.get_json()["data"]
         # Convert from epoch to unix
@@ -183,7 +184,8 @@ def create_app(dbms="sqlite3", test_config=None):
             'success': True,
         }, 204)
     @app.route("/misc_data", methods=["POST"])
-    def misc_data():
+    @requires_auth('post')
+    def misc_data(payload):
 
         el_json = request.get_json()["data"]
         # Convert from epoch to unix
@@ -219,7 +221,8 @@ def create_app(dbms="sqlite3", test_config=None):
         }, 204)
 
     @app.route("/data_today", methods=["POST"])
-    def post_data_today():
+    @requires_auth('post')
+    def post_data_today(payload):
         """
         Save new added food rows to the data base and also the planed total cal amount for the day
         :return:
@@ -228,13 +231,18 @@ def create_app(dbms="sqlite3", test_config=None):
         el = request.get_json()["data"]
         '#2.Step: Overwrite the current total cal amount'
         hm1 = db.session.query(Home_misc).first()
-        hm1.total_calories = el.pop("total_calorie_plan")
+        if el["total_calorie_plan"]!= None:
+            hm1.total_calories = el.pop("total_calorie_plan")
+        else:
+            '#If empty it will not overwrite the excising value'
+            pass
         '#3.Step: Save the new food row to the database'
         # Convert from epoch to unix
         el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
         del (el["timestamp_epoch"])
-        '#Check for double then inject'
-        if db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1:
+        '#Check for double then inject and that name is not none'
+        if (db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1) and \
+            (el["name"]!=None):
             el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
             f1 = Food(**el)
             db.session.add(f1)
@@ -245,7 +253,8 @@ def create_app(dbms="sqlite3", test_config=None):
         }, 204)
 
     @app.route("/data_today", methods=["Delete"])
-    def delete_data_today():
+    @requires_auth('delete')
+    def delete_data_today(payload):
 
         db_id = request.get_json()["data"]
         # Convert from epoch to unix
@@ -301,6 +310,14 @@ def create_app(dbms="sqlite3", test_config=None):
         """
         return {c.key: getattr(obj, c.key)
                 for c in inspect(obj).mapper.column_attrs}
+
+    @app.errorhandler(401)
+    def unprocessable(error):
+        return jsonify(
+            dict(success=False, error=422,
+                 message='The server understands the '
+                         'content type of the request entity')
+        ), 422
 
     app.merge_food_misc=merge_food_misc
     app.convert_sqlalchemy_todict = convert_sqlalchemy_todict

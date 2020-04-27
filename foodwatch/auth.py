@@ -9,7 +9,7 @@ import base64
 AUTH0_DOMAIN = 'gwillig.eu.auth0.com'
 ALGORITHMS = ['RS256']
 
-API_AUDIENCE = 'food_watchgw'
+API_AUDIENCE = 'foodwatchgw'
 
 '#Read secret from file or env'
 if "jwt_foodwatch" in os.environ.keys():
@@ -49,17 +49,6 @@ def get_token_auth_header():
     return token
 
 
-'''
-@TODO implement check_permissions(permission, payload) method
-    @INPUTS
-        permission: string permission (i.e. 'post:drink')
-        payload: decoded jwt payload
-
-    it should raise an AuthError if permissions are not included in the payload
-        !!NOTE check your RBAC settings in Auth0
-    it should raise an AuthError if the requested permission string is not in the payload permissions array
-    return true otherwise
-'''
 '================================='
 def check_permissions(permission, payload):
     if permission in payload["permissions"]:

@@ -55,10 +55,11 @@
     </style>
 </head>
 <body>
+<script type="text/javascript" src="{{ url_for('static', filename = 'js/home.js') }}?100"></script>
 <div class="main">
   <h1>Misc</h1>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
-  <p id="export"></p>
+  <p id="msg_db"></p>
   <div id="table" class="table-editable">
     <span class="table-add glyphicon glyphicon-plus"></span>
     <table class="table">
@@ -102,121 +103,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore.js"></script>
 <script>
 
-var $TABLE = $('#table');
-var $BTN = $('#export-btn');
-var $EXPORT = $('#export');
-
-$('.table-add').click(function () {
-  let current_date = new Date();
-  //An explanation for "current_date.getMonth()+1" can be found https://stackoverflow.com/questions/23161366/javascript-get-current-day-and-month-issue
-  let date_str = `${current_date.getDate()}/${current_date.getMonth()+1}/${current_date.getFullYear()}`
-  //.Step: Set the current date
-  document.querySelector("#row_hiden").outerHTML = document.querySelector("#row_hiden").outerHTML.replace("placeholder",
-                                                                                                          date_str)
-  var $clone = $TABLE.find('tr.hide').clone(true).removeClass('hide table-line')
-
-  $clone.insertAfter('#header_table')
-});
-
-$('.table-remove').click(function () {
-  $(this).parents('tr').detach();
-});
-
-// A few jQuery helpers for exporting only
-jQuery.fn.pop = [].pop;
-jQuery.fn.shift = [].shift;
-
-$BTN.click(function () {
-  var $rows = $TABLE.find('tr:not(:hidden)');
-  var headers = [];
-  var data = [];
-
-  // Get the headers (add special header logic here)
-  $($rows.shift()).find('th:not(:empty)').each(function () {
-    headers.push($(this).text().toLowerCase());
-  });
-
-  // Turn all existing rows into a loopable array
-  $rows.each(function () {
-    var $td = $(this).find('td');
-    var h = {};
-
-    // Use the headers from earlier to name our hash keys
-    headers.forEach(function (header, i) {
-      h[header] = $td.eq(i).text().trim();
-    });
-
-    data.push(h);
-  });
-
-  // Output the result
-  //$EXPORT.text(JSON.stringify(data));
-  post_misc_data(data)
-
-});
-
-function post_misc_data(data_json){
-
-    fetch("/misc_data", {
-        mode:"cors",
-        method: "post",
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-
-      //make sure to serialize your JSON body
-      body: JSON.stringify({
-        data:  data_json
-      })
-    })
-    .then( (response) => {
-        console.log("data successfully sent")
-       $EXPORT.text("data successfully sent")
-       $EXPORT.css({'color': 'green','font-size':'x-large'})
-    })
-    .catch(function() {
-        $EXPORT.text(
-          "Network error; Try again"
-          )
-        $EXPORT.css({'color': 'red','font-size':'x-large'})
-    });
-
-}
-
-function remove(x){
-  /*
-  args:
-    x(html-element)
-  Removes the clicked data row from the database
-  */
-  let db_id = $(x).parent().parent()[0].querySelector(".db_id").innerText
-
-      fetch("/misc", {
-        mode:"cors",
-        method: "delete",
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-        },
-
-      //make sure to serialize your JSON body
-      body: JSON.stringify({
-        data:  db_id
-      })
-    })
-    .then( (response) => {
-        console.log("row successfully deleted")
-       $EXPORT.text("row successfully deleted")
-       $EXPORT.css({'color': 'green','font-size':'x-large'})
-    })
-    .catch(function() {
-        $EXPORT.text(
-          "Network error; Try again"
-          )
-        $EXPORT.css({'color': 'red','font-size':'x-large'})
-    });
-}
 </script>
 
 
