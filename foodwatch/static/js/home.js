@@ -452,21 +452,39 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function get_jwt(){
+function jwt_localStorage(){
+    /*
+    @describe:
+        Saves the jwt to the localStorage
+    @return:
+        Nothing
+    */
+        let url_string  = window.location.href
+        const fragment = window.location.hash.substr(1).split('&')[0].split('=');
+        let access_token = fragment[1]
+        localStorage.setItem('jwt', `bearer ${access_token}`);
+        console.log("Saved jwt to localStorage")
+
+}
+
+
+function get_jwt(localStorage_jwt=false){
     /*
     @describe:
         Gets the jwt from url and return as string with Bearer
     @return:
         str:(str)
     */
+
+    if(localStorage_jwt == false){
         let url_string  = window.location.href
         const fragment = window.location.hash.substr(1).split('&')[0].split('=');
-        access_token = fragment[1]
+        let access_token = fragment[1];
         return `bearer ${access_token}`
-
-
-
-
+    }
+    else{
+        return localStorage["jwt"]
+    }
 
 
 }

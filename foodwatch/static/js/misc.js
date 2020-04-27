@@ -53,13 +53,22 @@ $BTN.click(function () {
 });
 
 function post_misc_data(data_json){
-    let bearer_str  = get_jwt();
-    fetch("/misc_data", {
+  /*
+  @describtion:
+   Sends all from the provied data_json to the backend
+  @args:
+    data_json(json)
+  @return:
+    Nothing
+  */
+  let bearer_str  = get_jwt(localStorage_jwt=true);
+  fetch("/misc_data", {
         mode:"cors",
         method: "post",
         headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
         },
 
       //make sure to serialize your JSON body
@@ -67,28 +76,29 @@ function post_misc_data(data_json){
         data:  data_json
       })
     })
-    .then( (response) => {
-        console.log("data successfully sent")
-       $EXPORT.text("data successfully sent")
-       $EXPORT.css({'color': 'green','font-size':'x-large'})
-    })
-    .catch(function() {
-        $EXPORT.text(
-          "Network error; Try again"
-          )
-        $EXPORT.css({'color': 'red','font-size':'x-large'})
-    });
-
+    .then(function(response){
+            //Check status code
+            if(response.ok==false){
+                return response.text()
+            }
+            else{
+               return "ok"
+            }
+        })
+    .then(body=>process_fetch_body(body));
 }
 
 function remove(x){
   /*
-  args:
+  @describtion:
+    Removes the clicked data row from the database and front-end
+  @args:
     x(html-element)
-  Removes the clicked data row from the database
+  @return:
+    Nothing
   */
   let db_id = $(x).parent().parent()[0].querySelector(".db_id").innerText
-
+  let bearer_str  = get_jwt(localStorage_jwt=true);
       fetch("/misc", {
         mode:"cors",
         method: "delete",
@@ -97,7 +107,6 @@ function remove(x){
         'Content-Type': 'application/json',
         'Authorization':bearer_str
         },
-
       //make sure to serialize your JSON body
       body: JSON.stringify({
         data:  db_id
@@ -112,11 +121,7 @@ function remove(x){
                return "ok"
             }
         })
-      .then(body=>process_fetch_body(body));
-    .then( (response) => {
-        console.log("row successfully deleted")
-       $EXPORT.text("row successfully deleted")
-       $EXPORT.css({'color': 'green','font-size':'x-large'})
-    })
+    .then(body=>process_fetch_body(body));
+
 
 }

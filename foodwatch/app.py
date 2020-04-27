@@ -4,6 +4,7 @@ from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date, datetime, timedelta
 from foodwatch.auth import requires_auth
+from flask import send_from_directory
 import pandas as pd
 import os
 import time
@@ -34,6 +35,10 @@ def create_app(dbms="sqlite3", test_config=None):
 
     CORS(app)
 
+    @app.route('/favicon.ico')
+    def favicon():
+        return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
+                                   mimetype='image/vnd.microsoft.icon')
     @app.route("/")
     def login():
         return render_template('login.html')
