@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 import json
 from flask import request, _request_ctx_stack
 from functools import wraps
@@ -17,7 +18,7 @@ API_AUDIENCE = 'foodwatchgw'
 if "jwt_foodwatch" in os.environ.keys():
     secret = os["jwt_foodwatch"]
 else:
-    with open('foodwatch/env.json','r') as env_file:
+    with open('env.json','r') as env_file:
         env_dict = json.load(env_file)
         secret = env_dict["jwt_foodwatch"]
 

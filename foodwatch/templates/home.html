@@ -6,15 +6,9 @@
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/home.js') }}?100"></script>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/home.css')}}?100">
-
-  <style>
-
-
-</style>
-
 </head>
 <body  onload="create_pieChart(6);get_data_today();jwt_localStorage()">
-
+{% include "header.html" %}
 <div class="chart-container">
 
 </div>

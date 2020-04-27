@@ -99,7 +99,8 @@ function convert_unix_datatime(unix_int){
   @return:
     datetime_string (string): e.g. '13:13:40'
   */
-  let date_obj = new Date(unix_int*1000);
+  //7200000 is the offset of 2 hours because, Date.now is always UTC
+  let date_obj = new Date(unix_int*1000-7200000);
   let datetime_string =   date_obj.getHours() + ":"
                   + date_obj.getMinutes()+ ":"
                 + date_obj.getSeconds();
@@ -255,9 +256,11 @@ function insert_new_row(){
   table_today =document.querySelector("#today_food")
   newRow = table_today.insertRow(1);
   let cell_current = newRow.insertCell(0);
-  cell_current.innerHTML = convert_unix_datatime(Date.now());
+  //7200000 is the offset of 2 hours because, Date.now is always UTC
+  cell_current.innerHTML = convert_unix_datatime(Date.now()+7200000);
   let cell_timestamp = newRow.insertCell(1);
-  cell_timestamp.innerHTML = Date.now();
+  //7200000 is the offset of 2 hours because, Date.now is always UTC
+  cell_timestamp.innerHTML = Date.now()+7200000;
   cell_timestamp.className = "td_timestamp";
   let cell_name = newRow.insertCell(2);
   cell_name.innerHTML = document.querySelector("#input_name").value
@@ -272,7 +275,8 @@ function insert_new_row(){
 
 
   post_data_today({
-      timestamp_epoch: Date.now(),
+      //7200000 is the offset of 2 hours because, Date.now is always UTC
+      timestamp_epoch: Date.now()+7200000,
       name: document.querySelector("#input_name").value,
       calorie: result_cal,
       total_calorie_plan: document.querySelector("#total_calorie").value
@@ -459,16 +463,19 @@ function jwt_localStorage(){
     @return:
         Nothing
     */
+    if(localStorage["jwt"]==undefined){
         let url_string  = window.location.href
         const fragment = window.location.hash.substr(1).split('&')[0].split('=');
         let access_token = fragment[1]
         localStorage.setItem('jwt', `bearer ${access_token}`);
         console.log("Saved jwt to localStorage")
+    }
+
 
 }
 
 
-function get_jwt(localStorage_jwt=false){
+function get_jwt(localStorage_jwt=true){
     /*
     @describe:
         Gets the jwt from url and return as string with Bearer

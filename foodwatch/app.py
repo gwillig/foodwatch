@@ -237,22 +237,27 @@ def create_app(dbms="sqlite3", test_config=None):
         Save new added food rows to the data base and also the planed total cal amount for the day
         :return:
         """
+
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
-        '#2.Step: Overwrite the current total cal amount'
+        '#1.1.Step: If name or calorie is empty => return!!'
+        if el["name"]==None and el["calorie"]==None:
+            return jsonify({
+                'success': True,
+            }, 204)
+        #2.Step: Overwrite the current total cal amount'
         hm1 = db.session.query(Home_misc).first()
         if el["total_calorie_plan"]!= None:
             hm1.total_calories = el.pop("total_calorie_plan")
         else:
             '#If empty it will not overwrite the excising value'
-            pass
+            el.pop("total_calorie_plan")
         '#3.Step: Save the new food row to the database'
         # Convert from epoch to unix
         el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
         del (el["timestamp_epoch"])
         '#Check for double then inject and that name is not none'
-        if (db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1) and \
-            (el["name"]!=None):
+        if (db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1):
             el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
             f1 = Food(**el)
             db.session.add(f1)

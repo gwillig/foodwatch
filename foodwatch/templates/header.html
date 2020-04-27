@@ -1,0 +1,40 @@
+<style>
+.logout{
+    top: 10px;
+    position: absolute;
+    right: 20px;
+    background-color: #FDE74C;
+    width:80px;
+    border-radius: 15px;
+}
+
+.logout a{
+    color: white;
+    text-decoration: none;
+     padding-left: 15px;
+
+}
+</style>
+<div class="logout">
+    <a id="logout_ref" href>Logout</a>
+</div>
+
+<script>
+            function change_redirect(){
+            /*
+            @description:
+                Change the logout of auth0 . If the url contain localhost it change it to localhost
+            */
+
+            let current_url = window.location.href
+            let href='https://gwillig.eu.auth0.com/v2/logout?'
+
+            if (current_url.includes("localhost:")){
+                document.querySelector("#loginlink").href = href + "&returnTohttp%3A%2F%2Flocalhost:5000/"
+            }
+            else {
+                document.querySelector("#loginlink").href = href + "&returnTo=https://foodwatchgw.herokuapp.com/"
+            }
+        }
+
+</script>
