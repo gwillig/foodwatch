@@ -23,7 +23,7 @@ def create_app(dbms="sqlite3", test_config=None):
         db = setup_db(app, database_path)
     else:
         if "jwt_foodwatch" in os.environ.keys():
-            database_path = os["database_path"]
+            database_path = os.environ["database_path"]
         else:
             with open('env.json', 'r') as env_file:
                 env_dict = json.load(env_file)
