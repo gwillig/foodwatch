@@ -42,7 +42,8 @@ def insert_data(db):
               timestamp_unix=1580300003, amount_weight=92,
               )
     print("data injected!")
-    db.session.bulk_save_objects([a1,a2,a3,a4,a5,m1,m2,m3,m4])
+    hm1 = Home_misc(total_calories=1600)
+    db.session.bulk_save_objects([hm1,a1,a2,a3,a4,a5,m1,m2,m3,m4])
     db.session.commit()
 
 def setup_db(app,database_path):

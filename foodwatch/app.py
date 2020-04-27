@@ -226,8 +226,7 @@ def create_app(dbms="sqlite3", test_config=None):
         """
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
-        '#2.Step: Oerwrite the current total cal amount'
-        el
+        '#2.Step: Overwrite the current total cal amount'
         hm1 = db.session.query(Home_misc).first()
         hm1.total_calories = el.pop("total_calorie_plan")
         '#3.Step: Save the new food row to the database'
