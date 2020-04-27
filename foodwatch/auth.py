@@ -3,12 +3,21 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 import base64
 
 AUTH0_DOMAIN = 'gwillig.eu.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'casting_agency'
-secret = 'IngM9p4aOXUnTw1EV6VteJOJ5po4wH9lQrRmO865eMRRdGq1E689VmaHAhWSL3No'
+
+API_AUDIENCE = 'food_watchgw'
+
+'#Read secret from file or env'
+if "jwt_foodwatch" in os.environ.keys():
+    secret = os["jwt_foodwatch"]
+else:
+    with open('.env','r') as env_file:
+        secret = env_file.read()
+
 ## AuthError Exception
 '''
 AuthError Exception
