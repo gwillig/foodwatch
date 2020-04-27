@@ -11,7 +11,7 @@ from datetime import datetime
 db = SQLAlchemy()
 
 def insert_data(db):
-    a1 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580000003),
+    a1 = Food(name="Orange_beson", timestamp_obj=datetime.utcfromtimestamp(1580000003),
               timestamp_unix=1580000003,
               calorie=200)
 
@@ -54,11 +54,6 @@ def setup_db(app,database_path):
     db.create_all()
     if len(db.session.query(Food).all())<1:
         insert_data(db)
-
-    if len(db.session.query(Home_misc).all())<1:
-        hm1 = Home_misc(total_calories=1600)
-        db.session.add(hm1)
-        db.session.commit()
     return db
 
 class Home_misc(db.Model):

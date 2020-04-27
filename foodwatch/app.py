@@ -72,7 +72,7 @@ def create_app(dbms="sqlite3", test_config=None):
         Return the analysis.html with data
 
         """
-        df_merge = merge_food_misc()
+        df_merge = merge_food_misc(db)
 
         '#1.1.Step: Convert from datetime64 to epoch'
         df_merge["timestamp_obj"] = df_merge["timestamp_obj"].astype("int64") / 1e6
@@ -111,7 +111,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '''
         rank_dict={}
         '#1.Step: Get all data'
-        df_merge_raw = merge_food_misc()
+        df_merge_raw = merge_food_misc(db)
 
         '#2.1Step: Create a new column which is the ratio in hecto (calorie per steps)'
         df_merge_raw["ratio_raw"] = (df_merge_raw["calorie"]/df_merge_raw["amount_steps"])*100
@@ -255,15 +255,21 @@ def create_app(dbms="sqlite3", test_config=None):
             'success': True,
         }, 204)
 
-    def merge_food_misc():
+    def merge_food_misc(db):
         '''
         Merge all Food and Misc records to one dataframe
+        :args:
+            db(<class 'flask_sqlalchemy.SQLAlchemy'>): db is the database which contains the data
         :return (pandas.DataFrame): Contains all Food ans Misc records
         '''
+
         '#1.1.Step: Get all records for Food, Misc'
         df_dict = {}
+
         for model_obj in [Food, Misc]:
             query = db.session.query(model_obj).all()
+            if db.session.query(model_obj).count()==0:
+                return "No data in db"
             query_result = [convert_sqlalchemy_todict(x) for x in query]
             dict_key = str(model_obj.__table__.name)
             df_dict[dict_key] = pd.DataFrame(query_result)
@@ -284,6 +290,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#3.1.Step: Merge the dataframe'
         df_merge = pd.merge(df_dict["food_grouped_reset"], df_dict["misc"], on='timestamp_obj', how='inner')
         df_merge = df_merge.dropna()
+
         return df_merge
 
     def convert_sqlalchemy_todict(obj):
@@ -295,6 +302,8 @@ def create_app(dbms="sqlite3", test_config=None):
         return {c.key: getattr(obj, c.key)
                 for c in inspect(obj).mapper.column_attrs}
 
+    app.merge_food_misc=merge_food_misc
+    app.convert_sqlalchemy_todict = convert_sqlalchemy_todict
     return app
 
 

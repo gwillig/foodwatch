@@ -1,9 +1,10 @@
 import unittest
-from .models import setup_db, Misc, Food
+from .models import setup_db, Misc, Food, Home_misc
 from .app import create_app
 from .models import insert_data
 import json
 import os
+import pandas as pd
 
 class Foodwatchgw(unittest.TestCase):
     """This class represents the trivia test case"""
@@ -21,6 +22,19 @@ class Foodwatchgw(unittest.TestCase):
     def tearDown(self):
         """Executed after reach test"""
         pass
+
+    def setUp(self):
+        """Executed before reach test"""
+        '#.Step: Delete all records in database because the test change the data'
+        for el in [Food,Misc,Home_misc]:
+            self.db.session.query(el).delete()
+            self.db.session.commit()
+        if self.db.session.query(Food).count()==0:
+            insert_data(self.db)
+
+    @classmethod
+    def tearDownClass(cls):
+        os.remove("foodwatch/database_test.db")
 
     def test_misc(self):
         response = self.client().get('/misc')
@@ -44,7 +58,7 @@ class Foodwatchgw(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_delete_misc(self):
-        response = self.client().delete('/misc')
+        response = self.client().delete('/misc', json={"data":1},headers={'Content-Type': 'application/json'},content_type='application/json')
         # Check response
         self.assertEqual(response.status_code, 200)
 
@@ -83,12 +97,15 @@ class Foodwatchgw(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_delete_data_today(self):
-        response = self.client().delete('/data_today')
+        response = self.client().delete('/data_today', json={"data":1},headers={'Content-Type': 'application/json'},content_type='application/json')
         # Check response
         self.assertEqual(response.status_code, 200)
 
     def test_merge_food_misc(self):
-        self.app.merge_food_misc()
-
-    def test_convert_sqlalchemy_todict(self):
-        self.app.test_convert_sqlalchemy_todict()
+        df_merge= self.app.merge_food_misc(self.db)
+        df_test = pd.read_csv("foodwatch/df_merge_food_misc_testcase.csv")
+        '#.Step: Adapt the type of the df_test'
+        df_test["timestamp_obj"] = pd.to_datetime((df_test["timestamp_obj"]))
+        df_test["amount_weight"] = df_test["amount_weight"].astype("float64")
+        pd._testing.assert_frame_equal(df_test[['timestamp_obj','amount_weight', 'amount_steps','calorie']],
+                                       df_merge[['timestamp_obj','amount_weight', 'amount_steps','calorie']])
