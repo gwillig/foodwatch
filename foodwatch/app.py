@@ -28,7 +28,7 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/")
     def login():
-        return render_template('index.html')
+        return render_template('login.html')
 
     @app.route("/home")
     def home():
