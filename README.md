@@ -4,6 +4,7 @@ Foodwatch is a private project which helps you to track the food you have eating
 * Finish test
 * Finish media query
 
+The CI is realized with azure devops.
 
 #Licence:
 
