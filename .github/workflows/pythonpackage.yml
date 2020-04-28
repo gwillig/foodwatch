@@ -50,6 +50,6 @@ jobs:
       run: |
         Install requirements
       env:
-        jwt_foodwatch: ${{ jwt_foodwatch }}
-        jwt_bearer_unauthorized: ${{ jwt_bearer_unauthorized }}
-        jwt_bearer: ${{ jwt_bearer }}
+        jwt_foodwatch: ${{jwt_foodwatch}}
+        jwt_bearer_unauthorized: ${{jwt_bearer_unauthorized}}
+        jwt_bearer: ${{jwt_bearer}}
