@@ -240,8 +240,8 @@ def create_app(dbms="sqlite3", test_config=None):
 
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
-        '#1.1.Step: If name or calorie is empty => return!!'
-        if el["name"]==None and el["calorie"]==None:
+        '#1.1.Step: If name is empty or calorie is NaN => return!!'
+        if el["name"]==None or isinstance(el["calorie"],str):
             return jsonify({
                 'success': True,
             }, 204)
@@ -302,8 +302,10 @@ def create_app(dbms="sqlite3", test_config=None):
             df_dict[dict_key]["timestamp_obj"] = pd.to_datetime((df_dict[dict_key]["timestamp_obj"])) \
                 .dt.floor('d')
 
-        '#2.Step: Group Foods by day and  reset_index'
-        df_dict["food_grouped_reset"] = df_dict["food"].groupby(by=df_dict["food"]['timestamp_obj'].dt.date)\
+        '#2.Step: Group Foods by day and  reset_index and remove all rows with string NaN'
+        df_dict["food_nan"] = df_dict["food"][(df_dict["food"]["calorie"]!="NaN")]
+        df_dict["food_nan"]["calorie"] = df_dict["food_nan"]["calorie"].astype("int64")
+        df_dict["food_grouped_reset"] = df_dict["food_nan"].groupby(by=df_dict["food_nan"]['timestamp_obj'].dt.date)\
             .sum() \
             .reset_index()
 
