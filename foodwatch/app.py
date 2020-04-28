@@ -352,7 +352,9 @@ def create_app(dbms="sqlite3", test_config=None):
 # Check if app runs on local computer:
 os.system('hostnamectl > tmp')
 with open('tmp', 'r') as temp_var:
-    if "gwillig" in temp_var.read():
+    content_tmp = temp_var.read()
+    '#"fv-az99" is the name of the computer in the azure pipeline'
+    if "gwillig" in content_tmp or "fv-az99" in content_tmp:
         app = create_app(dbms="sqlite3")
     else:
         app = create_app(dbms="mysql")
