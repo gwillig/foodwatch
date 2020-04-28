@@ -245,6 +245,25 @@ function convert_table_array(){
 
 }
 
+function standard_meal(){
+    /*
+    @description:
+        Add standard meal
+
+    */
+    let standard_meal_items={Proteinpulver_25_g:90,
+    Leinsamen_20g:106,Apfelkuchen_Hälfte:50,Hafer_50_g:180
+    }
+      post_data_today({
+          //7200000 is the offset of 2 hours because, Date.now is always UTC
+          timestamp_epoch: Date.now()+7200000,
+          name: food_name,
+          calorie: result_cal,
+          total_calorie_plantotal_calorie_plan:
+      })
+    }
+
+
 function post_insert_data(){
   /*
   @description:
@@ -253,16 +272,18 @@ function post_insert_data(){
   @return
   */
   let input_value = document.querySelector("#input_cal").value.replace(",",".")
-
+  let food_name = document.querySelector("#input_name").value;
+  let total_calorie_plan document.querySelector("#total_calorie").value;
   //1.2.Step:Execute the input as cmd and convert to String
-  result_cal = String(Math.round(eval(input_value)))
+  let result_cal = String(Math.round(eval(input_value)))
+
 
   post_data_today({
       //7200000 is the offset of 2 hours because, Date.now is always UTC
       timestamp_epoch: Date.now()+7200000,
-      name: document.querySelector("#input_name").value,
+      name: food_name,
       calorie: result_cal,
-      total_calorie_plan: document.querySelector("#total_calorie").value
+      total_calorie_plantotal_calorie_plan:
   })
 }
 function insert_new_row(){
