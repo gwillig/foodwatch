@@ -1,10 +1,12 @@
 import unittest
-from .models import setup_db, Misc, Food, Home_misc
-from .app import create_app
-from .models import insert_data
 import json
 import os
 import pandas as pd
+import sys
+sys.path.append("foodwatch")
+from .models import setup_db, Misc, Food, Home_misc
+from .app import create_app
+from .models import insert_data
 
 """
 Test user with no permissions:
@@ -20,12 +22,16 @@ class Foodwatchgw_backend(unittest.TestCase):
         """Define test variables and initialize app."""
         if "jwt_bearer" in os.environ.keys():
             cls.jwt_bearer = os.environ["jwt_bearer"]
+        elif "JWT_BEARER" in os.environ.keys():
+            cls.jwt_bearer = os.environ["JWT_BEARER"]
         else:
             with open('foodwatch/env.json', 'r') as env_file:
                 env_dict = json.load(env_file)
                 cls.jwt_bearer = env_dict["jwt_bearer"]
         if "jwt_bearer_unauthorized" in os.environ.keys():
             cls.jwt_bearer_unauthorized = os.environ["jwt_bearer_unauthorized"]
+        elif "JWT_BEARER_UNAUTHORIZED" in os.environ.keys():
+            cls.jwt_bearer = os.environ["JWT_BEARER_UNAUTHORIZED"]
         else:
             with open('foodwatch/env.json', 'r') as env_file:
                 env_dict = json.load(env_file)
@@ -160,3 +166,7 @@ class Foodwatchgw_backend(unittest.TestCase):
         pd._testing.assert_frame_equal(df_test[['timestamp_obj','amount_weight', 'amount_steps','calorie']],
                                        df_merge[['timestamp_obj','amount_weight', 'amount_steps','calorie']])
 
+
+
+if __name__ == '__main__':
+    unittest.main()
