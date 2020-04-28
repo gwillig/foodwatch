@@ -16,8 +16,8 @@ steps:
         export JWT_FOODWATCH=$JWT_FOODWATCH;
         python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
   displayName: 'echo JWT_FOODWATCH'
-- script: sudo apt-get install python3-setuptools
-  displayName: 'Install setuptools'
+- script: hostnamectl
+  displayName: 'hostnamectl'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
@@ -27,9 +27,9 @@ steps:
 - script: pwd
   displayName: 'current pwd'
 - script : > 
-           export JWT_FOODWATCH=$JWT_FOODWATCH;
-           export JWT_BEARER_UNAUTHORIZED=$JWT_BEARER_UNAUTHORIZED;
-           export JWT_BEARER=$JWT_BEARER;
+           export jwt_foodwatch=$JWT_FOODWATCH;
+           export jwt_bearer_unauthorized=$JWT_BEARER_UNAUTHORIZED;
+           export jwt_bearer=$JWT_BEARER;
            python3 -m unittest foodwatch/test.py
   displayName: 'Run tests'
 
