@@ -11,10 +11,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: sudo apt-get install python3-setuptools
-  displayName: 'Install setuptools'
 - script: echo $JWT_FOODWATCH
   displayName: 'Display JWT_FOODWATCH'
+- script: sudo apt-get install python3-setuptools
+  displayName: 'Install setuptools'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
