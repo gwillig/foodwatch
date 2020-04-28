@@ -13,7 +13,7 @@ pool:
   vmImage: 'ubuntu-latest'
 steps:
 - script: epxort JWT_FOODWATCH=$JWT_FOODWATCH
-  displayName: 'export JWT_FOODWATCH'
+  displayName: 'echo JWT_FOODWATCH'
 - script: python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
   displayName: 'Access var with python'
 - script: sudo apt-get install python3-setuptools
