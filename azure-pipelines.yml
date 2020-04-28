@@ -12,8 +12,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $JWTFOODWATCH
-  displayName: 'Display JWTFOODWATCH'
+- script: echo $JWTBEARER
+  displayName: 'Display JWTBEARER'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: sudo apt-get install python3-setuptools
