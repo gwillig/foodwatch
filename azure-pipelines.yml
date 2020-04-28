@@ -12,7 +12,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: > 
+- script: >  
+        echo "This prints secret: $(test2)";
         export test121=$(test);
         python -c 'import os;print(os.environ["test121"])';
   displayName: 'echo JWT_FOODWATCH'
