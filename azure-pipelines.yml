@@ -16,7 +16,7 @@ steps:
   displayName: 'Update pip3'
 - script: pip3 install -r requirements.txt
   displayName: 'Install requirements'
-- script : python foodwatch/test.py 
+- script : python -m unittest 
   displayName: 'Run tests'
 - script: |
     echo Add other tasks to build, test, and deploy your project.
