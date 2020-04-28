@@ -18,6 +18,10 @@ jobs:
         python-version: [3.5, 3.6, 3.7, 3.8]
 
     steps:
+    - env:
+        jwt_foodwatch: ${{jwt_foodwatch}}
+        jwt_bearer_unauthorized: ${{jwt_bearer_unauthorized}}
+        jwt_bearer: ${{jwt_bearer}}
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
@@ -49,7 +53,4 @@ jobs:
     - name: Run tests 
       run: |
         Install requirements
-      env:
-        jwt_foodwatch: ${{jwt_foodwatch}}
-        jwt_bearer_unauthorized: ${{jwt_bearer_unauthorized}}
-        jwt_bearer: ${{jwt_bearer}}
+
