@@ -2,7 +2,9 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+
 variables:
+  TEST:$TEST
   JWT_FOODWATCH: $(JWT_FOODWATCH)
   JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $(JWT_BEARER_UNAUTHORIZED)
@@ -11,7 +13,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $JWT_FOODWATCH
+- script: echo $TEST
   displayName: 'Display JWT_FOODWATCH'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
