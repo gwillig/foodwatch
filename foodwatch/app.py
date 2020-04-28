@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask,abort, render_template, jsonify, request
 from foodwatch.models import setup_db, Food, Misc, Home_misc
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
@@ -6,10 +6,11 @@ from datetime import date, datetime, timedelta
 from foodwatch.auth import requires_auth
 from flask import send_from_directory
 import pandas as pd
+import numpy as np
 import os
 import time
 import json
-
+from foodwatch.helper import try_str_float
 
 def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
@@ -201,7 +202,7 @@ def create_app(dbms="sqlite3", test_config=None):
         misc_mapping = []
         for el in el_json:
             if (el["database_id"] == 'database_id') and \
-                isinstance(el["weight"],int) and isinstance(el["steps"],int):
+                try_str_float(el["weight"]) and try_str_float(el["steps"]) :
                 "#If row hasn't a existing record in db, a new object will be created an added to the db"
                 timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')
                 timestamp_unix = time.mktime(timestamp_obj.timetuple())
@@ -210,7 +211,7 @@ def create_app(dbms="sqlite3", test_config=None):
                          amount_steps=el["steps"], amount_weight=el["weight"])
                 )
                 db.session.commit()
-            elif isinstance(el["weight"],int) and isinstance(el["steps"],int):
+            elif try_str_float(el["weight"]) and try_str_float(el["steps"]):
                 '#Replace the existing record'
                 '# In order to make a bulk update, an array with dict (same key as Misc) need to be created'
                 timestamp_obj = datetime.strptime(el["date"], '%d/%m/%Y')
@@ -222,7 +223,8 @@ def create_app(dbms="sqlite3", test_config=None):
                              "id": el["database_id"]
                              }
                 misc_mapping.append(modify_el)
-
+            else:
+                abort(400)
         db.session.bulk_update_mappings(Misc, misc_mapping)
         db.session.commit()
 
@@ -242,9 +244,7 @@ def create_app(dbms="sqlite3", test_config=None):
         el = request.get_json()["data"]
         '#1.1.Step: If name is empty or calorie is NaN => return!!'
         if el["name"]==None or isinstance(el["calorie"],str):
-            return jsonify({
-                'success': True,
-            }, 204)
+            abort(400)
         #2.Step: Overwrite the current total cal amount'
         hm1 = db.session.query(Home_misc).first()
         if el["total_calorie_plan"]!= None:
@@ -329,15 +329,23 @@ def create_app(dbms="sqlite3", test_config=None):
                 for c in inspect(obj).mapper.column_attrs}
 
     @app.errorhandler(401)
-    def unprocessable(error):
-        return jsonify(
-            dict(success=False, error=422,
-                 message='The server understands the '
-                         'content type of the request entity')
-        ), 422
+    def data_processing_error(error):
+        raise ({
+            'code':'Data was in the wrong format!',
+            'description':'Server was not able to save data to database'
+        }, 401)
+
 
     app.merge_food_misc=merge_food_misc
     app.convert_sqlalchemy_todict = convert_sqlalchemy_todict
+
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify(dict(success=False, error=400,
+                            message='Data was in the wrong format!'+\
+                                    ' Server was not able to save data to database'
+                            )), 400
+
     return app
 
 
@@ -348,6 +356,8 @@ with open('tmp', 'r') as temp_var:
         app = create_app(dbms="sqlite3")
     else:
         app = create_app(dbms="mysql")
+
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

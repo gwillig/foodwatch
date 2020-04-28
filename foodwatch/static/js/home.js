@@ -245,7 +245,26 @@ function convert_table_array(){
 
 }
 
+function post_insert_data(){
+  /*
+  @description:
+  Posts new data to database and insert new row
+  @args:
+  @return
+  */
+  let input_value = document.querySelector("#input_cal").value.replace(",",".")
 
+  //1.2.Step:Execute the input as cmd and convert to String
+  result_cal = String(Math.round(eval(input_value)))
+
+  post_data_today({
+      //7200000 is the offset of 2 hours because, Date.now is always UTC
+      timestamp_epoch: Date.now()+7200000,
+      name: document.querySelector("#input_name").value,
+      calorie: result_cal,
+      total_calorie_plan: document.querySelector("#total_calorie").value
+  })
+}
 function insert_new_row(){
   /*
   @description:
@@ -272,15 +291,6 @@ function insert_new_row(){
   //1.2.Step:Execute the input as cmd and convert to String
   result_cal = String(Math.round(eval(input_value)))
   cell_cal.innerHTML = result_cal
-
-
-  post_data_today({
-      //7200000 is the offset of 2 hours because, Date.now is always UTC
-      timestamp_epoch: Date.now()+7200000,
-      name: document.querySelector("#input_name").value,
-      calorie: result_cal,
-      total_calorie_plan: document.querySelector("#total_calorie").value
-  })
 }
 
 function post_data_today(data_json){
@@ -309,6 +319,7 @@ function post_data_today(data_json){
             }
             else{
                return "ok"
+               insert_new_row()
             }
         })
       .then(body=>process_fetch_body(body));
@@ -326,12 +337,23 @@ function process_fetch_body(body){
             //Parse the response string to an html object
             let parser = new DOMParser()
             let doc = parser.parseFromString(body, "text/html");
-            let error_details_raw = doc.querySelector(".errormsg").innerText;
-            let error_details_msg_raw = error_details_raw.split("foodwatch.auth.AuthError: (")[1]
-            //remove Error code
-            let error_details = error_details_msg_raw.split(", 401)")[0]
-            let error_detail_str = replaceAll(error_details,"'",'"')
-            let error_json = JSON.parse(error_detail_str)
+            '#1.Step: Check if auth error or other'
+            '#1.1.Step: If auth error, an element with the class errormsg will be found'
+             let error_details_raw = doc.querySelector(".errormsg");
+             let error_detail_str=null;
+            if (error_details_raw != null){
+                let error_details_msg_raw = error_details_raw.innerText.split("foodwatch.auth.AuthError: (")[1];
+                //remove Error code
+                let error_details = error_details_msg_raw.split(", 401)")[0];
+                error_detail_str = replaceAll(error_details,"'",'"');
+                let error_json = JSON.parse(error_detail_str);
+            }
+            else{
+                error_detail_str = JSON.parse(body).message;
+            }
+
+
+
 
             //Show error msg
 

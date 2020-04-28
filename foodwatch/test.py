@@ -12,7 +12,7 @@ user:  unauthorizeduser017@gmail.com
 pw: Test123!
 
 """
-class Foodwatchgw(unittest.TestCase):
+class Foodwatchgw_backend(unittest.TestCase):
     """This class represents the trivia test case"""
 
     @classmethod

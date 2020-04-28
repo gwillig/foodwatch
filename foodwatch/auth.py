@@ -6,6 +6,8 @@ from jose import jwt
 from urllib.request import urlopen
 import os
 import sys
+from pathlib import Path
+
 sys.path.append('foodwatch')
 import base64
 
@@ -18,7 +20,8 @@ API_AUDIENCE = 'foodwatchgw'
 if "jwt_foodwatch" in os.environ.keys():
     secret = os.environ["jwt_foodwatch"]
 else:
-    with open('env.json','r') as env_file:
+    path = Path(__file__).parent / "env.json"
+    with open(path,'r') as env_file:
         env_dict = json.load(env_file)
         secret = env_dict["jwt_foodwatch"]
 
