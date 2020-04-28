@@ -10,7 +10,9 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: pip install -r requirements.txt
+- script: pip3 install --upgrade pip
+  displayName: 'Update pip3'
+- script: pip3 install -r requirements.txt
   displayName: 'Install requirements'
 - script : python foodwatch/test.py 
   displayName: 'Run tests'
