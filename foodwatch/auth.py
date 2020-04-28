@@ -19,8 +19,6 @@ API_AUDIENCE = 'foodwatchgw'
 '#Read secret from file or env'
 if "jwt_foodwatch" in os.environ.keys():
     secret = os.environ["jwt_foodwatch"]
-elif "JWT_FOODWATCH"in os.environ.keys():
-    secret = os.environ["JWT_FOODWATCH"]
 else:
     path = Path(__file__).parent / "env.json"
     with open(path,'r') as env_file:

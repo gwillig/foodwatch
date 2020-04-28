@@ -22,16 +22,12 @@ class Foodwatchgw_backend(unittest.TestCase):
         """Define test variables and initialize app."""
         if "jwt_bearer" in os.environ.keys():
             cls.jwt_bearer = os.environ["jwt_bearer"]
-        elif "JWT_BEARER" in os.environ.keys():
-            cls.jwt_bearer = os.environ["JWT_BEARER"]
         else:
             with open('foodwatch/env.json', 'r') as env_file:
                 env_dict = json.load(env_file)
                 cls.jwt_bearer = env_dict["jwt_bearer"]
         if "jwt_bearer_unauthorized" in os.environ.keys():
             cls.jwt_bearer_unauthorized = os.environ["jwt_bearer_unauthorized"]
-        elif "JWT_BEARER_UNAUTHORIZED" in os.environ.keys():
-            cls.jwt_bearer = os.environ["JWT_BEARER_UNAUTHORIZED"]
         else:
             with open('foodwatch/env.json', 'r') as env_file:
                 env_dict = json.load(env_file)
