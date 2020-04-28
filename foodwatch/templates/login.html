@@ -8,7 +8,7 @@
 
 </head>
 
-<body>
+<body onload="check_connection()">
     <div class="desktop">
         <div class="background_div">
         <img src="{{ url_for('static', filename = 'img/login.gif') }}">
@@ -30,11 +30,21 @@
     <script>
         function check_connection(){
         /*
-        If mobile network is below 2g it should show the img instead of the video
+        If mobile network is below 2g it should show the img instead of the video works only for CHROME
         */
-        navigator.connection.effectiveType;
+        try{
+            let network_status = navigator.connection.effectiveType;
+            if(network_status == '2g' || network_status == 'slow-2g'){
+                //Remove video if connection is to slow
+                document.querySelector("video source").src=""
+            }
+            catch(err) {
+              //Nothing will happen
+            }
+
 
         }
+
         function change_redirect(){
             /*
             @description:

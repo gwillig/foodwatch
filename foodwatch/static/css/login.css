@@ -6,10 +6,13 @@
 }
 
 .background_div img{
+    transition: all 2s ease;
     position: absolute;
     left: -70px;
 }
-
+.background_div video{
+    transition: all 2s ease;
+}
 
 .header{
     position:absolute;
@@ -45,9 +48,26 @@ body{
     margin:0px;
 }
 @media screen and (max-width: 600px) {
+
+    video{
+    -webkit-animation: cssAnimation 13s infinite ease-in-out;
+    -moz-animation: cssAnimation 13s infinite  ease-in-out;
+    -o-animation: cssAnimation 13s infinite  ease-in-out;
+    }
+
+    @-webkit-keyframes cssAnimation {
+        0% { opacity:0; }
+        50% { opacity:1; }
+        75% { opacity:1; }
+        100% { opacity:0; }
+    }
         .background_div{
             width: 100vw;
             height: 100vh;
+            -webkit-transition:all 11s ease;
+            -moz-transition:all 11s ease;
+            -o-transition:all 11s ease;
+            transition:all 11s ease;
         }
         .login{
             bottom: 15px;
@@ -58,7 +78,6 @@ body{
             font-size:160%
         }
         .background_div img{
-            display:none;
             position: absolute;
             left: -75px;
             height: 650px;
