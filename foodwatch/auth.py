@@ -16,7 +16,7 @@ API_AUDIENCE = 'foodwatchgw'
 
 '#Read secret from file or env'
 if "jwt_foodwatch" in os.environ.keys():
-    secret = os["jwt_foodwatch"]
+    secret = os.environ["jwt_foodwatch"]
 else:
     with open('env.json','r') as env_file:
         env_dict = json.load(env_file)
