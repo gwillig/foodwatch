@@ -243,7 +243,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
         '#1.1.Step: If name is empty or calorie is NaN => return!!'
-        if el["name"]==None or isinstance(el["calorie"],str):
+        if el["name"]==None or try_str_float(el["calorie"])==False:
             abort(400)
         #2.Step: Overwrite the current total cal amount'
         hm1 = db.session.query(Home_misc).first()
