@@ -7,16 +7,21 @@ variables:
   JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
   JWT_FOODWATCH: $jwt_foodwatch
+  test2: $(test2)
 trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
 steps:
 - script: >  
-        echo "This prints secret: $(test2)";
+        echo "This prints secret: $test2";
+        length=${#str};
+        echo "Length of '$str' is $length";
         export test121=$(test);
         python -c 'import os;print(os.environ["test121"])';
   displayName: 'echo JWT_FOODWATCH'
+  env: 
+    test2: $(test2)
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
   displayName: 'test12'
 - script: >
