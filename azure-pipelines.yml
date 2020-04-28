@@ -16,7 +16,7 @@ steps:
         export JWT_FOODWATCH=$JWT_FOODWATCH;
         python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
   displayName: 'echo JWT_FOODWATCH'
-- script: hostnamectl
+- script: python -c 'os.system('hostnamectl > tmp');temp_var=open('tmp', 'r');content_tmp = temp_var.read();print(content_tmp);'
   displayName: 'hostnamectl'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
