@@ -348,7 +348,6 @@ def create_app(dbms="sqlite3", test_config=None):
 
     return app
 
-
 # Check if app runs on local computer:
 os.system('hostnamectl > tmp')
 with open('tmp', 'r') as temp_var:
