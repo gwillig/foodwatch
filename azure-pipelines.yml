@@ -5,7 +5,7 @@
 
 variables:
   TEST: $TEST
-  JWTFOODWATCH: $jwtfoodwatch
+  JWTBEARERUNAUTHORIZED: $JWTBEARERUNAUTHORIZED
   JWT_FOODWATCH: $(JWT_FOODWATCH)
   JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $(JWT_BEARER_UNAUTHORIZED)
@@ -14,8 +14,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $JWTFOODWATCH
-  displayName: 'Display JWTFOODWATCH'
+- script: echo $JWTBEARERUNAUTHORIZED
+  displayName: 'Display JWTBEARERUNAUTHORIZED'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: sudo apt-get install python3-setuptools
