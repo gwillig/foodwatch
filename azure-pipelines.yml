@@ -8,12 +8,15 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
-
+variables:
+  JWT_FOODWATCH: $(JWT_FOODWATCH)
+  JWT_BEARER: $(JWT_BEARER)
+  JWT_BEARER_UNAUTHORIZED: $(JWT_BEARER_UNAUTHORIZED)
 steps:
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: echo $JWT_FOODWATCH
-  displayName: 'Install setuptools'
+  displayName: 'Display JWT_FOODWATCH'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
