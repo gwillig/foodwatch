@@ -40,7 +40,7 @@ steps:
   displayName: 'Install requirements'
 - script: pwd
   displayName: 'current pwd'
-- script : > 
+- script: > 
            export jwt_foodwatch=$JWT_FOODWATCH;
            export jwt_bearer_unauthorized=$JWT_BEARER_UNAUTHORIZED;
            export jwt_bearer=$JWT_BEARER;
