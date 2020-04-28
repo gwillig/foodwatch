@@ -7,7 +7,6 @@ variables:
   JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
   JWT_FOODWATCH: $jwt_foodwatch
-  test2: $(test2)
 trigger:
 - master
 pool:
