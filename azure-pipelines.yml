@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: sudo apt-get install python3-setuptools
+  displayName: 'Install setuptools'
+- script: pip3 install --upgrade pip
+  displayName: 'Update pip3'
+- script: pip3 install -r requirements.txt
+  displayName: 'Install requirements'
+- script: pwd
+  displayName: 'current pwd'
+- script : python3 -m unittest foodwatch/test.py
+  displayName: 'Run tests'
+
