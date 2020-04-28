@@ -12,7 +12,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: export JWT_FOODWATCH=$JWT_FOODWATCH;ython -c 'import os;print(os.environ["JWT_FOODWATCH"])
+- script: export JWT_FOODWATCH=$JWT_FOODWATCH;python -c 'import os;print(os.environ["JWT_FOODWATCH"])
   displayName: 'echo JWT_FOODWATCH'
 - script: python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
   displayName: 'Access var with python'
