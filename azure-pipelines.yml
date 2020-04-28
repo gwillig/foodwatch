@@ -19,6 +19,11 @@ steps:
   displayName: 'echo JWT_FOODWATCH'
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
   displayName: 'test12'
+- script: >
+          export JWT_FOODWATCH=$JWT_FOODWATCH;
+          export test12=$(python -c 'import os;print(os.environ["JWT_FOODWATCH"])');
+          echo $test12;
+  displayName: 'test12'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
