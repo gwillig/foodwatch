@@ -50,9 +50,9 @@ body{
 @media screen and (max-width: 600px) {
 
     video{
-    -webkit-animation: cssAnimation 13s infinite ease-in-out;
-    -moz-animation: cssAnimation 13s infinite  ease-in-out;
-    -o-animation: cssAnimation 13s infinite  ease-in-out;
+    -webkit-animation: cssAnimation 12s infinite ease-in-out;
+    -moz-animation: cssAnimation 12s infinite  ease-in-out;
+    -o-animation: cssAnimation 12s infinite  ease-in-out;
     }
 
     @-webkit-keyframes cssAnimation {
@@ -64,7 +64,10 @@ body{
         .background_div{
             width: 100vw;
             height: 100vh;
-
+            -webkit-transition:all 12s ease;
+            -moz-transition:all 12s ease;
+            -o-transition:all 12s ease;
+            transition:all 12s ease;
         }
         .login{
             bottom: 15px;
