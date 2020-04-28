@@ -45,4 +45,8 @@ steps:
 - script: > 
            python3 -m unittest foodwatch/test.py
   displayName: 'Run tests'
+  env: 
+    jwt_bearer_unauthorized: $(jwt_bearer_unauthorized)
+    jwt_bearer: $(jwt_bearer)
+    jwt_foodwatch: $(jwt_foodwatch)
 
