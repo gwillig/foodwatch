@@ -245,12 +245,9 @@ function convert_table_array(){
 
 }
 
+/*
 function standard_meal(){
-    /*
-    @description:
-        Add standard meal
 
-    */
     let standard_meal_items={Proteinpulver_25_g:90,
         Leinsamen_20g:106,Apfelkuchen_Hälfte:50,Hafer_50_g:180
     }
@@ -259,9 +256,10 @@ function standard_meal(){
           timestamp_epoch: Date.now()+7200000,
           name: food_name,
           calorie: result_cal,
-          total_calorie_plantotal_calorie_plan:
+          total_calorie_plan:total_calorie_plan:
       })
     }
+*/
 
 
 function post_insert_data(){
@@ -273,7 +271,7 @@ function post_insert_data(){
   */
   let input_value = document.querySelector("#input_cal").value.replace(",",".")
   let food_name = document.querySelector("#input_name").value;
-  let total_calorie_plan document.querySelector("#total_calorie").value;
+  let total_calorie_plan = document.querySelector("#total_calorie").value;
   //1.2.Step:Execute the input as cmd and convert to String
   let result_cal = String(Math.round(eval(input_value)))
 
@@ -283,7 +281,7 @@ function post_insert_data(){
       timestamp_epoch: Date.now()+7200000,
       name: food_name,
       calorie: result_cal,
-      total_calorie_plantotal_calorie_plan:
+      total_calorie_plan:total_calorie_plan
   })
 }
 function insert_new_row(){
@@ -339,8 +337,8 @@ function post_data_today(data_json){
                 return response.text()
             }
             else{
+                insert_new_row()
                return "ok"
-               insert_new_row()
             }
         })
       .then(body=>process_fetch_body(body));
@@ -506,12 +504,25 @@ function jwt_localStorage(){
     @return:
         Nothing
     */
+
+
     if(localStorage["jwt"]==undefined){
         let url_string  = window.location.href
         const fragment = window.location.hash.substr(1).split('&')[0].split('=');
         let access_token = fragment[1]
         localStorage.setItem('jwt', `bearer ${access_token}`);
         console.log("Saved jwt to localStorage")
+    }
+    else{
+        //Check if existing jwt is already expired
+        jwt_token = jwt_decode(localStorage["jwt"].split("bearer")[1])
+        if(jwt_token.exp<(Date.now()/1000)){
+            let url_string  = window.location.href
+            const fragment = window.location.hash.substr(1).split('&')[0].split('=');
+            let access_token = fragment[1]
+            localStorage.setItem('jwt', `bearer ${access_token}`);
+            console.log("Saved jwt to localStorage")
+        }
     }
 
 
