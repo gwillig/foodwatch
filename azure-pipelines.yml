@@ -12,7 +12,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: python -c 'import os;print(os.environ)'
+- script: echo $JWT_FOODWATCH
+  displayName: 'echo JWT_FOODWATCH'
+- script: python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
   displayName: 'Access var with python'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
