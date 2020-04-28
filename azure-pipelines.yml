@@ -30,8 +30,10 @@ steps:
   displayName: 'echo JWT_FOODWATasdCH'
   env: 
     test2: $(test2)
-- script: export test12=$(python -c  'print("Hello world")');echo $test12
-  displayName: 'test12'
+- script: echo  $MY_MAPPED_ENV_VAR
+  displayName: ' MY_MAPPED_ENV_VAR'
+  env: 
+    MY_MAPPED_ENV_VAR: $(mySecret)
 - script: >
           export JWT_FOODWATCH=$JWT_FOODWATCH;
           export test12=$(python -c 'import os;print(os.environ["JWT_FOODWATCH"])');
