@@ -12,6 +12,10 @@ pool:
 steps:
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
+- script: echo $JWT_FOODWATCH
+  displayName: 'Install setuptools'
+- script: sudo apt-get install python3-setuptools
+  displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
   displayName: 'Update pip3'
 - script: pip3 install -r requirements.txt
