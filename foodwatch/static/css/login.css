@@ -45,24 +45,32 @@ body{
     margin:0px;
 }
 @media screen and (max-width: 600px) {
-    .background_div{
-        width: 100vw;
-        height: 100vh;
-    }
-    .login{
-        bottom: 15px;
-        width:40%;
-    }
-    .header{
-        width:100%;
-        font-size:160%
-    }
-    .background_div img{
-        position: absolute;
-        left: -75px;
-        height: 650px;
-        top: -70px;
-    }
+        .background_div{
+            width: 100vw;
+            height: 100vh;
+        }
+        .login{
+            bottom: 15px;
+            width:40%;
+        }
+        .header{
+            width:100%;
+            font-size:160%
+        }
+        .background_div img{
+            display:none;
+            position: absolute;
+            left: -75px;
+            height: 650px;
+            top: -70px;
+        }
+
+        .background_div video{
+                position: absolute;
+                left: -380px;
+                height: 850px;
+                top: -70px;
+        }
 }
 @media screen and (min-width: 600px) {
 
@@ -76,6 +84,9 @@ body{
             border-radius: 30px 30px 30px 30px;
         }
 
+        .background_div video{
+            display:none
+        }
         .body{
             background-color: #800028;
         }

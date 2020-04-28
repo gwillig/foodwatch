@@ -252,7 +252,7 @@ function standard_meal(){
 
     */
     let standard_meal_items={Proteinpulver_25_g:90,
-    Leinsamen_20g:106,Apfelkuchen_Hälfte:50,Hafer_50_g:180
+        Leinsamen_20g:106,Apfelkuchen_Hälfte:50,Hafer_50_g:180
     }
       post_data_today({
           //7200000 is the offset of 2 hours because, Date.now is always UTC

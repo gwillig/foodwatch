@@ -11,7 +11,11 @@
 <body>
     <div class="desktop">
         <div class="background_div">
-            <img src="{{ url_for('static', filename = 'img/login.gif') }}">
+        <img src="{{ url_for('static', filename = 'img/login.gif') }}">
+            <video width="1100" height="1100"autoplay loop muted playsinline>
+                  <source src="{{ url_for('static', filename = 'img/Neues Video_1080_short.mp4') }}" type="video/mp4">
+                  Your browser does not support the video tag.
+            </video>
         </div>
 
         <div class="header">
@@ -24,6 +28,13 @@
         </div>
         </div>
     <script>
+        function check_connection(){
+        /*
+        If mobile network is below 2g it should show the img instead of the video
+        */
+        navigator.connection.effectiveType;
+
+        }
         function change_redirect(){
             /*
             @description:
