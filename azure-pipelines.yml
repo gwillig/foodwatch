@@ -12,7 +12,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $TEST
+- script: echo $JWT_BEARER
   displayName: 'Display JWTBEARERAZURE'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
