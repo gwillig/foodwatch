@@ -9,31 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: >  
-        echo "This prints secret: $test2";
-        length=${#test2};
-        echo "Length of '$str' is $length";
-        export test121=$(test);
-        python -c 'import os;print(os.environ["test121"])';
-  displayName: 'echo JWT_FOODWATCH'
-  env: 
-    test2: $(test2)
-- script: >  
-        echo "This prints secret: $test2";
-        length=${#test2};
-        echo "Length of '$str' is $length";
-        export test121=$(test);
-        python -c 'import os;print(os.environ["test121"])';
-  displayName: 'echo JWT_FOODWATasdCH'
-  env: 
-    test2: $(test2)
-- script: echo  $MY_MAPPED_ENV_VAR
-  displayName: ' MY_MAPPED_ENV_VAR'
-  env: 
-    MY_MAPPED_ENV_VAR: $(mySecret)
-- script: >
-          echo $test12;
-  displayName: 'test12'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
