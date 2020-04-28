@@ -12,6 +12,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 steps:
+- script: export test12=$(python -c  'print("Hello world")');echo $test12
+  displayName: 'test12a'
 - script: >  
         echo "This prints secret: $test2";
         length=${#test2};
@@ -23,10 +25,6 @@ steps:
     test2: $(test2)
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
   displayName: 'test12'
-- script: echo "This prints a: $MY_MAPPED_ENV_VAR" 
-  displayName: 'person2'
-  env: 
-    MY_MAPPED_ENV_VAR: $(person2)
 - script: >
           export JWT_FOODWATCH=$JWT_FOODWATCH;
           export test12=$(python -c 'import os;print(os.environ["JWT_FOODWATCH"])');
