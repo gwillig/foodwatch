@@ -3,21 +3,12 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-variables:
-  JWT_BEARER: $JWT_BEARER
-  JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
-  JWT_FOODWATCH: $JWT_FOODWATCH
+
 trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: > 
-        export JWT_FOODWATCH=$JWT_FOODWATCH;
-        python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
-  displayName: 'echo JWT_FOODWATCH'
-- script: python -c 'import os;os.system("hostnamectl > tmp");temp_var=open("tmp", "r");content_tmp = temp_var.read();print(content_tmp);'
-  displayName: 'hostnamectl'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
@@ -26,10 +17,11 @@ steps:
   displayName: 'Install requirements'
 - script: pwd
   displayName: 'current pwd'
-- script : > 
-           export jwt_foodwatch=$JWT_FOODWATCH;
-           export jwt_bearer_unauthorized=$JWT_BEARER_UNAUTHORIZED;
-           export jwt_bearer=$JWT_BEARER;
+- script: > 
            python3 -m unittest foodwatch/test.py
   displayName: 'Run tests'
+  env: 
+    jwt_bearer_unauthorized: $(jwt_bearer_unauthorized)
+    jwt_bearer: $(jwt_bearer)
+    jwt_foodwatch: $(jwt_foodwatch)
 
