@@ -1,26 +1,34 @@
 <style>
-.logout{
-    top: 10px;
+.logout_btn {
     position: absolute;
-    right: 40px;
-    background-color: #F6AF65;
-    width:80px;
-    border-radius: 15px;
-}
-
-.logout a{
+    top: 7px;
+    z-index: 1000;
+    right: 5px;
+    width: 80px;
+    border: none;
+    background-color: #4394E1;
     color: white;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: normal;
     text-decoration: none;
-     padding-left: 15px;
-
 }
+
+.logout_btn:hover {
+  background-color: #ddd;
+  color: black;
+}
+
 </style>
-<div class="logout">
-    <a id="logout_ref" href>Logout</a>
+<div >
+    <a onclick="change_redirect_logout()" class="logout_btn" href>Logout</a>
 </div>
 
 <script>
-            function change_redirect(){
+            function change_redirect_logout(){
             /*
             @description:
                 Change the logout of auth0 . If the url contain localhost it change it to localhost
@@ -30,10 +38,10 @@
             let href='https://gwillig.eu.auth0.com/v2/logout?'
 
             if (current_url.includes("localhost:")){
-                document.querySelector("#loginlink").href = href + "&returnTohttp%3A%2F%2Flocalhost:5000/"
+                document.querySelector(".logout_btn").href = href + "&returnTohttp%3A%2F%2Flocalhost:5000/"
             }
             else {
-                document.querySelector("#loginlink").href = href + "&returnTo=https://foodwatchgw.herokuapp.com/"
+                document.querySelector(".logout_btn").href = href + "&returnTo=https://foodwatchgw.herokuapp.com/"
             }
         }
 
