@@ -4,18 +4,16 @@
 # https://aka.ms/yaml
 
 variables:
-  TEST: $TEST
   JWTBEARERUNAUTHORIZED: $JWTBEARERUNAUTHORIZED
-  JWT_FOODWATCH: $(JWT_FOODWATCH)
-  JWT_BEARER: $(JWT_BEARER)
-  JWT_BEARER_UNAUTHORIZED: $(JWT_BEARER_UNAUTHORIZED)
+  JWTBEARER: $(JWTBEARER)
+  JWTFOODWATCH: $(JWTFOODWATCH)
 trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $JWTBEARERUNAUTHORIZED
-  displayName: 'Display JWTBEARERUNAUTHORIZED'
+- script: echo $JWTFOODWATCH
+  displayName: 'Display JWTFOODWATCH'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: sudo apt-get install python3-setuptools
