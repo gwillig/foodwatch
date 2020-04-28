@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 variables:
-  JWT_BEARER: $JWT_BEARER
+  JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
   JWT_FOODWATCH: $JWT_FOODWATCH
 trigger:
@@ -14,7 +14,7 @@ pool:
 steps:
 - script: > 
         
-        python -c 'import os;print(os.environ["JWT_FOODWATCH"])'
+        python -c 'import os;print(os.environ["JWT_BEARER"])'
         python -c 'import os;print("Hello world")'
   displayName: 'echo JWT_FOODWATCH'
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
