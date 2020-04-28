@@ -14,7 +14,7 @@ pool:
   vmImage: 'ubuntu-latest'
 steps:
 - script: > 
-        
+        export test12=$(test)
         python -c 'import os;print(os.environ["test"])'
         python -c 'import os;print("Hello world")'
   displayName: 'echo JWT_FOODWATCH'
