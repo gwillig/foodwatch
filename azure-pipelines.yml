@@ -10,6 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- script: sudo apt-get install python3-setuptools
+  displayName: 'Install setuptools'
 - script: pip3 install --upgrade pip
   displayName: 'Update pip3'
 - script: pip3 install -r requirements.txt
