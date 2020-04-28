@@ -5,15 +5,15 @@
 
 variables:
   JWTBEARERUNAUTHORIZED: $JWTBEARERUNAUTHORIZED
-  JWTBEARER: $(JWTBEARER)
+  JWTBEARERAZURE: $(JWTBEARERAZURE)
   JWTFOODWATCH: $(JWTFOODWATCH)
 trigger:
 - master
 pool:
   vmImage: 'ubuntu-latest'
 steps:
-- script: echo $JWTBEARER
-  displayName: 'Display JWTBEARER'
+- script: echo $JWTBEARERAZURE
+  displayName: 'Display JWTBEARERAZURE'
 - script: sudo apt-get install python3-setuptools
   displayName: 'Install setuptools'
 - script: sudo apt-get install python3-setuptools
