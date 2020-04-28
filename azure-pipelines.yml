@@ -13,8 +13,8 @@ pool:
   vmImage: 'ubuntu-latest'
 steps:
 - script: > 
-        export test12=$(test);
-        python -c 'import os;print(os.environ["test"])';
+        export test121=$(test);
+        python -c 'import os;print(os.environ["test121"])';
   displayName: 'echo JWT_FOODWATCH'
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
   displayName: 'test12'
