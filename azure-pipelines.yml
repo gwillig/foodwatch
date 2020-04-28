@@ -18,7 +18,7 @@ steps:
   displayName: 'Install requirements'
 - script: pwd
   displayName: 'current pwd'
-- script : python -m unittest foodwatch/test.py
+- script : python3 -m unittest foodwatch/test.py
   displayName: 'Run tests'
 - script: |
     echo Add other tasks to build, test, and deploy your project.
