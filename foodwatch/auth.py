@@ -46,6 +46,7 @@ def get_token_auth_header():
         }, 401)
 
     headerAuthList = headerAuth.split()
+    print(headerAuthList)
     if headerAuthList[0].lower() != 'bearer':
         raise AuthError({
             'code': 'Invalid header',
