@@ -7,6 +7,7 @@ variables:
   JWT_BEARER: $(JWT_BEARER)
   JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
   JWT_FOODWATCH: $jwt_foodwatch
+  test: $(test)
 trigger:
 - master
 pool:
@@ -14,7 +15,7 @@ pool:
 steps:
 - script: > 
         
-        python -c 'import os;print(os.environ["JWT_BEARER"])'
+        python -c 'import os;print(os.environ["test"])'
         python -c 'import os;print("Hello world")'
   displayName: 'echo JWT_FOODWATCH'
 - script: export test12=$(python -c  'print("Hello world")');echo $test12
