@@ -3,10 +3,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-variables:
-  JWT_BEARER: $(JWT_BEARER)
-  JWT_BEARER_UNAUTHORIZED: $JWT_BEARER_UNAUTHORIZED
-  JWT_FOODWATCH: $jwt_foodwatch
+
 trigger:
 - master
 pool:
@@ -35,8 +32,6 @@ steps:
   env: 
     MY_MAPPED_ENV_VAR: $(mySecret)
 - script: >
-          export JWT_FOODWATCH=$JWT_FOODWATCH;
-          export test12=$(python -c 'import os;print(os.environ["JWT_FOODWATCH"])');
           echo $test12;
   displayName: 'test12'
 - script: sudo apt-get install python3-setuptools
@@ -48,9 +43,6 @@ steps:
 - script: pwd
   displayName: 'current pwd'
 - script: > 
-           export jwt_foodwatch=$JWT_FOODWATCH;
-           export jwt_bearer_unauthorized=$JWT_BEARER_UNAUTHORIZED;
-           export jwt_bearer=$JWT_BEARER;
            python3 -m unittest foodwatch/test.py
   displayName: 'Run tests'
 
