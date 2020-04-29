@@ -1,9 +1,7 @@
-from flask import Flask,abort, render_template, jsonify, request
-from foodwatch.models import setup_db, Food, Misc, Home_misc
+from flask import Flask, render_template, jsonify, request
 from flask_cors import CORS
 from sqlalchemy import Date, cast, inspect
 from datetime import date, datetime, timedelta
-from foodwatch.auth import requires_auth
 from flask import send_from_directory
 import pandas as pd
 import numpy as np
@@ -11,52 +9,15 @@ import os
 import time
 import json
 from foodwatch.helper import try_str_float
-
-from werkzeug.exceptions import HTTPException, default_exceptions,  Aborter
-class UnavailableForLegalReasons(HTTPException):
-    code = 4011
-    description = 'Permission check fail'
-
-class Invalid_header_malformed(HTTPException):
-    code = 4012
-    description = 'invalid_header - Authorization malformed.'
-
-class Token_expired(HTTPException):
-    code = 4013
-    description = 'invalid_header'
-
-class Audience_issuer(HTTPException):
-    code = 4014
-    description = 'Incorrect claims. Please, check the audience and issuer.'
-
-class Authentication_token(HTTPException):
-    code = 4015
-    description = 'Unable to parse authentication token'
-
-class Unable_appropriate_key(HTTPException):
-    code = 4016
-    description = 'Unable to find the appropriate key'
-
-class Add_authorization_header(HTTPException):
-    code = 4017
-    description = 'Add authorization header to the request.'
-
-class Authorization_must_bear(HTTPException):
-    code = 4018
-    description = 'The authorization header must be bearer'
-
-default_exceptions[4011] = UnavailableForLegalReasons
-default_exceptions[4012] = Invalid_header_malformed
-default_exceptions[4013] = Token_expired
-default_exceptions[4014] = Audience_issuer
-default_exceptions[4015] = Authentication_token
-default_exceptions[4016] = Unable_appropriate_key
-default_exceptions[4017] = Add_authorization_header
-default_exceptions[4018] = Authorization_must_bear
-abort = Aborter()  # don't from flask import abort
+from foodwatch.auth import requires_auth
+from foodwatch.own_abort_exception import abort
+from foodwatch.models import setup_db, Food, Misc, Home_misc
 
 def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
+    #=========
+
+    #================
     app = Flask(__name__)
 
     if dbms == "sqlite3":
@@ -94,9 +55,15 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/home")
     def home():
+
+
         datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
-        extention = ["Brötchen", "Ei", "100g_Wurst", "200g_Wurst"]
-        datalist_name.extend(extention)
+
+        df = pd.read_sql_table("food", db.session.bind)
+        df_groupby = df.groupby(by=df["name"]).mean()
+        df_mean = df_groupby.reset_index()
+        datalist_name = df_mean[["name", "calorie"]].values
+
         rank_dict = home_rank()
         total_calories = db.session.query(Home_misc.total_calories).first()
         return render_template('home.html', datalist_name=datalist_name,
@@ -450,7 +417,7 @@ with open('tmp', 'r') as temp_var:
     content_tmp = temp_var.read()
     '#"fv-az99" is the name of the computer in the azure pipeline'
     if "gwillig" in content_tmp or "fv-az" in content_tmp:
-        app = create_app(dbms="mysql")
+        app = create_app(dbms="sqlite3")
     else:
         app = create_app(dbms="mysql")
 

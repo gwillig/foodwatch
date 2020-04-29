@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from flask import Flask,abort
+from flask import Flask
 import json
 from flask import request, _request_ctx_stack
 from functools import wraps
@@ -8,6 +8,8 @@ from urllib.request import urlopen
 import os
 import sys
 from pathlib import Path
+from foodwatch.own_abort_exception import abort
+
 
 sys.path.append('foodwatch')
 import base64

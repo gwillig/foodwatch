@@ -535,6 +535,25 @@ function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
 
+function addCalorie(){
+   /*
+   @description:
+    Add the food_cal to the input_cal based on selected input_value food_name
+   */
+
+   //1.Step: Query input_name and the corresponding  datalist
+  const Value = document.querySelector('#input_name').value;
+  const datalist = document.querySelector("#list_name")
+  //2.Step: If emtpy the function should stop
+  if(!Value) return;
+  //
+  //2.
+  const food_cal = datalist.querySelector('option[value="' + Value + '"]').text
+  const input_cal = document.querySelector("#input_cal")
+  input_cal.value = food_cal
+}
+
+
 function jwt_localStorage(){
     /*
     @describe:
