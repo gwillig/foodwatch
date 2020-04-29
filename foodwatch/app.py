@@ -28,9 +28,14 @@ def create_app(dbms="sqlite3", test_config=None):
         if "jwt_foodwatch" in os.environ.keys():
             database_path = os.environ["database_path"]
         else:
-            with open('env.json', 'r') as env_file:
-                env_dict = json.load(env_file)
-                database_path = env_dict["database_path"]
+            try:
+                with open('foodwatch/env.json', 'r') as env_file:
+                    env_dict = json.load(env_file)
+                    database_path = env_dict["database_path"]
+            except FileNotFoundError:
+                with open('env.json', 'r') as env_file:
+                    env_dict = json.load(env_file)
+                    database_path = env_dict["database_path"]
 
         db = setup_db(app, database_path)
 

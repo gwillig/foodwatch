@@ -3,6 +3,11 @@ import json
 import os
 import pandas as pd
 import sys
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 sys.path.append("foodwatch")
 from .models import setup_db, Misc, Food, Home_misc
 from .app import create_app
@@ -14,24 +19,42 @@ user:  unauthorizeduser017@gmail.com
 pw: Test123!
 
 """
-class Foodwatchgw_backend(unittest.TestCase):
-    """This class represents the trivia test case"""
+class Foodwatchgw_basic(unittest.TestCase):
+    """
+    Contains the setUpClass, tearDown etc
 
+    """
     @classmethod
     def setUpClass(cls):
         """Define test variables and initialize app."""
-        if "jwt_bearer" in os.environ.keys():
-            cls.jwt_bearer = os.environ["jwt_bearer"]
-        else:
-            with open('foodwatch/env.json', 'r') as env_file:
-                env_dict = json.load(env_file)
-                cls.jwt_bearer = env_dict["jwt_bearer"]
-        if "jwt_bearer_unauthorized" in os.environ.keys():
-            cls.jwt_bearer_unauthorized = os.environ["jwt_bearer_unauthorized"]
-        else:
-            with open('foodwatch/env.json', 'r') as env_file:
-                env_dict = json.load(env_file)
-                cls.jwt_bearer_unauthorized = env_dict["jwt_bearer_unauthorized"]
+
+        '#1.Step: Load env variables'
+        for el in ["admin","viewer"]:
+            if el[0] in os.environ.keys():
+                exec(f'cls.{el} = {os.environ[el]}')
+            else:
+                with open('foodwatch/env.json', 'r') as env_file:
+                    env_dict = json.load(env_file)
+                    exec(f'cls.{el} = {env_dict[el]}')
+
+        '#2.Step: Get jwt'
+        driver_wait=30
+        for el in [cls.admin,cls.viewer]:
+            driver = webdriver.Chrome("foodwatch/chromedriver")
+            driver.get("localhost:5000")
+            login_btn = driver.find_element_by_id("loginlink")
+            login_btn.click()
+            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
+            email_input = driver.find_element_by_id("1-email")
+            email_input.send_keys(el["email"])
+            pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
+            pwd_input.send_keys(el["pwd"])
+            login_span = driver.find_element_by_class_name("auth0-label-submit")
+            login_span.click()
+            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "percent")))
+            el["jwt_token"] = driver.execute_script("return localStorage.getItem('jwt')")
+            driver.close()
+
 
         cls.app = create_app(dbms="sqlite3",test_config=True)
         project_dir = os.path.dirname(os.path.abspath(__file__))
@@ -52,9 +75,8 @@ class Foodwatchgw_backend(unittest.TestCase):
         if self.db.session.query(Food).count()==0:
             insert_data(self.db)
 
-    @classmethod
-    def tearDownClass(cls):
-        os.remove("foodwatch/database_test.db")
+class Backend(Foodwatchgw_basic):
+    """The test case for the backend"""
 
     def test_misc(self):
         response = self.client().get('/misc')
@@ -83,10 +105,10 @@ class Foodwatchgw_backend(unittest.TestCase):
         Test delete misc for authorized user and unauthorized user
 
         """
-        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
             with self.subTest(k):
                 response = self.client().delete('/misc', json={"data":1},headers={'Content-Type': 'application/json',
-                                                                                  "Authorization": "Bearer " +v[0]},
+                                                                                  "Authorization": v[0]},
                                                  content_type='application/json')
                 # Check response
                 self.assertEqual(response.status_code, v[1])
@@ -111,10 +133,10 @@ class Foodwatchgw_backend(unittest.TestCase):
                           },
                         ]
            }
-        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
             with self.subTest(k):
                 response = self.client().post('/misc_data',headers={'Content-Type': 'application/json',
-                                                                    "Authorization": "Bearer " +v[0]},
+                                                                    "Authorization": v[0]},
                                               content_type='application/json',  json=data)
                 # Check response
                 self.assertEqual(response.status_code, v[1])
@@ -132,20 +154,20 @@ class Foodwatchgw_backend(unittest.TestCase):
                         "total_calorie_plan": "1600"
                     }
                 }
-        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
             with self.subTest(k):
                 response = self.client().post('/data_today', json=data,headers={'Content-Type': 'application/json',
-                                                                                "Authorization": "Bearer " +v[0]},
+                                                                                "Authorization": v[0]},
                                               content_type='application/json')
                 # Check response
                 self.assertEqual(response.status_code, v[1])
 
     def test_delete_data_today(self):
 
-        for k,v in {"jwt_auth":[self.jwt_bearer,200],"jwt_unauthorized":[self.jwt_bearer_unauthorized,500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
             with self.subTest(k):
                 response = self.client().delete('/data_today', json={"data":1},headers={'Content-Type': 'application/json',
-                                                                                        "Authorization": "Bearer " +v[0]}
+                                                                                        "Authorization": v[0]}
                                                 ,content_type='application/json')
                 # Check response
                 self.assertEqual(response.status_code, v[1])
@@ -163,6 +185,20 @@ class Foodwatchgw_backend(unittest.TestCase):
                                        df_merge[['timestamp_obj','amount_weight', 'amount_steps','calorie']])
 
 
-
+# class Frontend(Foodwatchgw_basic):
+#
+#
+#     def test_login(self):
+#         driver = webdriver.Chrome("./chromedriver")
+#         driver.get("localhost:5000")
+#         login_btn = driver.find_element_by_id("loginlink")
+#         login_btn.click()
+#         email_input = driver.find_element_by_id("1-email")
+#         email_input.send_keys(admin["email"])
+#         pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
+#         pwd_input.send_keys(admin["pwd"])
+#         login_span = driver.find_element_by_class_name("auth0-label-submit")
+#         login_span.click()
+#         jwt_token = driver.execute_script("return localStorage.getItem('jwt')")
 if __name__ == '__main__':
     unittest.main()

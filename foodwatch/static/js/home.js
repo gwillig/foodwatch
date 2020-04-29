@@ -556,7 +556,6 @@ function jwt_localStorage(){
 
 }
 
-
 function get_jwt(localStorage_jwt=true){
     /*
     @describe:
