@@ -542,25 +542,15 @@ function jwt_localStorage(){
     @return:
         Nothing
     */
+    //1.Step: Gets the current url
+    let url_string  = window.location.href
+    //2.Step: Check if a token is in url and save it to the local storage
+    if(url_string.includes("access_token")==true){
 
-
-    if(localStorage["jwt"]==undefined){
-        let url_string  = window.location.href
         const fragment = window.location.hash.substr(1).split('&')[0].split('=');
         let access_token = fragment[1]
         localStorage.setItem('jwt', `bearer ${access_token}`);
         console.log("Saved jwt to localStorage")
-    }
-    else{
-        //Check if existing jwt is already expired
-        jwt_token = jwt_decode(localStorage["jwt"].split("bearer")[1])
-        if(jwt_token.exp<(Date.now()/1000)){
-            let url_string  = window.location.href
-            const fragment = window.location.hash.substr(1).split('&')[0].split('=');
-            let access_token = fragment[1]
-            localStorage.setItem('jwt', `bearer ${access_token}`);
-            console.log("Saved jwt to localStorage")
-        }
     }
 
 

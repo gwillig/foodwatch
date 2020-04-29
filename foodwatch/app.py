@@ -352,7 +352,7 @@ with open('tmp', 'r') as temp_var:
     content_tmp = temp_var.read()
     '#"fv-az99" is the name of the computer in the azure pipeline'
     if "gwillig" in content_tmp or "fv-az" in content_tmp:
-        app = create_app(dbms="sqlite3")
+        app = create_app(dbms="mysql")
     else:
         app = create_app(dbms="mysql")
 
