@@ -41,18 +41,12 @@ def get_token_auth_header():
     """
     headerAuth = request.headers.get('Authorization', None)
     if not headerAuth:
-        raise AuthError({
-            'code':'authorization is missing',
-            'description':'Add authorization header to the request'
-        }, 401)
+        abort(4017)
 
     headerAuthList = headerAuth.split()
 
     if headerAuthList[0].lower() != 'bearer':
-        raise AuthError({
-            'code': 'Invalid header',
-            'description':'The authorization header must be bearer'
-        }, 401)
+        abort(4018)
     token = headerAuthList[1]
     return token
 
@@ -62,7 +56,7 @@ def check_permissions(permission, payload):
     if permission in payload["permissions"]:
         return True
     else:
-        abort(401)
+        abort(4011)
 
 '=================================================================='
 
@@ -78,10 +72,7 @@ def verify_decode_jwt(token):
     # CHOOSE OUR KEY
     rsa_key = {}
     if 'kid' not in unverified_header:
-        raise AuthError({
-            'code': 'invalid_header',
-            'description': 'Authorization malformed.'
-        }, 401)
+        abort(4012)
 
     for key in jwks['keys']:
         if key['kid'] == unverified_header['kid']:
@@ -108,25 +99,13 @@ def verify_decode_jwt(token):
             return payload
 
         except jwt.ExpiredSignatureError:
-            raise AuthError({
-                'code': 'token_expired',
-                'description': 'Token expired.'
-            }, 401)
+            abort(4013)
 
         except jwt.JWTClaimsError:
-            raise AuthError({
-                'code': 'invalid_claims',
-                'description': 'Incorrect claims. Please, check the audience and issuer.'
-            }, 401)
+            abort(4014)
         except Exception:
-            raise AuthError({
-                'code': 'invalid_header',
-                'description': 'Unable to parse authentication token.'
-            }, 400)
-    raise AuthError({
-        'code': 'invalid_header',
-        'description': 'Unable to find the appropriate key.'
-    }, 400)
+            abort(4015)
+    abort(4016)
 
 
 def requires_auth(permission=''):

@@ -191,7 +191,7 @@ class Frontend(Foodwatchgw_basic):
     def test_home_add_btn(self):
         driver_wait=30
         for el in [[self.admin,"'Successfully submitted to database'"]
-                    ,[self.viewer,'{"code": "Permission check fail", "description": "The person doenst has the required permission"}']]:
+                    ,[self.viewer,'Permission check fail. The person doenst has the required permission']]:
             driver = webdriver.Chrome("foodwatch/chromedriver")
             driver.get("localhost:5000")
             login_btn = driver.find_element_by_id("loginlink")

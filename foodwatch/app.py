@@ -331,14 +331,63 @@ def create_app(dbms="sqlite3", test_config=None):
         return {c.key: getattr(obj, c.key)
                 for c in inspect(obj).mapper.column_attrs}
 
-    @app.errorhandler(401)
-    def bad_request(error):
-        return jsonify(dict(success=False, error=401,
-                            message='Permission check fail'+\
+    @app.errorhandler(4011)
+    def permission_check_fail(error):
+        return jsonify(dict(success=False, error=4011,
+                            message='Permission check fail. ' +
                                     'The person doenst has the required permission'
-                            )), 401
+                            )), 4011
 
+    @app.errorhandler(4012)
+    def invalid_header(error):
+        return jsonify(dict(success=False, error=4012,
+                            message='invalid_header.' + " - " +
+                                    'Authorization malformed.'
+                            )), 4012
 
+    @app.errorhandler(4013)
+    def token_expired(error):
+        return jsonify(dict(success=False, error=4013,
+                            message='token_expired.' + " - " +
+                                    'Token expired.'
+                            )), 4013
+
+    @app.errorhandler(4014)
+    def invalid_claims(error):
+        return jsonify(dict(success=False, error=4014,
+                            message='invalid_claims' + " - " +
+                                    'Incorrect claims. Please, check the audience and issuer.'
+                            )), 4014
+    app.merge_food_misc=merge_food_misc
+    app.convert_sqlalchemy_todict = convert_sqlalchemy_todict
+
+    @app.errorhandler(4015)
+    def invalid_claims(error):
+        return jsonify(dict(success=False, error=4015,
+                            message='invalid_header' + " - " +
+                                    'Unable to parse authentication token.'
+                            )), 4015
+
+    @app.errorhandler(4016)
+    def invalid_claims(error):
+        return jsonify(dict(success=False, error=4016,
+                            message='invalid_header' + " " +
+                                    'Unable to find the appropriate key.'
+                            )), 4016
+
+    @app.errorhandler(4017)
+    def invalid_claims(error):
+        return jsonify(dict(success=False, error=4017,
+                            message='authorization is missing' + " " +
+                                    'Add authorization header to the request.'
+                            )), 4017
+
+    @app.errorhandler(4018)
+    def invalid_claims(error):
+        return jsonify(dict(success=False, error=4018,
+                            message='invalid_header' + " " +
+                                    'The authorization header must be bearer'
+                            )), 4018
     app.merge_food_misc=merge_food_misc
     app.convert_sqlalchemy_todict = convert_sqlalchemy_todict
 
