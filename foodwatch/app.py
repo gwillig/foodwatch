@@ -256,12 +256,10 @@ def create_app(dbms="sqlite3", test_config=None):
         # Convert from epoch to unix
         el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
         del (el["timestamp_epoch"])
-        '#Check for double then inject and that name is not none'
-        if (db.session.query(Food).filter_by(timestamp_unix=el["timestamp_unix"]).count() < 1):
-            el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
-            f1 = Food(**el)
-            db.session.add(f1)
-            db.session.commit()
+        el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
+        f1 = Food(**el)
+        db.session.add(f1)
+        db.session.commit()
 
         return jsonify({
             'success': True,

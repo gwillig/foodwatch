@@ -81,7 +81,22 @@
     </datalist>
   </p>
   <p id="msg_db"></p>
-<input class="add_btn" type="button" value="Add" onclick="post_insert_data()">
+  <ul class="nav_mo_ca">
+  <li>
+    <input class="add_btn" type="button" value="Add" onclick="post_insert_data()">
+  </li>
+  <li>
+    <input class="nav_input " type="button" value="Standard Meal"
+           onclick='inject_array_db([
+                      ["Proteinpulver_25_g",90],
+                      ["Leinsamen_20g",106],
+                      ["Apfelkuchen_Hälfte",50],
+                      ["Hafer_50_g",180]
+                      ])'
+    >
+  </li>
+</ul>
+
 </div>
 <table id="today_food">
   <tr>

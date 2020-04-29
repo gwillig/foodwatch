@@ -88,22 +88,32 @@ function current_time_string(){
 
 }
 
-function convert_unix_datatime(unix_int){
+function convert_unix_datatime(timestamp,unix=true){
   /*
   @description:
-    Converts unix timestampe into a string e.g. '13:13:40'. Is need because the data in the database is saved as
-    unix timestampe but javascript require epoch.
+    Converts  timestampe into a string e.g. '13:13:40'
   @args:
-    unix_int (int):
-
+    timestamp (int): e.g. 1588149907472
+    unix (boolean)
   @return:
     datetime_string (string): e.g. '13:13:40'
   */
-  //7200000 is the offset of 2 hours because, Date.now is always UTC
-  let date_obj = new Date(unix_int*1000-7200000);
+  let date_obj = null;
+  if(unix==true){
+    //To process date from the backend when the page is new loaded
+    //7200000 is the offset of 2 hours because, Date.now is always UTC
+    date_obj = new Date(timestamp*1000-7200000);
+
+  }
+  else{
+    //To process date which is sended to the backend after the button "Add" is clicked
+    //7200000 is the offset of 2 hours because, Date.now is always UTC
+    date_obj = new Date(timestamp-7200000);
+  }
+
   let datetime_string =   date_obj.getHours() + ":"
-                  + date_obj.getMinutes()+ ":"
-                + date_obj.getSeconds();
+              + date_obj.getMinutes()+ ":"
+            + date_obj.getSeconds();
 
   return datetime_string
 }
@@ -245,21 +255,36 @@ function convert_table_array(){
 
 }
 
-/*
-function standard_meal(){
 
-    let standard_meal_items={Proteinpulver_25_g:90,
-        Leinsamen_20g:106,Apfelkuchen_Hälfte:50,Hafer_50_g:180
-    }
-      post_data_today({
+function inject_array_db(meal_items){
+    /*
+    @description:
+        Injest a array into the database
+    @args:
+    meal_items (array) e.g.
+            [
+              ["Proteinpulver_25_g",90],
+              ["Leinsamen_20g",106],
+              ["Apfelkuchen_Hälfte",50],
+              ["Hafer_50_g",180]
+            ]
+    */
+
+    let total_calorie_plan = document.querySelector("#total_calorie").value;
+    for([food_name,calorie] of meal_items){
+        console.log(food_name,": ",calorie)
+
+        post_data_today({
           //7200000 is the offset of 2 hours because, Date.now is always UTC
           timestamp_epoch: Date.now()+7200000,
           name: food_name,
-          calorie: result_cal,
-          total_calorie_plan:total_calorie_plan:
+          calorie: calorie,
+          total_calorie_plan:total_calorie_plan
       })
     }
-*/
+
+    }
+
 
 
 function post_insert_data(){
@@ -282,37 +307,45 @@ function post_insert_data(){
       name: food_name,
       calorie: result_cal,
       total_calorie_plan:total_calorie_plan
-  })
+  },
+  unix=false)
 }
-function insert_new_row(){
-  /*
-  @description:
-  Convert the input from name and calorie to the row in the table #today_food
-  @args:
-  @return
-  */
-  table_today =document.querySelector("#today_food")
-  newRow = table_today.insertRow(1);
-  let cell_current = newRow.insertCell(0);
-  //7200000 is the offset of 2 hours because, Date.now is always UTC
-  cell_current.innerHTML = convert_unix_datatime(Date.now()+7200000);
-  let cell_timestamp = newRow.insertCell(1);
-  //7200000 is the offset of 2 hours because, Date.now is always UTC
-  cell_timestamp.innerHTML = Date.now()+7200000;
-  cell_timestamp.className = "td_timestamp";
-  let cell_name = newRow.insertCell(2);
-  cell_name.innerHTML = document.querySelector("#input_name").value
-  let cell_cal = newRow.insertCell(3);
-  //1.Step: Calculate the input_cal
-  //1.1.Step: Get the value and replace comma with .dot
-  let input_value = document.querySelector("#input_cal").value.replace(",",".")
+function insert_new_row(timestamp_epoch,food_name,calorie,db_id){
+    /*
+    @description:
+    Convert the input from name and calorie to the row in the table #today_food
+    @args:
+    @return
+    */
+    //1.Step: Get the table today_food by id
+    table_today = document.querySelector("#today_food")
+    //2.Step: Insert a empty row
+    row = table_today.insertRow(1);
 
-  //1.2.Step:Execute the input as cmd and convert to String
-  result_cal = String(Math.round(eval(input_value)))
-  cell_cal.innerHTML = result_cal
+    //3.Step: Inject a cell into the empty row
+    //3.1.Step: Inject a cell with the timestampe (in unix)
+    let cell_Timestamp = row.insertCell(0);
+    cell_Timestamp.innerHTML = timestamp_epoch;
+    cell_Timestamp.className="td_timestamp";
+    //3.1.Step: Inject a cell with the timestampe (in unix)
+    let cell_Time = row.insertCell(1);
+    cell_Time.innerHTML = convert_unix_datatime(timestamp_epoch,unix=false);
+    cell_Time.className ="td_food_time";
+    //3.2.Step: Inject a cell name of the food
+    let cell_Name = row.insertCell(2);
+    cell_Name.innerHTML = food_name;
+    cell_Name.className="td_food_name"
+    //3.3.Step: Inject a cell name of the food
+    let cell_cal = row.insertCell(3);
+    cell_cal.innerHTML = calorie;
+    cell_cal.className = "td_food_amount";
+    //3.4.Step: Add red x
+    let cell_del = row.insertCell(4);
+    cell_del.outerHTML =`<td onclick="delete_current_row(this)" data-database-id="${db_id}"=>&#10060</td>`
+    cell_cal.className = "td_food_amount";
 }
 
-function post_data_today(data_json){
+function post_data_today(data_json,unix=true){
     /*
     @description:
         Function posts food data to the back end
@@ -337,7 +370,7 @@ function post_data_today(data_json){
                 return response.text()
             }
             else{
-                insert_new_row()
+                insert_new_row(data_json.timestamp_epoch,data_json.name,data_json.calorie,9999)
                return "ok"
             }
         })
@@ -387,7 +420,12 @@ function process_fetch_body(body){
 
       }
 function delete_current_row(self_row){
-
+    /*
+    @description:
+        Delete the current row
+    @args:
+       self_row (html-obj)
+    */
     //1.Step: Get the data-database-id
     db_id = self_row.getAttribute("data-database-id")
     //2.Step: delete in data base

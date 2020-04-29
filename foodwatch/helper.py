@@ -8,7 +8,8 @@ def try_str_float(element):
         element (string): e.g. "NaN", 84.2, 16000
     :return:
     @Doctest
-
+    >>> try_str_float(84.1)
+    True
     >>> try_str_float('84.1')
     True
     >>> try_str_float('84,1')
@@ -19,8 +20,10 @@ def try_str_float(element):
     False
     """
     try:
+        '#1.0.Step: Convert element into string'
+        element_str = str(element)
         '#1.1.Step: Replace the comma with a dot'
-        element_dot = element.replace(",", ".")
+        element_dot = element_str.replace(",", ".")
         '#1.2.Step: Try to convert it to a float'
         element_float = float(element_dot)
         '#1.3.Step: Test if element_float is nan'
