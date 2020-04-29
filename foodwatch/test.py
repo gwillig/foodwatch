@@ -185,20 +185,40 @@ class Backend(Foodwatchgw_basic):
                                        df_merge[['timestamp_obj','amount_weight', 'amount_steps','calorie']])
 
 
-# class Frontend(Foodwatchgw_basic):
-#
-#
-#     def test_login(self):
-#         driver = webdriver.Chrome("./chromedriver")
-#         driver.get("localhost:5000")
-#         login_btn = driver.find_element_by_id("loginlink")
-#         login_btn.click()
-#         email_input = driver.find_element_by_id("1-email")
-#         email_input.send_keys(admin["email"])
-#         pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
-#         pwd_input.send_keys(admin["pwd"])
-#         login_span = driver.find_element_by_class_name("auth0-label-submit")
-#         login_span.click()
-#         jwt_token = driver.execute_script("return localStorage.getItem('jwt')")
+class Frontend(Foodwatchgw_basic):
+
+
+    def test_home_add_btn(self):
+        driver_wait=30
+        for el in [[self.admin,"'Successfully submitted to database'"]
+                    ,[self.viewer,'{"code": "Permission check fail", "description": "The person doenst has the required permission"}']]:
+            driver = webdriver.Chrome("foodwatch/chromedriver")
+            driver.get("localhost:5000")
+            login_btn = driver.find_element_by_id("loginlink")
+            login_btn.click()
+            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
+            email_input = driver.find_element_by_id("1-email")
+            email_input.send_keys(el[0]["email"])
+            pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
+            pwd_input.send_keys(el[0]["pwd"])
+            login_span = driver.find_element_by_class_name("auth0-label-submit")
+            login_span.click()
+            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "percent")))
+            el[0]["jwt_token"] = driver.execute_script("return localStorage.getItem('jwt')")
+            '#.Step: Enter food name'
+            food_name = driver.find_element_by_id("input_name")
+            food_name.send_keys("Orange")
+            '#.Step: Enter food cal'
+            food_cal = driver.find_element_by_id("input_cal")
+            food_cal.send_keys("150")
+            '#.Step: Click add btn'
+            add_btn = driver.find_element_by_class_name("add_btn")
+            add_btn.click()
+            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "msg_db")))
+            msg_db = driver.find_element_by_id("msg_db")
+            with self.subTest(el[0]):
+                self.assertEqual(msg_db.text, el[1])
+            driver.close()
+
 if __name__ == '__main__':
     unittest.main()

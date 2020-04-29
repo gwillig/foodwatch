@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from flask import Flask,abort
 import json
 from flask import request, _request_ctx_stack
 from functools import wraps
@@ -61,10 +62,7 @@ def check_permissions(permission, payload):
     if permission in payload["permissions"]:
         return True
     else:
-        raise AuthError({
-            'code': 'Permission check fail',
-            'description':'The person doenst has the required permission'
-        }, 401)
+        abort(401)
 
 '=================================================================='
 

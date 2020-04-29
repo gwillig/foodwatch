@@ -332,11 +332,11 @@ def create_app(dbms="sqlite3", test_config=None):
                 for c in inspect(obj).mapper.column_attrs}
 
     @app.errorhandler(401)
-    def data_processing_error(error):
-        raise ({
-            'code':'Data was in the wrong format!',
-            'description':'Server was not able to save data to database'
-        }, 401)
+    def bad_request(error):
+        return jsonify(dict(success=False, error=401,
+                            message='Permission check fail'+\
+                                    'The person doenst has the required permission'
+                            )), 401
 
 
     app.merge_food_misc=merge_food_misc
