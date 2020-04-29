@@ -50,7 +50,6 @@ def get_token_auth_header():
     token = headerAuthList[1]
     return token
 
-
 '================================='
 def check_permissions(permission, payload):
     if permission in payload["permissions"]:
