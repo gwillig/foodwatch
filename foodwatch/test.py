@@ -105,7 +105,7 @@ class Backend(Foodwatchgw_basic):
         Test delete misc for authorized user and unauthorized user
 
         """
-        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],4011]}.items():
             with self.subTest(k):
                 response = self.client().delete('/misc', json={"data":1},headers={'Content-Type': 'application/json',
                                                                                   "Authorization": v[0]},
@@ -133,7 +133,7 @@ class Backend(Foodwatchgw_basic):
                           },
                         ]
            }
-        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],4011]}.items():
             with self.subTest(k):
                 response = self.client().post('/misc_data',headers={'Content-Type': 'application/json',
                                                                     "Authorization": v[0]},
@@ -154,7 +154,7 @@ class Backend(Foodwatchgw_basic):
                         "total_calorie_plan": "1600"
                     }
                 }
-        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],4011]}.items():
             with self.subTest(k):
                 response = self.client().post('/data_today', json=data,headers={'Content-Type': 'application/json',
                                                                                 "Authorization": v[0]},
@@ -164,7 +164,7 @@ class Backend(Foodwatchgw_basic):
 
     def test_delete_data_today(self):
 
-        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],500]}.items():
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],4011]}.items():
             with self.subTest(k):
                 response = self.client().delete('/data_today', json={"data":1},headers={'Content-Type': 'application/json',
                                                                                         "Authorization": v[0]}

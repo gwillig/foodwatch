@@ -256,22 +256,18 @@ function convert_table_array(){
 }
 
 
-function inject_array_db(meal_items){
+function inject_array_db(){
     /*
     @description:
         Injest a array into the database
     @args:
-    meal_items (array) e.g.
-            [
-              ["Proteinpulver_25_g",90],
-              ["Leinsamen_20g",106],
-              ["Apfelkuchen_Hälfte",50],
-              ["Hafer_50_g",180]
-            ]
     */
-
+    //1.Step: The the values from the textarea
+    let textarea  = document.querySelector("#bulk_textarea")
+    let textarea_array = textarea.value.replace(/\r\n/g,"\n").split("\n");
+    let array_finish = textarea_array.map((el)=>el.split(","))
     let total_calorie_plan = document.querySelector("#total_calorie").value;
-    for([food_name,calorie] of meal_items){
+    for([food_name,calorie] of array_finish){
         console.log(food_name,": ",calorie)
 
         post_data_today({
@@ -500,6 +496,18 @@ function hide_motivation_div(self_div){
 
 }
 
+function show_bulk_add(id){
+    /*
+    Show the bulk div
+    */
+    let bulk_div = document.querySelector("#"+id);
+    if (bulk_div.style.display=="")
+        bulk_div.style.display="block"
+    else if(bulk_div.style.display=="block"){
+        bulk_div.style.display=""
+        inject_array_db()
+    }
+}
 function show_motivation_div(id){
     /*
     Show the motivation div

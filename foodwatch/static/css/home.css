@@ -157,8 +157,33 @@ font-family: sans-serif;
 .motivation_div p {
     padding-left: 30px;
 }
+
 .motivation_div img{
    padding-left: 30px;
 
+}
+
+#bulk_textarea{
+    width: 90%;
+    height: 90%;
+    border: none;
+    top: 3%;
+    right: 20px;
+    position: absolute;
+}
+
+.bulk_add{
+    left: 30px;
+    bottom: -40%;
+    z-index: 1000;
+    border-radius: 10px;
+    position: absolute;
+    display:none;
+    width: 85%;
+    height: 40%;
+    background-color: white;
+
+    border-width:2px;
+    box-shadow: 10px -1px 36px 1px rgba(0,0,0,0.75);
 
 }

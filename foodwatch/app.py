@@ -422,6 +422,5 @@ with open('tmp', 'r') as temp_var:
         app = create_app(dbms="mysql")
 
 
-
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
