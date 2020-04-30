@@ -13,3 +13,8 @@ The CIpipline is realized with azure devops.
 ##Useful cmd
 chrome://inspect/#devices
 Screen size on smartphone: 320 x 544 #http://jsfiddle.net/jermartin77/8wFMh/
+
+
+#Multi user
+* Changed sqlite3 :done
+* Adpation of front-end
