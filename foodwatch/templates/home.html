@@ -28,10 +28,10 @@
   </p>
 <ul class="nav_mo_ca">
   <li>
-    <input class="nav_input" type="button" value="Cal ratio" onclick="calculate_ratio(this)">
+    <input id="btn_cal_ratio" class="nav_input" type="button" value="Cal ratio" onclick="calculate_ratio(this)">
   </li>
   <li>
-    <input class="nav_input " type="button" value="Motiviation" onclick="show_motivation_div('motivation_div')">
+    <input id="btn_motiv" class="nav_input " type="button" value="Motiviation" onclick="show_motivation_div('motivation_div')">
   </li>
 </ul>
   <div id="motivation_div" onclick="hide_motivation_div(this)" class="motivation_div">
@@ -83,10 +83,10 @@
   <p id="msg_db"></p>
   <ul class="nav_mo_ca">
   <li>
-    <input class="add_btn" type="button" value="Add" onclick="post_insert_data()">
+    <input class="btn_add" type="button" value="Add" onclick="post_insert_data()">
   </li>
   <li>
-    <input class="nav_input " type="button" value="Bulk add"
+    <input id="btn_bulk" class="nav_input " type="button" value="Bulk add"
            onclick='show_bulk_add("bulk_add")'>
 
   </li>

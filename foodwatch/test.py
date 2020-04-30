@@ -188,36 +188,56 @@ class Backend(Foodwatchgw_basic):
 class Frontend(Foodwatchgw_basic):
 
 
-    def test_home_add_btn(self):
+    def test_home_bgn(self):
+        "Tests all buttons on the home.html"
         driver_wait=30
+
         for el in [[self.admin,"Successfully submitted to database"]
                     ,[self.viewer,'Permission check fail. The person doenst has the required permission']]:
-            driver = webdriver.Chrome("foodwatch/chromedriver")
-            driver.get("localhost:5000")
-            login_btn = driver.find_element_by_id("loginlink")
-            login_btn.click()
-            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
-            email_input = driver.find_element_by_id("1-email")
-            email_input.send_keys(el[0]["email"])
-            pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
-            pwd_input.send_keys(el[0]["pwd"])
-            login_span = driver.find_element_by_class_name("auth0-label-submit")
-            login_span.click()
-            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "percent")))
-            el[0]["jwt_token"] = driver.execute_script("return localStorage.getItem('jwt')")
-            '#.Step: Enter food name'
-            food_name = driver.find_element_by_id("input_name")
-            food_name.send_keys("Orange")
-            '#.Step: Enter food cal'
-            food_cal = driver.find_element_by_id("input_cal")
-            food_cal.send_keys("150")
-            '#.Step: Click add btn'
-            add_btn = driver.find_element_by_class_name("add_btn")
-            add_btn.click()
-            WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "msg_db")))
-            msg_db = driver.find_element_by_id("msg_db")
-            with self.subTest(el[0]):
-                self.assertEqual(msg_db.text, el[1])
+            for btn in ["btn_add", "btn_bulk"]:
+                driver = webdriver.Chrome("foodwatch/chromedriver")
+                driver.get("localhost:5000")
+                login_btn = driver.find_element_by_id("loginlink")
+                login_btn.click()
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
+                email_input = driver.find_element_by_id("1-email")
+                email_input.send_keys(el[0]["email"])
+                pwd_input = driver.find_element_by_xpath("//input[@placeholder='your password']")
+                pwd_input.send_keys(el[0]["pwd"])
+                login_span = driver.find_element_by_class_name("auth0-label-submit")
+                login_span.click()
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "percent")))
+                el[0]["jwt_token"] = driver.execute_script("return localStorage.getItem('jwt')")
+                '#.Step: Enter food name'
+                food_name = driver.find_element_by_id("input_name")
+                food_name.send_keys("Orange")
+                '#.Step: Enter food cal'
+                food_cal = driver.find_element_by_id("input_cal")
+                food_cal.send_keys("150")
+                '#.Step: Click add btn'
+                add_btn = driver.find_element_by_class_name(btn)
+                add_btn.click()
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "msg_db")))
+                msg_db = driver.find_element_by_id("msg_db")
+                with self.subTest(el[0]):
+                    self.assertEqual(msg_db.text, el[1])
+                '#Test btn cal ratio'
+                btn_cal_ratio = driver.find_element_by_id("btn_cal_ratio")
+                btn_cal_ratio.click()
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.CLASS_NAME, "cal_output")))
+                with self.subTest("btn_cal_ratio"):
+                    '#If btn_cal_ratio works the will be an output in cal_output'
+                    input_cal_output = driver.find_element_by_id("cal_output")
+                    self.assertTrue(input_cal_output.text!="" )
+                '#Test btn motivation'
+                btn_motiv = driver.find_element_by_id("btn_motiv")
+                btn_motiv.click()
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.CLASS_NAME, "motivation_div")))
+                with self.subTest("btn_motiv"):
+                    motivation_div = driver.find_element_by_id("motivation_div")
+                    '# The value of display should be none, underwise it is not visible'
+                    display_value = motivation_div.value_of_css_property("display")
+                    self.assertEqual(display_value,"" )
             driver.close()
 
 if __name__ == '__main__':
