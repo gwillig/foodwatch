@@ -79,8 +79,8 @@ body{
         }
         .background_div img{
             position: absolute;
-            left: -75px;
-            height: 650px;
+            left: -40%;
+            height: 125%;
             top: -70px;
         }
 
