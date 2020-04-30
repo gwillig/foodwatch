@@ -1,14 +1,39 @@
+function get_username(bearer_str){
+     /*
+     @description:
+        Gets the user_information
+     @args:
+        bearer_str(str): user token
+     return:
+        None
+     */
+     fetch('https://gwillig.eu.auth0.com/userinfo',{
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
+        }})
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+          localStorage["email"]=data.email
+          get_data_today(data.email)
+      });
 
-function get_data_today(){
+}
+
+function get_data_today(user_email){
      /*
      @description:
         Gets all records of current day from the database.
         Then it execute the function  proc_backend
      @args:
+        user_email(string): e.g. gustavwillig@gmail.com
      return:
         None
      */
-     fetch('/data_today')
+     fetch('/data_today/'+user_email)
       .then((response) => {
         return response.json();
       })
@@ -578,10 +603,14 @@ function jwt_localStorage(){
         let access_token = fragment[1]
         localStorage.setItem('jwt', `bearer ${access_token}`);
         console.log("Saved jwt to localStorage")
+
+       return `bearer ${access_token}`
     }
 
 
 }
+
+
 
 function get_jwt(localStorage_jwt=true){
     /*
@@ -595,7 +624,7 @@ function get_jwt(localStorage_jwt=true){
         let url_string  = window.location.href
         const fragment = window.location.hash.substr(1).split('&')[0].split('=');
         let access_token = fragment[1];
-        return `bearer ${access_token}`
+        return get_username(`bearer ${access_token}`)
     }
     else{
         return localStorage["jwt"]

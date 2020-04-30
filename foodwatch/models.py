@@ -13,33 +13,37 @@ db = SQLAlchemy()
 def insert_data(db):
     a1 = Food(name="Orange_beson", timestamp_obj=datetime.utcfromtimestamp(1580000003),
               timestamp_unix=1580000003,
-              calorie=200)
+              calorie=200,user_email="gustavwillig@gmail.com")
 
     a2 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580100003),
               timestamp_unix=1580100003,
-              calorie=300)
+              calorie=300,user_email="gustavwillig@gmail.com")
     a3 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580200003),
               timestamp_unix=1580200003,
-              calorie=400)
+              calorie=400,user_email="gustavwillig@gmail.com")
     a4 = Food(name="Orange", timestamp_obj=datetime.utcfromtimestamp(1580300003),
               timestamp_unix=1580300003,
-              calorie=500)
+              calorie=500,user_email="gustavwillig@gmail.com")
     a5 = Food(name="Banana", timestamp_obj=datetime.utcfromtimestamp(1580300003),
               timestamp_unix=1580300003,
-              calorie=500)
+              calorie=500,user_email="gustavwillig@gmail.com")
 
     m1 = Misc(amount_steps=1000, timestamp_obj=datetime.utcfromtimestamp(1580000003),
               timestamp_unix=1580000003,amount_weight=89,
+              user_email="gustavwillig@gmail.com"
               )
     m2 = Misc(amount_steps=1100, timestamp_obj=datetime.utcfromtimestamp(1580100003),
               timestamp_unix=1580100003,amount_weight=90,
+              user_email="gustavwillig@gmail.com"
               )
     m3 = Misc(amount_steps=1200, timestamp_obj=datetime.utcfromtimestamp(1580200003),
               timestamp_unix=1580200003,amount_weight=91,
+              user_email="gustavwillig@gmail.com"
               )
 
     m4 = Misc(amount_steps=1300, timestamp_obj=datetime.utcfromtimestamp(1580300003),
               timestamp_unix=1580300003, amount_weight=92,
+              user_email="gustavwillig@gmail.com"
               )
     print("data injected!")
     hm1 = Home_misc(total_calories=1600)
@@ -68,7 +72,7 @@ class Misc(db.Model):
     timestamp_obj = db.Column(db.DateTime)
     amount_weight = db.Column(db.Float)
     amount_steps = db.Column(Integer)
-
+    user_email = db.Column(db.String(100))
 class Food(db.Model):
     __tablename__ = 'food'
 
@@ -77,7 +81,7 @@ class Food(db.Model):
     timestamp_unix = db.Column(db.Float)
     timestamp_obj = db.Column(db.DateTime)
     calorie = db.Column(Integer)
-
+    user_email = db.Column(db.String(100))
 
     def __repr__(self):
         '1.Step: Get all actors which were involved in move'

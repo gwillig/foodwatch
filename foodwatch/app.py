@@ -56,13 +56,14 @@ def create_app(dbms="sqlite3", test_config=None):
     @app.route("/home")
     def home():
 
-
-        datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
-
         df = pd.read_sql_table("food", db.session.bind)
         df_groupby = df.groupby(by=df["name"]).mean()
         df_mean = df_groupby.reset_index()
-        datalist_name = df_mean[["name", "calorie"]].values
+        '#1.Step: Check if empty'
+        if df_mean.shape[0]==0:
+            datalist_name=[["empty","0"],["empty","0"]]
+        else:
+            datalist_name = df_mean[["name", "calorie"]].values
 
         rank_dict = home_rank()
         total_calories = db.session.query(Home_misc.total_calories).first()
@@ -141,39 +142,52 @@ def create_app(dbms="sqlite3", test_config=None):
 
         '#2.2.Step: Exclude all day where calorie is below 1200'
         df_merge = df_merge_raw.loc[(df_merge_raw["calorie"]>1200)]
-        '#4.Step: Sort max'
-        df_sorted = df_merge.sort_values(by="ratio").reset_index(drop=True)
-        '#4.1.Step: Get the current day'
-        today = df_merge_raw.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
-        '#4.3.Step: Check if the value is under 1200, if so then df_merge_raw need to be used'
-        current_cal  = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index().loc[0, "calorie"]
-
-        if current_cal<1200:
-            df_current = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index()
-            df_current["index"]=99
+        '#3.1.Step: Check if any records exist'
+        if df_merge.shape[0]==0:
+            dict_empty={}
+            dict_empty["current"] =[ {'timestamp_obj':0,
+                                    'calorie':0,
+                                    'amount_weight':0,
+                                    'amount_steps':0,
+                                    'ratio_raw':0,
+                                    'ratio':0}]
+            return dict_empty
         else:
-            today = df_merge.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
-            '#4.2.Step: Select, and reset index to get the current rank as colum'
-            df_current = df_sorted.loc[(df_sorted.timestamp_obj == today)].reset_index()
-        df_current["timestamp_str"] = df_current["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
-        '#4.3.Step: Convert to dict'
-        rank_dict["current"]= df_current.T.to_dict()
-        '#5.1.Step: Get the best and worst days, exclude the current day'
-        df_ex = df_sorted.loc[(df_sorted.timestamp_obj != today)].reset_index()
-        df_ex["timestamp_str"] = df_ex["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
-        rank_dict["best"] = df_ex.iloc[0:3, ].T.to_dict()
-        '5.2.Step: .iloc[::-1] is to reverse the order'
-        rank_dict["worst"] = df_ex.tail(3).iloc[::-1].reset_index().T.to_dict()
+            '#4.Step: Sort max'
+            df_sorted = df_merge.sort_values(by="ratio").reset_index(drop=True)
+            '#4.1.Step: Get the current day'
+            today = df_merge_raw.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
+            '#4.3.Step: Check if the value is under 1200, if so then df_merge_raw need to be used'
+            current_cal  = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index().loc[0, "calorie"]
 
-        return rank_dict
+            if current_cal<1200:
+                df_current = df_merge_raw.loc[df_merge_raw["timestamp_obj"] == today].reset_index()
+                df_current["index"]=99
+            else:
+                today = df_merge.sort_values(by="timestamp_obj", ascending=False).reset_index().iloc[0, 1]
+                '#4.2.Step: Select, and reset index to get the current rank as colum'
+                df_current = df_sorted.loc[(df_sorted.timestamp_obj == today)].reset_index()
+            df_current["timestamp_str"] = df_current["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
+            '#4.3.Step: Convert to dict'
+            rank_dict["current"]= df_current.T.to_dict()
+            '#5.1.Step: Get the best and worst days, exclude the current day'
+            df_ex = df_sorted.loc[(df_sorted.timestamp_obj != today)].reset_index()
+            df_ex["timestamp_str"] = df_ex["timestamp_obj"].dt.strftime('%a - %d/%m/%Y')
+            rank_dict["best"] = df_ex.iloc[0:3, ].T.to_dict()
+            '5.2.Step: .iloc[::-1] is to reverse the order'
+            rank_dict["worst"] = df_ex.tail(3).iloc[::-1].reset_index().T.to_dict()
+
+            return rank_dict
 
 
-    @app.route("/data_today", methods=["GET"])
-    def get_data_today():
+    @app.route("/data_today/<username>", methods=["GET"])
+    def get_data_today(username):
         '#1.Step: Get all records for the current day'
         today = date.today()
         yesterday = today - timedelta(days=1)
-        query = db.session.query(Food).filter(Food.timestamp_obj > today).all()
+        query = db.session.query(Food).filter(Food.timestamp_obj > today)\
+                                      .filter(Food.user_email ==username)\
+                                      .all()
         query_result = [convert_sqlalchemy_todict(x) for x in query]
         '#2.Step: Get the current sum of the day'
         df = pd.DataFrame(query_result)
@@ -204,6 +218,7 @@ def create_app(dbms="sqlite3", test_config=None):
         return jsonify({
             'success': True,
         }, 204)
+    @app.route("/misc_data", methods=["POST"])
     @app.route("/misc_data", methods=["POST"])
     @requires_auth('post')
     def misc_data(payload):
@@ -267,6 +282,7 @@ def create_app(dbms="sqlite3", test_config=None):
         else:
             '#If empty it will not overwrite the excising value'
             el.pop("total_calorie_plan")
+
         '#3.Step: Save the new food row to the database'
         # Convert from epoch to unix
         el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
