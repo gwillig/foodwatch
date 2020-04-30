@@ -87,18 +87,13 @@
   </li>
   <li>
     <input id="btn_bulk" class="nav_input " type="button" value="Bulk add"
-           onclick='show_bulk_add("bulk_add")'>
+           onclick='show_bulk_add("bulk_add");insert_bulktextarea(`{{bulk_items[0]}}`)'>
 
   </li>
 </ul>
 </div>
 <div class="bulk_add" id="bulk_add">
-  <textarea id="bulk_textarea">
-    Proteinpulver_25_g,90
-    Leinsamen_20g,106
-    Apfelkuchen_Hälfte,50
-    Hafer_50_g,180
-  </textarea>
+  <textarea id="bulk_textarea"> </textarea>
 </div>
 <table id="today_food">
   <tr>

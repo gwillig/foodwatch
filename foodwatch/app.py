@@ -8,6 +8,7 @@ import numpy as np
 import os
 import time
 import json
+from flask_migrate import Migrate
 from foodwatch.helper import try_str_float
 from foodwatch.auth import requires_auth
 from foodwatch.own_abort_exception import abort
@@ -66,9 +67,11 @@ def create_app(dbms="sqlite3", test_config=None):
 
         rank_dict = home_rank()
         total_calories = db.session.query(Home_misc.total_calories).first()
+        bulk_items = db.session.query(Home_misc.bulk_items).first()
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
-                               total_calories=total_calories)
+                               total_calories=total_calories,
+                               bulk_items=bulk_items)
 
     #<path:path> is just for safe view "
     @app.route("/histor<path:path>")
@@ -257,12 +260,16 @@ def create_app(dbms="sqlite3", test_config=None):
 
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
+        '#1.1.Step: If bulk_items is in fetch, write to db'
+        if "bulk_items" in el.keys():
+            hm1 = db.session.query(Home_misc).first()
+            hm1.bulk_items = el.pop("bulk_items")
         '#1.1.Step: If name is empty or calorie is NaN => return!!'
         if el["name"]==None or try_str_float(el["calorie"])==False:
             abort(400)
         #2.Step: Overwrite the current total cal amount'
-        hm1 = db.session.query(Home_misc).first()
         if el["total_calorie_plan"]!= None:
+            hm1 = db.session.query(Home_misc).first()
             hm1.total_calories = el.pop("total_calorie_plan")
         else:
             '#If empty it will not overwrite the excising value'

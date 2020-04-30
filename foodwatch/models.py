@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import relationship, backref
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -50,6 +51,7 @@ def setup_db(app,database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
+    migrate = Migrate(app, db)
     db.init_app(app)
     db.create_all()
     if len(db.session.query(Food).all())<1:
@@ -60,6 +62,7 @@ class Home_misc(db.Model):
     __table__name="home_misc"
     id = db.Column(db.Integer, primary_key=True)
     total_calories= db.Column(Integer)
+    bulk_items = db.Column(db.String(1000),default="Dummy")
 
 class Misc(db.Model):
     __table__name ='weights'

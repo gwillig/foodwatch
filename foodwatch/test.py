@@ -224,7 +224,6 @@ class Frontend(Foodwatchgw_basic):
                 '#Test btn cal ratio'
                 btn_cal_ratio = driver.find_element_by_id("btn_cal_ratio")
                 btn_cal_ratio.click()
-                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.CLASS_NAME, "cal_output")))
                 with self.subTest("btn_cal_ratio"):
                     '#If btn_cal_ratio works the will be an output in cal_output'
                     input_cal_output = driver.find_element_by_id("cal_output")
@@ -237,7 +236,7 @@ class Frontend(Foodwatchgw_basic):
                     motivation_div = driver.find_element_by_id("motivation_div")
                     '# The value of display should be none, underwise it is not visible'
                     display_value = motivation_div.value_of_css_property("display")
-                    self.assertEqual(display_value,"" )
+                    self.assertEqual(display_value,"block" )
             driver.close()
 
 if __name__ == '__main__':

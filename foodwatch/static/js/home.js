@@ -264,7 +264,8 @@ function inject_array_db(){
     */
     //1.Step: The the values from the textarea
     let textarea  = document.querySelector("#bulk_textarea")
-    let textarea_array = textarea.value.replace(/\r\n/g,"\n").split("\n");
+    let bulk_items = textarea.value
+    let textarea_array = bulk_items.replace(/\r\n/g,"\n").split("\n");
     let array_finish = textarea_array.map((el)=>el.split(","))
     let total_calorie_plan = document.querySelector("#total_calorie").value;
     for([food_name,calorie] of array_finish){
@@ -275,14 +276,25 @@ function inject_array_db(){
           timestamp_epoch: Date.now()+7200000,
           name: food_name,
           calorie: calorie,
-          total_calorie_plan:total_calorie_plan
+          total_calorie_plan:total_calorie_plan,
+          bulk_items:bulk_items
       })
     }
 
     }
 
+function insert_bulktextarea(content){
 
+    /*
+    @description
+        The content for bulk textarea is a string, because
+         line breaks (\n\r?) are not the same as HTML <br/> tags
+         it is neccessary to set the value via js
+    @args:
 
+    */
+    document.querySelector("#bulk_textarea").value = content
+}
 function post_insert_data(){
   /*
   @description:
