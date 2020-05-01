@@ -262,6 +262,9 @@ def create_app(dbms="sqlite3", test_config=None):
             if el["bulk_items"] == "":
                 hm1 = db.session.query(Home_misc).first()
                 hm1.bulk_items = el.pop("bulk_items")
+            else:
+                '#1.3.Step: If empty it will not overwrite the excising value'
+                el.pop("bulk_items")
         '#1.1.Step: Tests if name,calorie is in fetch'
         if "name" in el.keys() and "calorie" in el.keys():
             '#2.1.Step: If name is empty or calorie is NaN => return!!'
