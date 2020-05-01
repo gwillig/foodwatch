@@ -112,8 +112,7 @@ function convert_unix_datatime(timestamp,unix=true){
   }
 
   let datetime_string =   date_obj.getHours() + ":"
-              + date_obj.getMinutes()+ ":"
-            + date_obj.getSeconds();
+                        + date_obj.getMinutes()
 
   return datetime_string
 }
@@ -283,6 +282,16 @@ function inject_array_db(){
 
     }
 
+function last_time_eat(){
+    /*
+        @description:
+        Calculate and shows the last time, when something was eaten
+    */
+    //1.Step: Get table today_food
+    table_today = document.querySelector("#today_food")
+    //1.1.Steo;
+    table_today.querySelector("tr:nth-child(2)")
+}
 function insert_bulktextarea(content){
 
     /*
@@ -326,7 +335,7 @@ function insert_new_row(timestamp_epoch,food_name,calorie,db_id){
     @return
     */
     //1.Step: Get the table today_food by id
-    table_today = document.querySelector("#today_food")
+    let table_today = document.querySelector("#today_food")
     //2.Step: Insert a empty row
     row = table_today.insertRow(1);
 
