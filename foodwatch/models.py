@@ -62,7 +62,13 @@ class Home_misc(db.Model):
     __table__name="home_misc"
     id = db.Column(db.Integer, primary_key=True)
     total_calories= db.Column(Integer)
-    bulk_items = db.Column(db.String(1000),default="Dummy")
+    default_value_bulk_items="""
+                                 Proteinpulver_25_g,90
+                                 Leinsamen_20g,106
+                                 Apfelkuchen_Hälfte,50
+                                 Hafer_50_g,180
+                                """
+    bulk_items = db.Column(db.String(1000),default=default_value_bulk_items)
 
 class Misc(db.Model):
     __table__name ='weights'

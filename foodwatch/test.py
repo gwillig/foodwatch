@@ -217,7 +217,6 @@ class Frontend(Foodwatchgw_basic):
                 '#.Step: Click add btn'
                 add_btn = driver.find_element_by_class_name(btn)
                 add_btn.click()
-                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "msg_db")))
                 msg_db = driver.find_element_by_id("msg_db")
                 with self.subTest(el[0]):
                     self.assertEqual(msg_db.text, el[1])
