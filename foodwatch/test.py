@@ -215,10 +215,12 @@ class Frontend(Foodwatchgw_basic):
                 food_cal = driver.find_element_by_id("input_cal")
                 food_cal.send_keys("150")
                 '#.Step: Click add btn'
-                add_btn = driver.find_element_by_class_name(btn)
+                add_btn = driver.find_element_by_id(btn)
                 add_btn.click()
-                msg_db = driver.find_element_by_id("msg_db")
                 with self.subTest(el[0]):
+                    WebDriverWait(driver, driver_wait).until(
+                        EC.text_to_be_present_in_element((By.ID, "msg_db"), el[1]))
+                    msg_db = driver.find_element_by_id("msg_db")
                     self.assertEqual(msg_db.text, el[1])
                 '#Test btn cal ratio'
                 btn_cal_ratio = driver.find_element_by_id("btn_cal_ratio")
@@ -230,12 +232,27 @@ class Frontend(Foodwatchgw_basic):
                 '#Test btn motivation'
                 btn_motiv = driver.find_element_by_id("btn_motiv")
                 btn_motiv.click()
-                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.CLASS_NAME, "motivation_div")))
                 with self.subTest("btn_motiv"):
+                    WebDriverWait(driver, driver_wait).until(
+                        EC.element_to_be_clickable((By.CLASS_NAME, "motivation_div")))
                     motivation_div = driver.find_element_by_id("motivation_div")
                     '# The value of display should be none, underwise it is not visible'
                     display_value = motivation_div.value_of_css_property("display")
                     self.assertEqual(display_value,"block" )
+                with self.subTest("close_bulk_div"):
+                    '#.Step: Click the bulk btn'
+                    add_btn = driver.find_element_by_id("btn_bulk")
+                    add_btn.click()
+                    '#.Step: Wait until the close_bulk p is clickable'
+                    WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "close_bulk_div")))
+                    close_bulk_p = driver.find_element_by_id("close_bulk_div")
+                    close_bulk_p.click()
+                    '# The value of display should be none, underwise it is not visible'
+                    bulk_div = driver.find_element_by_id("bulk_div")
+                    display_value = bulk_div.value_of_css_property("display")
+                    self.assertEqual(display_value,"none" )
+
+
             driver.close()
 
 if __name__ == '__main__':
