@@ -56,10 +56,6 @@ def create_app(dbms="sqlite3", test_config=None):
 
     @app.route("/home")
     def home():
-
-
-        datalist_name = [el[0] for el in db.session.query(Food.name).distinct().all()]
-
         df = pd.read_sql_table("food", db.session.bind)
         df_groupby = df.groupby(by=df["name"]).mean()
         df_mean = df_groupby.reset_index()
@@ -262,30 +258,35 @@ def create_app(dbms="sqlite3", test_config=None):
         el = request.get_json()["data"]
         '#1.1.Step: If bulk_items is in fetch, write to db'
         if "bulk_items" in el.keys():
-            hm1 = db.session.query(Home_misc).first()
-            hm1.bulk_items = el.pop("bulk_items")
-        '#1.1.Step: If name is empty or calorie is NaN => return!!'
-        if el["name"]==None or try_str_float(el["calorie"])==False:
-            abort(400)
-        #2.Step: Overwrite the current total cal amount'
-        if el["total_calorie_plan"]!= None:
-            hm1 = db.session.query(Home_misc).first()
-            hm1.total_calories = el.pop("total_calorie_plan")
+            '#1.2.Step: If empty it will not overwrite the excising value'
+            if el["bulk_items"] == "":
+                hm1 = db.session.query(Home_misc).first()
+                hm1.bulk_items = el.pop("bulk_items")
+        '#1.1.Step: Tests if name,calorie is in fetch'
+        if "name" in el.keys() and "calorie" in el.keys():
+            '#2.1.Step: If name is empty or calorie is NaN => return!!'
+            if el["name"]==None or try_str_float(el["calorie"])==False:
+                abort(400)
+            '#2.2.Step: Overwrite the current total cal amount'
+            if el["total_calorie_plan"]!= None:
+                hm1 = db.session.query(Home_misc).first()
+                hm1.total_calories = el.pop("total_calorie_plan")
+            else:
+                '#If empty it will not overwrite the excising value'
+                el.pop("total_calorie_plan")
+            '#3.Step: Save the new food row to the database'
+            # Convert from epoch to unix
+            el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
+            del (el["timestamp_epoch"])
+            el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
+            f1 = Food(**el)
+            db.session.add(f1)
+            db.session.commit()
+            return jsonify({
+                'success': True,
+            }, 204)
         else:
-            '#If empty it will not overwrite the excising value'
-            el.pop("total_calorie_plan")
-        '#3.Step: Save the new food row to the database'
-        # Convert from epoch to unix
-        el["timestamp_unix"] = round(int(el["timestamp_epoch"]) / 1000)
-        del (el["timestamp_epoch"])
-        el["timestamp_obj"] = datetime.utcfromtimestamp(el["timestamp_unix"])
-        f1 = Food(**el)
-        db.session.add(f1)
-        db.session.commit()
-
-        return jsonify({
-            'success': True,
-        }, 204)
+            abort(400)
 
     @app.route("/data_today", methods=["Delete"])
     @requires_auth('delete')
