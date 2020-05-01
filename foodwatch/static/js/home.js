@@ -507,25 +507,34 @@ function hide_motivation_div(self_div){
 
 
 }
+function hide_bulk_div(x){
+    /*
+    @description:
+        Hides the bulk_div
+    @args:
+        x(html-object): e.g. p tag #close_bulk_div
+    */
+    x.closest("#bulk_div").style.display="none"
 
-function show_bulk_add(id){
+}
+function show_bulk_add(id_div){
     /*
     Show the bulk div
     */
-    let bulk_div = document.querySelector("#"+id);
-    if (bulk_div.style.display=="")
+    let bulk_div = document.querySelector("#"+id_div);
+    if ((bulk_div.style.display=="")||bulk_div.style.display=="none")
         bulk_div.style.display="block"
     else if(bulk_div.style.display=="block"){
         bulk_div.style.display=""
         inject_array_db()
     }
 }
-function show_motivation_div(id){
+function show_motivation_div(id_div){
     /*
     Show the motivation div
     */
 
-     document.querySelector("#"+id).style.display="block"
+     document.querySelector("#"+id_div).style.display="block"
 
 
 

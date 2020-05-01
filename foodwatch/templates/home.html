@@ -87,13 +87,14 @@
   </li>
   <li>
     <input id="btn_bulk" class="nav_input " type="button" value="Bulk add"
-           onclick='show_bulk_add("bulk_add");insert_bulktextarea(`{{bulk_items[0]}}`)'>
+           onclick='show_bulk_add("bulk_div");insert_bulktextarea(`{{bulk_items[0]}}`)'>
 
   </li>
 </ul>
 </div>
-<div class="bulk_add" id="bulk_add">
+<div class="bulk_div" id="bulk_div">
   <textarea id="bulk_textarea"> </textarea>
+  <p onclick="hide_bulk_div(this)" id="close_bulk_div">&#10060</p>
 </div>
 <table id="today_food">
   <tr>

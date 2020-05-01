@@ -82,6 +82,18 @@ font-family: sans-serif;
   width: 80%;
   font-size: x-large;
 }
+
+#close_bulk_div{
+    right: 10%;
+    z-index: 100;
+    position: absolute;
+}
+
+#close_bulk_div:hover{
+    cursor: pointer;
+    font-size: large;
+}
+
 .btn_add{
   display: block;
 
@@ -164,6 +176,7 @@ font-family: sans-serif;
 }
 
 #bulk_textarea{
+    font-size: x-large;
     width: 90%;
     height: 90%;
     border: none;
@@ -172,7 +185,7 @@ font-family: sans-serif;
     position: absolute;
 }
 
-.bulk_add{
+.bulk_div{
     left: 30px;
     bottom: -40%;
     z-index: 1000;
@@ -190,7 +203,7 @@ font-family: sans-serif;
 
 @media screen and (min-width: 600px) {
 
-    .bulk_add{
+    .bulk_div{
         bottom: 0;
 
     }
