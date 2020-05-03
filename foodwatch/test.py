@@ -213,8 +213,11 @@ class Frontend(Foodwatchgw_basic):
                 food_name.send_keys("Orange")
                 '#.Step: Enter food cal'
                 food_cal = driver.find_element_by_id("input_cal")
+                '#.Step: '
+                food_cal.clear()
                 food_cal.send_keys("150")
                 '#.Step: Click add btn'
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, btn)))
                 add_btn = driver.find_element_by_id(btn)
                 add_btn.click()
                 with self.subTest(el[0]):
@@ -239,6 +242,7 @@ class Frontend(Foodwatchgw_basic):
                     '# The value of display should be none, underwise it is not visible'
                     display_value = motivation_div.value_of_css_property("display")
                     self.assertEqual(display_value,"block" )
+                    motivation_div.click()
                 with self.subTest("close_bulk_div"):
                     '#.Step: Click the bulk btn'
                     add_btn = driver.find_element_by_id("btn_bulk")

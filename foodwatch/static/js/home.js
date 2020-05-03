@@ -37,7 +37,7 @@ function proc_backend(data){
 
     //Process every element of the data array. Every element is an record in the database
     data[0].food.forEach(function(el){
-        insert_new_row(el.timestamp_unix,el.name,el.calorie,el.db_id)
+        insert_new_row(el.timestamp_unix,el.name,el.calorie,el.id)
     });
 
 
