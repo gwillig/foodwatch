@@ -37,34 +37,7 @@ function proc_backend(data){
 
     //Process every element of the data array. Every element is an record in the database
     data[0].food.forEach(function(el){
-        //1.Step: Get the table today_food by id
-        table_today = document.querySelector("#today_food")
-        //2.Step: Insert a empty row
-        row = table_today.insertRow(1);
-
-        //3.Step: Inject a cell into the empty row
-        //3.1.Step: Inject a cell with the timestampe (in unix)
-        let cell_Timestamp = row.insertCell(0);
-        cell_Timestamp.innerHTML = el.timestamp_unix;
-        cell_Timestamp.className="td_timestamp";
-        //3.1.Step: Inject a cell with the timestampe (in unix)
-        let cell_Time = row.insertCell(1);
-        cell_Time.innerHTML = convert_unix_datatime(el.timestamp_unix);
-        cell_Time.className ="td_food_time";
-        //3.2.Step: Inject a cell name of the food
-        let cell_Name = row.insertCell(2);
-        cell_Name.innerHTML = el.name;
-        cell_Name.className="td_food_name"
-        //3.3.Step: Inject a cell name of the food
-        let cell_cal = row.insertCell(3);
-        cell_cal.innerHTML = el.calorie;
-        cell_cal.className = "td_food_amount";
-        //3.4.Step: Add red x
-        let cell_del = row.insertCell(4);
-        cell_del.outerHTML =`<td onclick="delete_current_row(this)" data-database-id="${el.id}"=>&#10060</td>`
-        cell_cal.className = "td_food_amount";
-
-
+        insert_new_row(el.timestamp_unix,el.name,el.calorie,el.db_id)
     });
 
 
@@ -287,11 +260,36 @@ function last_time_eat(){
         @description:
         Calculate and shows the last time, when something was eaten
     */
-    //1.Step: Get table today_food
-    table_today = document.querySelector("#today_food")
-    //1.1.Steo;
-    table_today.querySelector("tr:nth-child(2)")
+    setInterval(function(){
+        //1.Step: Get table today_food
+        table_today = document.querySelector("#today_food")
+        //1.1.Get the first cell of the row with the datetime in unix
+        let last_time_meal = table_today.rows[1].cells[0].textContent;
+        if (last_time_meal!=""){
+            //1.2.Convert to epoch
+            last_time_meal_epoch = last_time_meal*1000 ;
+            // Add offset to time now
+            let time_now = Date.now()+7200000
+            //1.2. Cal diff in h
+            let diff = time_now-last_time_meal_epoch;
+            let diff_h = diff/1000/60/60;
+            //1.3.Step: Round to mins
+            let diff_h_round = Math.round(diff_h*100)/100
+            //2.Step: change the innerText of div_last_time p
+            document.querySelector("#div_last_time p").innerText = `Time since last meal: ${diff_h_round} h`
+            //3.Step: Check if the differnce is smaller 1 h
+            if (diff_h_round<1){
+               document.querySelector("#div_last_time p").style.cssText ="color:red;font-size:large"
+            }
+            else{
+            document.querySelector("#div_last_time p").style.cssText ="color:green"
+            }
+        }
+    }, 3000)
+
 }
+
+
 function insert_bulktextarea(content){
 
     /*
@@ -327,7 +325,7 @@ function post_insert_data(){
   },
   unix=false)
 }
-function insert_new_row(timestamp_epoch,food_name,calorie,db_id){
+function insert_new_row(timestamp_unix,food_name,calorie,db_id){
     /*
     @description:
     Convert the input from name and calorie to the row in the table #today_food
@@ -342,11 +340,11 @@ function insert_new_row(timestamp_epoch,food_name,calorie,db_id){
     //3.Step: Inject a cell into the empty row
     //3.1.Step: Inject a cell with the timestampe (in unix)
     let cell_Timestamp = row.insertCell(0);
-    cell_Timestamp.innerHTML = timestamp_epoch;
+    cell_Timestamp.innerHTML = timestamp_unix;
     cell_Timestamp.className="td_timestamp";
     //3.1.Step: Inject a cell with the timestampe (in unix)
     let cell_Time = row.insertCell(1);
-    cell_Time.innerHTML = convert_unix_datatime(timestamp_epoch,unix=false);
+    cell_Time.innerHTML = convert_unix_datatime(timestamp_unix,unix=true);
     cell_Time.className ="td_food_time";
     //3.2.Step: Inject a cell name of the food
     let cell_Name = row.insertCell(2);
@@ -367,6 +365,8 @@ function post_data_today(data_json,unix=true){
     @description:
         Function posts food data to the back end
     */
+    //1.step: Convert data_json.timestamp_epoch to unix
+    data_json.timestamp_unix = data_json.timestamp_epoch/1000
     let bearer_str  = get_jwt();
     fetch("/data_today", {
         mode:"cors",
@@ -387,7 +387,7 @@ function post_data_today(data_json,unix=true){
                 return response.text()
             }
             else{
-                insert_new_row(data_json.timestamp_epoch,data_json.name,data_json.calorie,9999)
+                insert_new_row(data_json.timestamp_unix,data_json.name,data_json.calorie,9999)
                return "ok"
             }
         })

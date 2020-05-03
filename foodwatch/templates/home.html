@@ -8,7 +8,7 @@
   <script type="text/javascript" src="{{ url_for('static', filename = 'js/home.js') }}?100"></script>
   <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/home.css')}}?100">
 </head>
-<body  onload="create_pieChart(6);get_data_today();jwt_localStorage()">
+<body  onload="create_pieChart(6);get_data_today();jwt_localStorage();last_time_eat()">
 {% include "header.html" %}
 <div class="chart-container">
 
@@ -97,7 +97,7 @@
   <p onclick="hide_bulk_div(this)" id="close_bulk_div">&#10060</p>
 </div>
 <div id="div_last_time">
-  <p>Test</p>
+  <p></p>
 </div>
 <table id="today_food">
   <tr>
