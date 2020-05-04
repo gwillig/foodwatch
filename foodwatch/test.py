@@ -3,7 +3,9 @@ import json
 import os
 import pandas as pd
 import sys
+from multiprocessing import Process
 from selenium import webdriver
+import threading
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -27,7 +29,18 @@ class Foodwatchgw_basic(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Define test variables and initialize app."""
+        '#1.Step: Start flask test server'
+        cls.app = create_app(dbms="sqlite3",test_config=True)
+        project_dir = os.path.dirname(os.path.abspath(__file__))
+        database_path = "sqlite:///{}".format(os.path.join(project_dir, "database_test.db"))
+        cls.db = setup_db(cls.app, database_path)
+        cls.client = cls.app.test_client
+        'Attention: in auth0 it must be included in the "Allowed Callback URLs" '
+        cls.host_port = "7000"
 
+        '#1.1.Step: Start test serer'
+        cls.test_server = Process(target=create_app().run, args=("0.0.0.0", cls.host_port))
+        cls.test_server.start()
         '#1.Step: Load env variables'
         for el in ["admin","viewer"]:
             if el[0] in os.environ.keys():
@@ -41,7 +54,7 @@ class Foodwatchgw_basic(unittest.TestCase):
         driver_wait=30
         for el in [cls.admin,cls.viewer]:
             driver = webdriver.Chrome("foodwatch/chromedriver")
-            driver.get("localhost:5000")
+            driver.get("localhost:" + cls.host_port)
             login_btn = driver.find_element_by_id("loginlink")
             login_btn.click()
             WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
@@ -54,13 +67,6 @@ class Foodwatchgw_basic(unittest.TestCase):
             WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "percent")))
             el["jwt_token"] = driver.execute_script("return localStorage.getItem('jwt')")
             driver.close()
-
-
-        cls.app = create_app(dbms="sqlite3",test_config=True)
-        project_dir = os.path.dirname(os.path.abspath(__file__))
-        database_path = "sqlite:///{}".format(os.path.join(project_dir, "database_test.db"))
-        cls.db = setup_db(cls.app, database_path)
-        cls.client = cls.app.test_client
 
     def tearDown(self):
         """Executed after reach test"""
@@ -196,7 +202,7 @@ class Frontend(Foodwatchgw_basic):
                     ,[self.viewer,'Permission check fail. The person doenst has the required permission']]:
             for btn in ["btn_add", "btn_bulk"]:
                 driver = webdriver.Chrome("foodwatch/chromedriver")
-                driver.get("localhost:5000")
+                driver.get("localhost:"+self.host_port)
                 login_btn = driver.find_element_by_id("loginlink")
                 login_btn.click()
                 WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "1-email")))
@@ -212,6 +218,7 @@ class Frontend(Foodwatchgw_basic):
                 food_name = driver.find_element_by_id("input_name")
                 food_name.send_keys("Orange")
                 '#.Step: Enter food cal'
+                WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "input_cal")))
                 food_cal = driver.find_element_by_id("input_cal")
                 '#.Step: '
                 food_cal.clear()
@@ -219,7 +226,8 @@ class Frontend(Foodwatchgw_basic):
                 '#.Step: Click add btn'
                 WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, btn)))
                 add_btn = driver.find_element_by_id(btn)
-                add_btn.click()
+                driver.execute_script(f"document.querySelector('#{btn}').click();")
+                driver.execute_script(f"document.querySelector('#{btn}').click();")
                 with self.subTest(el[0]):
                     WebDriverWait(driver, driver_wait).until(
                         EC.text_to_be_present_in_element((By.ID, "msg_db"), el[1]))
@@ -245,12 +253,11 @@ class Frontend(Foodwatchgw_basic):
                     motivation_div.click()
                 with self.subTest("close_bulk_div"):
                     '#.Step: Click the bulk btn'
-                    add_btn = driver.find_element_by_id("btn_bulk")
-                    add_btn.click()
+                    driver.execute_script(f"document.querySelector('#btn_bulk').click();")
                     '#.Step: Wait until the close_bulk p is clickable'
                     WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "close_bulk_div")))
                     close_bulk_p = driver.find_element_by_id("close_bulk_div")
-                    close_bulk_p.click()
+                    driver.execute_script(f"document.querySelector('#close_bulk_div').click();")
                     '# The value of display should be none, underwise it is not visible'
                     bulk_div = driver.find_element_by_id("bulk_div")
                     display_value = bulk_div.value_of_css_property("display")
@@ -259,5 +266,20 @@ class Frontend(Foodwatchgw_basic):
 
             driver.close()
 
+            self.test_server.terminate()
 if __name__ == '__main__':
     unittest.main()
+
+
+
+    def print_out():
+        import time
+        for i in range(10):
+            time.sleep(1)
+            print("hello world")
+
+
+
+    t = Process(target=print_out)
+    t.start()
+    t.terminate()

@@ -54,8 +54,12 @@
             let current_url = window.location.href
             let href='https://gwillig.eu.auth0.com/authorize?audience=foodwatchgw&response_type=token&client_id=YwBpDwZuXEuTNS5NKDJ54HR6DTOQN04l'
 
-            if (current_url.includes("localhost:")){
+            if (current_url.includes("localhost:5000")){
                 document.querySelector("#loginlink").href = href + "&redirect_uri=http://localhost:5000/home"
+            }
+            //Addresse of the testserver if a selenium test is running
+            else if(current_url.includes("localhost:7000")){
+                document.querySelector("#loginlink").href = href + "&redirect_uri=http://localhost:7000/home"
             }
             else {
                 document.querySelector("#loginlink").href = href + "&redirect_uri=https://foodwatchgw.herokuapp.com/home"
