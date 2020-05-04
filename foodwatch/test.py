@@ -256,7 +256,7 @@ class Frontend(Foodwatchgw_basic):
                     driver.execute_script(f"document.querySelector('#btn_bulk').click();")
                     '#.Step: Wait until the close_bulk p is clickable'
                     WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "close_bulk_div")))
-                    close_bulk_p = driver.find_element_by_id("close_bulk_div")
+                    cloclose_bulk_p = driver.find_element_by_id("close_bulk_div")
                     driver.execute_script(f"document.querySelector('#close_bulk_div').click();")
                     '# The value of display should be none, underwise it is not visible'
                     bulk_div = driver.find_element_by_id("bulk_div")

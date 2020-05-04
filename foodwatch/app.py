@@ -173,7 +173,7 @@ def create_app(dbms="sqlite3", test_config=None):
         today = date.today()
         yesterday = today - timedelta(days=1)
         query = db.session.query(Food).filter(Food.timestamp_obj > today)
-        query_sort = query.order_by(Food.timestamp_obj.desc()).all()
+        query_sort = query.order_by(Food.timestamp_obj.asc()).all()
         query_result = [convert_sqlalchemy_todict(x) for x in query_sort]
         '#2.Step: Get the current sum of the day'
         df = pd.DataFrame(query_result)
