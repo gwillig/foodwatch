@@ -93,7 +93,9 @@ font-family: sans-serif;
     cursor: pointer;
     font-size: large;
 }
-
+.add_input_fields{
+    margin:5px;
+}
 .btn_add{
   display: block;
 
@@ -199,6 +201,10 @@ font-family: sans-serif;
     box-shadow: 10px -1px 36px 1px rgba(0,0,0,0.75);
 
 }
+@media screen and (max-width: 600px) {
+
+
+}
 
 @media screen and (min-width: 600px) {
 
@@ -210,5 +216,8 @@ font-family: sans-serif;
     #percent{
         font-size:90px;
 
+    }
+    .chart-container{
+        width:50%;
     }
 }
