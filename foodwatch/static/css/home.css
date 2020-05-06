@@ -72,6 +72,7 @@ font-family: sans-serif;
 .input_fields{
   width: 85%;
   font-size: x-large;
+  margin-left: 10px;
 }
 
 .p_name{
