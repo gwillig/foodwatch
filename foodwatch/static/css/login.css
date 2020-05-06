@@ -1,4 +1,6 @@
-
+body{
+   background-color: aliceblue;
+}
 .background_div{
     position: absolute;
     z-index: -1;
