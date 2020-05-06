@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+
+p{
+    color:white;
+    position: absolute;
+}
+    #canvas {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+h1 {
+    color: white;
+    position: absolute;
+    left: 15px;
+    top: 20px;
+    font-size: xxx-large;
+    pointer-events: none;
+}
+body {
+  min-height: 100vh;
+  background: var(--fg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+:root {
+  --fg: ##ff0000;
+  --bg: #88bdd9;
+
+}
+
+/* Moving Text*/
+.ml2 {
+  font-weight: 900;
+  font-size: 3.5em;
+}
+
+.ml2 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+</style>
+
+<body>
+<canvas id="canvas"></canvas>
+<h1 class="ml2">Welcome to foodwatch</h1>
+<p>DON'T STOP until you`re PROUD </p>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script>
+    const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const cellSize = 30;
+const maxSize = 30;
+let mousePos = vec2.fromValues(innerWidth * 0.25, innerHeight * 0.5);
+let numThingsX;
+let numThingsY;
+let things;
+
+function drawThing(thing) {
+  const {pos, radius} = thing;
+  ctx.fillStyle = '#88bdd9';
+  ctx.beginPath();
+  ctx.arc(pos[0], pos[1], radius, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function loop() {
+  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  things.forEach(thing => {
+    const dist = vec2.dist(mousePos, thing.pos);
+    thing.radius = clamp(dist * dist * 0.0003 - 1, 0, maxSize);
+    drawThing(thing);
+  });
+  // For now I'm turning off the RAF loop because
+  // there are no ongoing animations.
+  // window.requestAnimationFrame(loop);
+}
+
+function makeThing(x, y) {
+  return {
+    pos: vec2.fromValues(x, y),
+    radius: 2,
+  };
+}
+
+function makeThings() {
+  things = [];
+  for (let i = 0; i < numThingsY; i += 1) {
+    for (let j = 0; j < numThingsX; j += 1) {
+      const thing = makeThing(j * cellSize + cellSize * 0.5, i * cellSize + cellSize * 0.5);
+      things.push(thing);
+    }
+  }
+}
+
+function sizeCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const canvasRect = canvas.getBoundingClientRect();
+  canvas.width = canvasRect.width * dpr;
+  canvas.height = canvasRect.height * dpr;
+  ctx.scale(dpr, dpr);
+}
+
+function handleResize() {
+  sizeCanvas();
+  numThingsX = Math.ceil(innerWidth / cellSize);
+  numThingsY = Math.ceil(innerHeight / cellSize);
+  makeThings();
+}
+window.addEventListener('resize', throttled(handleResize));
+
+function handleMouseMove(event) {
+  vec2.set(mousePos, event.clientX, event.clientY);
+  loop();
+}
+window.addEventListener('mousemove', throttled(handleMouseMove));
+
+// Kick it off
+handleResize();
+loop();
+
+// USEFUL FUNCTIONS ----------
+function throttled(fn) {
+  let didRequest = false;
+  return param => {
+    if (!didRequest) {
+      window.requestAnimationFrame(() => {
+        fn(param);
+        didRequest = false;
+      });
+      didRequest = true;
+    }
+  };
+}
+function clamp (value, min = 0, max = 1) {
+  return value <= min ? min : value >= max ? max : value;
+}
+
+</script>
+<script>
+    //Moving Text
+
+
+    var textWrapper = document.querySelector('.ml2');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml2 .letter',
+    scale: [4,1],
+    opacity: [0,1],
+    translateZ: 0,
+    easing: "easeOutExpo",
+    duration: 950,
+    delay: (el, i) => 70*i
+  }).add({
+    targets: '.ml2',
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
+</script>
+</body>
+</html>
