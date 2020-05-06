@@ -64,7 +64,7 @@
 <div id="input_fields">
   <p class="p_name">
       <label for>Name</label>
-      <input id="input_name add_input_fields " onchange="addCalorie()"  class="input_fields" list="list_name" />
+      <input id="input_name"  onchange="addCalorie()"  class="input_fields add_input_fields" list="list_name" />
 
       <datalist id="list_name">
          {% for el in datalist_name %}
@@ -74,7 +74,7 @@
   </p>
   <p>
     <label>Calorie</label>
-    <input  id="input_cal add_input_fields" class="input_fields" list="list_cal"/>
+    <input  id="input_cal" class="input_fields add_input_fields" list="list_cal"/>
     <datalist id="list_cal">
       <option value=50>
       <option value=100>
