@@ -321,16 +321,6 @@ def create_app(dbms="sqlite3", test_config=None):
 
         '#1.Step: Get all the data'
         el = request.get_json()["data"]
-        '#1.1.Step: If bulk_items is in fetch, write to db'
-        if "bulk_items" in el.keys():
-            '#1.2.Step: If empty it will not overwrite the excising value'
-            if el["bulk_items"] != "":
-                hm1 = db.session.query(Home_misc).first()
-                hm1.bulk_items = el.pop("bulk_items")
-                db.session.commit()
-            else:
-                '#1.3.Step: If empty it will not overwrite the excising value'
-                el.pop("bulk_items")
         '#1.1.Step: Tests if name,calorie is in fetch'
         if "name" in el.keys() and "calorie" in el.keys():
             '#2.1.Step: If name is empty or calorie is NaN => return!!'

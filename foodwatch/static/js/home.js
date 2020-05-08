@@ -249,7 +249,6 @@ function inject_array_db(){
           name: food_name,
           calorie: calorie,
           total_calorie_plan:total_calorie_plan,
-          bulk_items:bulk_items
       })
     }
 

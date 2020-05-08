@@ -6,6 +6,16 @@ body {
 
 }
 
+.btn_home{
+    border: none;
+    background-color: #34A7C1;
+    color: white;
+    padding: 14px 28px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: large
+}
 .chart-container {
   margin-left:5%;
   width:90%;
@@ -84,17 +94,6 @@ font-family: sans-serif;
   font-size: x-large;
 }
 
-#close_bulk_div{
-    right: 10%;
-    z-index: 100;
-    top: 15px;
-    position: absolute;
-}
-
-#close_bulk_div:hover{
-    cursor: pointer;
-    font-size: large;
-}
 .add_input_fields{
     margin:5px;
 }
@@ -178,16 +177,7 @@ font-family: sans-serif;
 
 }
 
-#bulk_textarea{
-    font-size: large;
-    width: 90%;
-    height: 40%;
-    border: none;
-    top: 3%;
-    right: 20px;
-    display: block;
-}
-
+/*Bulk div elements======*/
 .bulk_div{
     left: 10px;
     bottom: -40%;
@@ -198,23 +188,44 @@ font-family: sans-serif;
     width: 85%;
     height: 60%;
     background-color: white;
-
+    padding-left: 10px;
+    padding-top: 10px;
     border-width:2px;
     box-shadow: 10px -1px 36px 1px rgba(0,0,0,0.75);
 
 }
-.bulk_div input{
-    margin:15px
+
+#bulk_textarea{
+    display: block;
+    height: 40%;
+    border-style: solid;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
 }
 
+#close_bulk_div{
+    right: 10%;
+    z-index: 100;
+    top: 15px;
+    position: absolute;
+}
+
+#close_bulk_div:hover{
+    cursor: pointer;
+    font-size: large;
+}
 .bulk_div label{
     display:block;
-    margin:15px
+
 }
 
 .bulk_div  #bulk_slot{
     display:block;
-    margin:15px
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
 }
 
 
