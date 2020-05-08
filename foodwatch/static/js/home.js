@@ -303,19 +303,7 @@ function insert_bulktextarea(content){
     document.querySelector("#bulk_textarea").value = content
 }
 
-function save_bulk_items(content){
-
-    /*
-    @description
-        Saves the items in the bulk textarea to the slot
-    @args:
-
-    */
-    let bulk_slot = document.querySelector("#bulk_slot").value
-    let bulk_items = document.querySelector("#bulk_textarea").value
-}
-
-function load_bulk_items(content){
+function get_bulk_items(){
 
     /*
     @description
@@ -324,7 +312,66 @@ function load_bulk_items(content){
 
     */
     let bulk_slot = document.querySelector("#bulk_slot").value
+
+    fetch(`/bulk_items/${bulk_slot}`)
+    .then(function(response){
+                //Check status code
+                if(response.ok==false){
+                    //
+                    return response.text()
+                }
+                else{
+
+                   return response.json()
+                }
+            })
+    .then((data)=>{
+    document.querySelector("#bulk_textarea").value = data[0]["bulk_slot_items"]
+    })
+
+}
+
+function post_bulk_items(){
+
+    /*
+    @description
+        Saves the items in the bulk textarea to a slot
+    @args:
+
+    */
+    let bulk_slot = document.querySelector("#bulk_slot").value
     let bulk_items = document.querySelector("#bulk_textarea").value
+    let bearer_str  = get_jwt();
+    fetch(`/bulk_items`,{
+        mode:"cors",
+        method: "post",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        "bulk_items": bulk_items,
+        "bulk_slot":bulk_slot
+      })
+    })
+    .then(function(response){
+                //Check status code
+                if(response.ok==false){
+                    //
+                    return response.text()
+                }
+                else{
+
+                   return "Items successfuly posted to database"
+                }
+            })
+    .then((data)=>{
+    document.querySelector("#bulk_msg").innerText = data
+    })
+
 }
 function post_insert_data(){
   /*

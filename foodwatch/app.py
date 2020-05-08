@@ -63,11 +63,13 @@ def create_app(dbms="sqlite3", test_config=None):
 
         rank_dict = home_rank()
         total_calories = db.session.query(Home_misc.total_calories).first()
-        bulk_items = db.session.query(Home_misc.bulk_items).first()
+        bulk_items = db.session.query(Home_misc.bulk_items).first()[0]
+        '#2.1.Step: Convert bulk_items string into dict'
+        dict_bulk_items = json.loads(bulk_items)
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
                                total_calories=total_calories,
-                               bulk_items=bulk_items)
+                               bulk_items=dict_bulk_items["0"])
 
     #<path:path> is just for safe view "
     @app.route("/histor<path:path>")
@@ -78,28 +80,65 @@ def create_app(dbms="sqlite3", test_config=None):
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('history.html', prev_data=prev_data)
 
-    @app.route("/bulk_items",method="GET")
+    @app.route("/bulk_items/<string:slot>",methods=["GET"])
     def get_bulk_items(slot):
         """
         Get the bulk_items of a specific slot
         :param slot:
         :return:
         """
-        bulk_items = {"0": """Proteinpulver_25_g,90
-                 Leinsamen_20g,106
-                 Apfelkuchen_Hälfte,50
-                 Hafer_50_g,180""",
-                      "1": """Steak_25_g,80"""}
-        bulk_items_s = json.dumps(bulk_items)
+        '#1.Step: Get the bulk_items'
+        bulk_items  = db.session.query(Home_misc.bulk_items).first()[0]
+        '#2.1.Step: Convert string into dict'
+        dict_bulk_items = json.loads(bulk_items)
 
-        bulk_items  = db.session.query(Home_misc.bulk_items).first()
-        bulk_items = bulk_items_s
-        db.session.commit()
-        bulk_items_slot =bulk_items[bulk_items]
+        '#2.2.Step: Check if slot is in keys'
+        if slot in dict_bulk_items.keys():
+            '#2.3.Step: Get the items of the slot'
+            bulk_slot_items = dict_bulk_items[slot]
+        else:
+            bulk_slot_items = "No items saved to this slot"
 
         return jsonify({
             'success': True,
-            'bulk_items_slot': bulk_items_slot,
+            'bulk_slot_items': bulk_slot_items,
+        }, 200)
+    @app.route("/bulk_items",methods=["POST"])
+    def post_bulk_items():
+        """
+        Get the bulk_items of a specific slot
+        :param slot:
+        :return:
+        """
+        '#1.Step: Get the bulk_items and bulk_slot'
+        bulk_items_front = request.get_json()["bulk_items"]
+        bulk_slot = request.get_json()["bulk_slot"]
+        HM = db.session.query(Home_misc).first()
+        # "2.1.Step: Check if result is empty"
+        # bulk_items1={"0":"""
+        #                          Proteinpulver_25_g,90
+        #                          Leinsamen_20g,106
+        #                          Apfelkuchen_Hälfte,50
+        #                          Hafer_50_g,180
+        #                         """,
+        #             "1":"""
+        #                          Proteinpulver_25_g,90
+        #                          Leinsamen_20g,106
+        #                          Apfelkuchen_Hälfte,50
+        #                          Hafer_50_g,180
+        #                         """}
+        # HM.bulk_items=json.dumps(bulk_items1)
+        # db.session.commit()
+        '#2.2.Step: Convert string into dict'
+        dict_bulk_items = json.loads(HM.bulk_items)
+        '#2.2.Step: Replace the bulk_items of the slot'
+        dict_bulk_items[bulk_slot] = bulk_items_front
+        '#2.3.Step: Stringly the dict and save it to the database'
+        HM.bulk_items = json.dumps(dict_bulk_items)
+        db.session.commit()
+        return jsonify({
+            'success': True,
+            'msg': "bulk items successfuly saved",
         }, 200)
 
     @app.route("/misc")
