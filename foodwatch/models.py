@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship, backref
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
+import json
 
 
 db = SQLAlchemy()
@@ -42,10 +42,24 @@ def insert_data(db):
     m4 = Misc(amount_steps=1300, timestamp_obj=datetime.utcfromtimestamp(1580300003),
               timestamp_unix=1580300003, amount_weight=92,
               )
-    print("data injected!")
-    hm1 = Home_misc(total_calories=1600)
+
+    default_value_bulk_items = {"0": """
+                             Proteinpulver_25_g,90
+                             Leinsamen_20g,106
+                             Apfelkuchen_Hälfte,50
+                             Hafer_50_g,180
+                            """,
+                   "1": """
+                             Proteinpulver_25_g,90
+                             Leinsamen_20g,106
+                             Apfelkuchen_Hälfte,50
+                             Hafer_50_g,180
+                            """}
+    default_value_bulk_items = json.dumps(default_value_bulk_items)
+    hm1 = Home_misc(total_calories=1600,bulk_items=default_value_bulk_items)
     db.session.bulk_save_objects([hm1,a1,a2,a3,a4,a5,m1,m2,m3,m4])
     db.session.commit()
+    print("data injected!")
 
 def setup_db(app,database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
@@ -62,12 +76,19 @@ class Home_misc(db.Model):
     __table__name="home_misc"
     id = db.Column(db.Integer, primary_key=True)
     total_calories= db.Column(Integer)
-    default_value_bulk_items="""
-                                 Proteinpulver_25_g,90
-                                 Leinsamen_20g,106
-                                 Apfelkuchen_Hälfte,50
-                                 Hafer_50_g,180
-                                """
+    default_value_bulk_items = {"0": """
+                             Proteinpulver_25_g,90
+                             Leinsamen_20g,106
+                             Apfelkuchen_Hälfte,50
+                             Hafer_50_g,180
+                            """,
+                   "1": """
+                             Proteinpulver_25_g,90
+                             Leinsamen_20g,106
+                             Apfelkuchen_Hälfte,50
+                             Hafer_50_g,180
+                            """}
+    default_value_bulk_items = json.dumps(default_value_bulk_items)
     bulk_items = db.Column(db.String(1000),default=default_value_bulk_items)
 
 class Misc(db.Model):

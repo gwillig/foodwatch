@@ -34,6 +34,11 @@ class Foodwatchgw_basic(unittest.TestCase):
         project_dir = os.path.dirname(os.path.abspath(__file__))
         database_path = "sqlite:///{}".format(os.path.join(project_dir, "database_test.db"))
         cls.db = setup_db(cls.app, database_path)
+        cls.db.session.query(Misc).delete()
+        cls.db.session.query(Food).delete()
+        cls.db.session.query(Home_misc).delete()
+        insert_data(cls.db)
+
         cls.client = cls.app.test_client
         'Attention: in auth0 it must be included in the "Allowed Callback URLs" '
         cls.host_port = "7000"
@@ -71,7 +76,9 @@ class Foodwatchgw_basic(unittest.TestCase):
     def tearDown(self):
         """Executed after reach test"""
         pass
-
+    @classmethod
+    def teardownClass(cls):
+        os.remove("foodwatch/database_test.db")
     def setUp(self):
         """Executed before reach test"""
         '#.Step: Delete all records in database because the test change the data'
@@ -99,7 +106,34 @@ class Backend(Foodwatchgw_basic):
         # Check response
         self.assertEqual(response.status_code, 200)
 
-    #Need to be redone!
+    def test_get_data_today(self):
+
+        response = self.client().get('/data_today')
+        # Check response
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_bulk_items(self):
+
+        response = self.client().get('/bulk_items/1')
+        # Check response
+        self.assertEqual(response.status_code, 200)
+
+    def test_post_bulk_items(self):
+
+        """
+        Test post bulk_items for authorized user and unauthorized user
+
+        """
+        for k,v in {"jwt_auth":[self.admin["jwt_token"],200],"jwt_unauthorized":[self.viewer["jwt_token"],4011]}.items():
+            with self.subTest(k):
+                response = self.client().post('/bulk_items', json={"bulk_items": "Test_123","bulk_slot":"test"},
+                                                headers={'Content-Type': 'application/json',
+                                                                                  "Authorization": v[0]},
+                                                 content_type='application/json')
+                # Check response
+                self.assertEqual(response.status_code, v[1])
+
+
     def test_get_data_today(self):
 
         response = self.client().get('/data_today')
@@ -262,7 +296,15 @@ class Frontend(Foodwatchgw_basic):
                     bulk_div = driver.find_element_by_id("bulk_div")
                     display_value = bulk_div.value_of_css_property("display")
                     self.assertEqual(display_value,"none" )
-
+                with self.subTest("save_bulk_items"):
+                    '#.Step: Click the bulk btn'
+                    driver.execute_script(f"document.querySelector('#btn_bulk').click();")
+                    '#.Step: Wait until the close_bulk p is clickable'
+                    WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "bulk_save")))
+                    driver.execute_script(f"document.querySelector('#bulk_save').click();")
+                    '# The text of p-tag bulk_msg should be "Items successfuly posted to database"'
+                    bulk_msg_text = driver.find_element_by_id("bulk_msg").text
+                    self.assertEqual(bulk_msg_text,"Items successfuly posted to database" )
 
             driver.close()
 

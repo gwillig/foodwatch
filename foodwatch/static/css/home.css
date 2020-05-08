@@ -185,8 +185,8 @@ font-family: sans-serif;
     border-radius: 10px;
     position: absolute;
     display:none;
-    width: 85%;
-    height: 60%;
+    width: 300px;
+    height: 360px;
     background-color: white;
     padding-left: 10px;
     padding-top: 10px;
@@ -197,7 +197,8 @@ font-family: sans-serif;
 
 #bulk_textarea{
     display: block;
-    height: 40%;
+    height: 150px;
+    width: 250px;
     border-style: solid;
     box-sizing: border-box;
     border: 2px solid #ccc;

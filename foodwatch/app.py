@@ -63,13 +63,28 @@ def create_app(dbms="sqlite3", test_config=None):
 
         rank_dict = home_rank()
         total_calories = db.session.query(Home_misc.total_calories).first()
-        bulk_items = db.session.query(Home_misc.bulk_items).first()[0]
+        HM = db.session.query(Home_misc).first()
         '#2.1.Step: Convert bulk_items string into dict'
-        dict_bulk_items = json.loads(bulk_items)
+        bulk_items1 = {"0": """
+                                 Proteinpulver_25_g,90
+                                 Leinsamen_20g,106
+                                 Apfelkuchen_Hälfte,50
+                                 Hafer_50_g,180
+                                """,
+                       "1": """
+                                 Proteinpulver_25_g,90
+                                 Leinsamen_20g,106
+                                 Apfelkuchen_Hälfte,50
+                                 Hafer_50_g,180
+                                """}
+        HM.bulk_items = json.dumps(bulk_items1)
+        db.session.commit()
+        bulk_items = db.session.query(Home_misc.bulk_items).first()[0]
+        str_bulk_items = json.loads(bulk_items)["0"]
         return render_template('home.html', datalist_name=datalist_name,
                                current = rank_dict["current"],
                                total_calories=total_calories,
-                               bulk_items=dict_bulk_items["0"])
+                               bulk_items=str_bulk_items)
 
     #<path:path> is just for safe view "
     @app.route("/histor<path:path>")
@@ -79,7 +94,6 @@ def create_app(dbms="sqlite3", test_config=None):
             el.timestamp_obj = el.timestamp_obj.strftime("%d/%m/%Y %a - %H:%M")
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('history.html', prev_data=prev_data)
-
     @app.route("/bulk_items/<string:slot>",methods=["GET"])
     def get_bulk_items(slot):
         """
@@ -103,8 +117,11 @@ def create_app(dbms="sqlite3", test_config=None):
             'success': True,
             'bulk_slot_items': bulk_slot_items,
         }, 200)
+
+
     @app.route("/bulk_items",methods=["POST"])
-    def post_bulk_items():
+    @requires_auth('post:bulk_items')
+    def post_bulk_items(payload):
         """
         Get the bulk_items of a specific slot
         :param slot:
