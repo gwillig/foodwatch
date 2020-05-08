@@ -65,20 +65,6 @@ def create_app(dbms="sqlite3", test_config=None):
         total_calories = db.session.query(Home_misc.total_calories).first()
         HM = db.session.query(Home_misc).first()
         '#2.1.Step: Convert bulk_items string into dict'
-        bulk_items1 = {"0": """
-                                 Proteinpulver_25_g,90
-                                 Leinsamen_20g,106
-                                 Apfelkuchen_Hälfte,50
-                                 Hafer_50_g,180
-                                """,
-                       "1": """
-                                 Proteinpulver_25_g,90
-                                 Leinsamen_20g,106
-                                 Apfelkuchen_Hälfte,50
-                                 Hafer_50_g,180
-                                """}
-        HM.bulk_items = json.dumps(bulk_items1)
-        db.session.commit()
         bulk_items = db.session.query(Home_misc.bulk_items).first()[0]
         str_bulk_items = json.loads(bulk_items)["0"]
         return render_template('home.html', datalist_name=datalist_name,
