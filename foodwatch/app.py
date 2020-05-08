@@ -78,6 +78,30 @@ def create_app(dbms="sqlite3", test_config=None):
             prev_data.append(convert_sqlalchemy_todict(el))
         return render_template('history.html', prev_data=prev_data)
 
+    @app.route("/bulk_items",method="GET")
+    def get_bulk_items(slot):
+        """
+        Get the bulk_items of a specific slot
+        :param slot:
+        :return:
+        """
+        bulk_items = {"0": """Proteinpulver_25_g,90
+                 Leinsamen_20g,106
+                 Apfelkuchen_Hälfte,50
+                 Hafer_50_g,180""",
+                      "1": """Steak_25_g,80"""}
+        bulk_items_s = json.dumps(bulk_items)
+
+        bulk_items  = db.session.query(Home_misc.bulk_items).first()
+        bulk_items = bulk_items_s
+        db.session.commit()
+        bulk_items_slot =bulk_items[bulk_items]
+
+        return jsonify({
+            'success': True,
+            'bulk_items_slot': bulk_items_slot,
+        }, 200)
+
     @app.route("/misc")
     def misc():
         prev_data = []

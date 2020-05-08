@@ -302,6 +302,30 @@ function insert_bulktextarea(content){
     */
     document.querySelector("#bulk_textarea").value = content
 }
+
+function save_bulk_items(content){
+
+    /*
+    @description
+        Saves the items in the bulk textarea to the slot
+    @args:
+
+    */
+    let bulk_slot = document.querySelector("#bulk_slot").value
+    let bulk_items = document.querySelector("#bulk_textarea").value
+}
+
+function load_bulk_items(content){
+
+    /*
+    @description
+        Loads the items in the bulk textarea to the slot
+    @args:
+
+    */
+    let bulk_slot = document.querySelector("#bulk_slot").value
+    let bulk_items = document.querySelector("#bulk_textarea").value
+}
 function post_insert_data(){
   /*
   @description:
