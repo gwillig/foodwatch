@@ -111,6 +111,7 @@ function replaceAll(original_string, find, replace) {
 function create_pieChart(current_angle,total_sum_today,base_total,color_pie="#3C6B9E"){
     //inspired by https://stackoverflow.com/questions/31912686/how-to-draw-gradient-arc-using-d3-js
 
+
     //Remove old svg
     if (document.querySelector(".chart-container svg")!=null){
         document.querySelector(".chart-container svg").remove()
@@ -181,6 +182,22 @@ var foreground = svg.append("path")
     .style("fill", color_pie)
     .attr("d", arc);
 
+//1.Step: Check the available screen width for style
+    if (screen.availWidth>600){
+        description.style("font-size",fontSize_amout/2+'px')
+                    .attr("dy",fontSize_amout/8-60);
+        percent.style("font-size",fontSize/2+'px')
+                .attr("dy",fontSize/10)
+                .attr("dx",2);
+
+        total.style("font-size",fontSize_amout+'px')
+            .attr("dy",50+fontSize_amout/7)
+
+
+        remaining.style("font-size",fontSize_amout/1.2+'px')
+                  .attr("dy",80+fontSize_amout/3)
+
+     }
 foreground.transition()
       .duration(750)
       .call(arcTween, current_angle);

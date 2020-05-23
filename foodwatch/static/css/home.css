@@ -237,6 +237,9 @@ font-family: sans-serif;
 
 @media screen and (min-width: 600px) {
 
+/*
+Attention the systel attribute for d3 chart is done in the function create_pieChart in home.js
+*/
     .bulk_div{
         bottom: 0;
 
