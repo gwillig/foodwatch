@@ -300,11 +300,11 @@ class Frontend(Foodwatchgw_basic):
                     '#.Step: Click the bulk btn'
                     driver.execute_script(f"document.querySelector('#btn_bulk').click();")
                     '#.Step: Wait until the close_bulk p is clickable'
-                    WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "bulk_save")))
-                    driver.execute_script(f"document.querySelector('#bulk_save').click();")
+                    WebDriverWait(driver, driver_wait).until(EC.element_to_be_clickable((By.ID, "btn_bulk")))
+                    driver.execute_script(f"document.querySelector('#btn_bulk').click();")
                     '# The text of p-tag bulk_msg should be "Items successfuly posted to database"'
-                    bulk_msg_text = driver.find_element_by_id("bulk_msg").text
-                    self.assertEqual(bulk_msg_text,"Items successfuly posted to database" )
+                    bulk_msg_text = driver.find_element_by_id("msg_db").text
+                    self.assertEqual(bulk_msg_text,el[1])
 
             driver.close()
 
