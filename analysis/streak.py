@@ -11,6 +11,11 @@ def get_longest_sequence(seq):
     return:
         existing_sequence(dict): is a dict which contains the length of all sequences
 
+    @Doctest
+    >>> max(get_longest_sequence([ 0, 1, 2,  4,  6,  3,  9, 19, 20,21,22,25,19, 20,21,22]))
+    4
+    >>> max(get_longest_sequence([ 0, 1, 2,  4,6]))
+    3
     """
     '#1.Step: Initials variables'
     existing_sequence = defaultdict(int)
