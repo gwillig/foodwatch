@@ -422,7 +422,7 @@ def create_app(dbms="sqlite3", test_config=None):
         df_weight = df.loc[(df["amount_weight"] >= weight - weight_range) & (df["amount_weight"] <= weight + weight_range)]
         '#4.Step: Sort by day and reset index'
         df_weight_sorted = df_weight.sort_values(by=['timestamp_obj'], ascending=False)
-        df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
+        # df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
         '#5.Step: Now get the index of the df and find the longest index sequence'
         index_sequence = list(df_weight_sorted.index)
         '#5.1.Step: If index emtpy return 0'
@@ -437,16 +437,20 @@ def create_app(dbms="sqlite3", test_config=None):
         else:
             '#5.2.Step: Get current streak'
             current_streak = streak.current_streak(index_sequence)
-            '#5.3.Step: Get  streak attempts'
-            '#5.4.Step: Get the longest streak'
+            '#5.3.Step: Get a sequence analysis'
             index_dict = streak.get_longest_sequence(index_sequence)
+            '#5.3.1.Step: Get  streak attempts'
+            streak_attempts = sum(k * v for k, v in index_dict.items())
+            '#5.3.2.Step: Get the longest streak'
+            longest_seq = max(index_dict.keys())
             '#5.5.Step: Get avg streak'
+            itemKeyValue= max(index_dict.items(), key=lambda x: x[1])
             return jsonify({
                 'success': True,
-                'longest_index': 0,
+                'longest_seq':longest_seq,
                 'current_streak': current_streak,
-                'streak_attempts':0,
-                'avg_streak': 0,
+                'streak_attempts':streak_attempts,
+                'avg_streak': itemKeyValue[0],
             }, 200)
 
 
