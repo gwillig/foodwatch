@@ -88,6 +88,46 @@ function post_misc_data(data_json){
     .then(body=>process_fetch_body(body));
 }
 
+function get_misc_streak(){
+  /*
+  @describtion:
+   Get the streak information (current streak, longsest streak, avg streak) from the db
+  @args:
+
+  @return:
+    Nothing
+  */
+  '#1.Step: Get weight and the weight range'
+  let weight = document.querySelector("#input_weight").value;
+  let weight_range = document.querySelector("#weight_range").value
+  let bearer_str  = get_jwt(localStorage_jwt=true);
+  fetch("/misc_streak", {
+        mode:"cors",
+        method: "get",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization':bearer_str
+        },
+
+      //make sure to serialize your JSON body
+      body: JSON.stringify({
+        "weight_range":  weight_range,
+        "weight": weight
+      })
+    })
+    .then(function(response){
+            //Check status code
+            if(response.ok==false){
+                return response.text()
+            }
+            else{
+               return "ok"
+            }
+        })
+    .then(body=>console.log(body));
+}
+
 function remove(x){
   /*
   @describtion:

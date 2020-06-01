@@ -402,6 +402,23 @@ def create_app(dbms="sqlite3", test_config=None):
 
         return df_merge
 
+    @app.route("/misc_streak", methods=["GET"])
+    def get_misc_streak():
+        """
+        Get the streak for a weight and range
+        :param slot:
+        :return:
+        """
+        '#1.Step: Get the bulk_items and bulk_slot'
+        weight = request.get_json()["weight"]
+        weight_range = request.get_json()["range"]
+        '#2.Step: Read data from database'
+        df = pd.read_sql_table("weight", db.session.bind)
+        '#3. Select all rows which mean the condition'
+        df_weight = df.loc[(df["Weight"] >= weight - weight_range) & (df["Weight"] <= weight + weight_range)]
+        '''#### Hier weiter machen'''
+
+
     def convert_sqlalchemy_todict(obj):
         """
         Converts a sqlalchemy oject to a dict
