@@ -5,6 +5,7 @@ from datetime import date, datetime, timedelta
 from flask import send_from_directory
 import pandas as pd
 import numpy as np
+import foodwatch.streak as streak
 import os
 import time
 import json
@@ -16,8 +17,6 @@ from foodwatch.models import setup_db, Food, Misc, Home_misc
 
 def create_app(dbms="sqlite3", test_config=None):
     # create and configure the app
-    #=========
-
     #================
     app = Flask(__name__)
 
@@ -88,7 +87,7 @@ def create_app(dbms="sqlite3", test_config=None):
         :return:
         """
         '#1.Step: Get the bulk_items'
-        bulk_items  = db.session.query(Home_misc.bulk_items).first()[0]
+        bulk_items = db.session.query(Home_misc.bulk_items).first()[0]
         '#2.1.Step: Convert string into dict'
         dict_bulk_items = json.loads(bulk_items)
 
@@ -402,21 +401,55 @@ def create_app(dbms="sqlite3", test_config=None):
 
         return df_merge
 
-    @app.route("/misc_streak", methods=["GET"])
-    def get_misc_streak():
+    @app.route("/misc_streak/<weight_str>/<weight_range_str>", methods=["GET"])
+    def get_misc_streak(weight_str, weight_range_str):
         """
         Get the streak for a weight and range
         :param slot:
         :return:
         """
-        '#1.Step: Get the bulk_items and bulk_slot'
-        weight = request.get_json()["weight"]
-        weight_range = request.get_json()["range"]
+        '''#1.Step: Convert url parameters to float (the problem with the <float:weight> is that it
+           required always a zero e.g. 85.0
+        '''
+        weight = float(weight_str)
+        weight_range = float(weight_range_str)
         '#2.Step: Read data from database'
-        df = pd.read_sql_table("weight", db.session.bind)
-        '#3. Select all rows which mean the condition'
-        df_weight = df.loc[(df["Weight"] >= weight - weight_range) & (df["Weight"] <= weight + weight_range)]
-        '''#### Hier weiter machen'''
+        df = pd.read_sql_table("misc", db.session.bind)
+        '#2.1.Step: Convert column amount_weight to float and column date to datetime obj'
+        df['amount_weight'] = df['amount_weight'].astype(float)
+        df["timestamp_obj"] = pd.to_datetime(df["timestamp_obj"], format='%Y-%m/%d %h:%m:%s')
+        '#3.Step: Select all rows which mean the condition'
+        df_weight = df.loc[(df["amount_weight"] >= weight - weight_range) & (df["amount_weight"] <= weight + weight_range)]
+        '#4.Step: Sort by day and reset index'
+        df_weight_sorted = df_weight.sort_values(by=['timestamp_obj'], ascending=False)
+        df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
+        '#5.Step: Now get the index of the df and find the longest index sequence'
+        index_sequence = list(df_weight_sorted.index)
+        '#5.1.Step: If index emtpy return 0'
+        if len(index_sequence)== 0:
+            return jsonify({
+                'success': True,
+                'longest_index': 0,
+                'current_streak': 0,
+                'streak_attempts':0,
+                'avg_streak': 0,
+            }, 200)
+        else:
+            '#5.2.Step: Get current streak'
+            current_streak = streak.current_streak(index_sequence)
+            '#5.3.Step: Get  streak attempts'
+            '#5.4.Step: Get the longest streak'
+            index_dict = streak.get_longest_sequence(index_sequence)
+            '#5.5.Step: Get avg streak'
+            return jsonify({
+                'success': True,
+                'longest_index': 0,
+                'current_streak': current_streak,
+                'streak_attempts':0,
+                'avg_streak': 0,
+            }, 200)
+
+
 
 
     def convert_sqlalchemy_todict(obj):
@@ -498,7 +531,7 @@ def create_app(dbms="sqlite3", test_config=None):
 
     return app
 
-# Check if app runs on local computer:
+'# Check if app runs on local computer:'
 os.system('hostnamectl > tmp')
 with open('tmp', 'r') as temp_var:
     content_tmp = temp_var.read()

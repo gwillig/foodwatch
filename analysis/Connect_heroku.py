@@ -14,10 +14,13 @@ from datetime import timezone
 
 '#1.Step: Connect to database'
 '#1.1.Step: Get path from env.json'
-with open('foodwatch/env.json','r') as env_file:
-    env_dict = json.load(env_file)
-    database_path = env_dict["database_path"]
-
+database = "sqllite"
+if database=="heroku":
+    with open('foodwatch/env.json','r') as env_file:
+        env_dict = json.load(env_file)
+        database_path = env_dict["database_path"]
+else:
+    database_path = "sqlite:///foodwatch/database.db"
 db_con = sqlalchemy.create_engine(database_path)
 
 
@@ -25,7 +28,7 @@ db_con = sqlalchemy.create_engine(database_path)
 Session = sessionmaker(bind=db_con)
 session = Session()
 '#1.3.Step: Show that connection work'
-result = db_con.execute("Select * from Misc")
+result = db_con.execute("Select * from misc")
 for row in result:
     print(row)
 '#2.Step: Add new data to database'

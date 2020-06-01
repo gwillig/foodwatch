@@ -100,22 +100,9 @@ function get_misc_streak(){
   '#1.Step: Get weight and the weight range'
   let weight = document.querySelector("#input_weight").value;
   let weight_range = document.querySelector("#weight_range").value
-  let bearer_str  = get_jwt(localStorage_jwt=true);
-  fetch("/misc_streak", {
-        mode:"cors",
-        method: "get",
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization':bearer_str
-        },
 
-      //make sure to serialize your JSON body
-      body: JSON.stringify({
-        "weight_range":  weight_range,
-        "weight": weight
-      })
-    })
+  fetch(`/misc_streak/${weight}/${weight_range}`,
+    )
     .then(function(response){
             //Check status code
             if(response.ok==false){
