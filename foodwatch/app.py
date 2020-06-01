@@ -418,11 +418,11 @@ def create_app(dbms="sqlite3", test_config=None):
         '#2.1.Step: Convert column amount_weight to float and column date to datetime obj'
         df['amount_weight'] = df['amount_weight'].astype(float)
         df["timestamp_obj"] = pd.to_datetime(df["timestamp_obj"], format='%Y-%m/%d %h:%m:%s')
-        '#3.Step: Select all rows which mean the condition'
+        '#3.Step: Sort by day and reset index'
+        df_weight_sorted = df.sort_values(by=['timestamp_obj'], ascending=False)
+        df_weight_sorted  = df.reset_index(drop=True)
+        '#4.Step: Select all rows which mean the condition'
         df_weight = df.loc[(df["amount_weight"] >= weight - weight_range) & (df["amount_weight"] <= weight + weight_range)]
-        '#4.Step: Sort by day and reset index'
-        df_weight_sorted = df_weight.sort_values(by=['timestamp_obj'], ascending=False)
-        # df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
         '#5.Step: Now get the index of the df and find the longest index sequence'
         index_sequence = list(df_weight_sorted.index)
         '#5.1.Step: If index emtpy return 0'
