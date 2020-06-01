@@ -103,16 +103,14 @@ function get_misc_streak(){
 
   fetch(`/misc_streak/${weight}/${weight_range}`,
     )
-    .then(function(response){
-            //Check status code
-            if(response.ok==false){
-                return response.text()
-            }
-            else{
-               return "ok"
-            }
-        })
-    .then(body=>console.log(body));
+  .then((response) => {
+        return response.json();
+      })
+  .then((response)=>{
+        //Write the msg that request was successfully
+        document.querySelector("#current_streak span").innerText =response.current_streak
+        document.querySelector("#streak_attemps span").innerText =response.streak_attemps
+    });
 }
 
 function remove(x){
