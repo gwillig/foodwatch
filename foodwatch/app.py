@@ -429,7 +429,7 @@ def create_app(dbms="sqlite3", test_config=None):
         if len(index_sequence)== 0:
             return jsonify({
                 'success': True,
-                'longest_index': 0,
+                'longest_seq':0,
                 'current_streak': 0,
                 'streak_attempts':0,
                 'avg_streak': 0,

@@ -108,8 +108,10 @@ function get_misc_streak(){
       })
   .then((response)=>{
         //Write the msg that request was successfully
-        document.querySelector("#current_streak span").innerText =response.current_streak
-        document.querySelector("#streak_attemps span").innerText =response.streak_attemps
+        document.querySelector("#current_streak span").innerText =response[0].current_streak
+        document.querySelector("#streak_attemps span").innerText =response[0].streak_attempts
+        document.querySelector("#longest_streak span").innerText =response[0].longest_seq
+        document.querySelector("#avg_streak span").innerText =response[0].avg_streak
     });
 }
 
