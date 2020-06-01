@@ -62,6 +62,22 @@
 {% include "header.html" %}
 <div class="main">
   <h1>Misc</h1>
+  <div id="div_streak">
+  <p>
+    <label for="input_weight">Weight</label>
+    <input id="input_weight" type="text">
+  </p>
+  <p>
+  <label for="weight_range">Range</label>
+  <input id="weight_range" type="text">
+  </p>
+
+  <p id="current_streak">Current Streak&nbsp; <span></span>&nbsp; days</p>
+  <p id="streak_attemps">Streak Attempts<span></span></p>
+  <p id="longest_streak">Longest Streak&nbsp; <span></span>&nbsp; days</p>
+  <p id="avg_strike">Avg. Strike&nbsp; <span></span>&nbsp; days</p>
+
+  </div>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
   <p id="msg_db"></p>
   <div id="table" class="table-editable">
