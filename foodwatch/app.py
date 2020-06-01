@@ -420,11 +420,11 @@ def create_app(dbms="sqlite3", test_config=None):
         df["timestamp_obj"] = pd.to_datetime(df["timestamp_obj"], format='%Y-%m/%d %h:%m:%s')
         '#3.Step: Sort by day and reset index'
         df_weight_sorted = df.sort_values(by=['timestamp_obj'], ascending=False)
-        df_weight_sorted  = df.reset_index(drop=True)
+        df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
         '#4.Step: Select all rows which mean the condition'
-        df_weight = df.loc[(df["amount_weight"] >= weight - weight_range) & (df["amount_weight"] <= weight + weight_range)]
+        df_weight = df.loc[(df_weight_sorted["amount_weight"] >= weight - weight_range) & (df_weight_sorted["amount_weight"] <= weight + weight_range)]
         '#5.Step: Now get the index of the df and find the longest index sequence'
-        index_sequence = list(df_weight_sorted.index)
+        index_sequence = list(df_weight.index)
         '#5.1.Step: If index emtpy return 0'
         if len(index_sequence)== 0:
             return jsonify({
