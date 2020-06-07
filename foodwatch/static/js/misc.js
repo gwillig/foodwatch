@@ -88,12 +88,12 @@ function post_misc_data(data_json){
     .then(body=>process_fetch_body(body));
 }
 
-function get_misc_streak(){
+function get_misc_streak(callback){
   /*
   @describtion:
    Get the streak information (current streak, longsest streak, avg streak) from the db
   @args:
-
+    callback: remaining_days()
   @return:
     Nothing
   */
@@ -108,11 +108,27 @@ function get_misc_streak(){
       })
   .then((response)=>{
         //Write the msg that request was successfully
-        document.querySelector("#current_streak span").innerText =response[0].current_streak
-        document.querySelector("#streak_attemps span").innerText =response[0].streak_attempts
-        document.querySelector("#longest_streak span").innerText =response[0].longest_seq
-        document.querySelector("#avg_streak span").innerText =response[0].avg_streak
+        document.querySelector("#current_streak span").innerText = response[0].current_streak;
+        document.querySelector("#streak_attemps span").innerText = response[0].streak_attempts;
+        document.querySelector("#longest_streak span").innerText = response[0].longest_seq;
+        document.querySelector("#avg_streak span").innerText = response[0].avg_streak;
     });
+
+  callback();
+}
+
+function remaining_days(goal=66){
+    /*
+    Function calculate the difference between the goal and another number
+    @args:
+        goal(int): e.g. 66
+    */
+    //1.Step: Get the current streak
+    let current_s = document.querySelector("#current_streak span").innerText;
+    //2.Step: Calculate the remaining days
+    let remaining_days = goal - current_s;
+    //3.Step: Update the <p><span> remaining_days element
+    document.querySelector("#remaining_days span").innerText = remaining_days;
 }
 
 function remove(x){

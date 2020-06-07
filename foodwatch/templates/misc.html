@@ -64,28 +64,29 @@
   }
     </style>
 </head>
-<body>
+<body onload="get_misc_streak(remaining_days())">
 {% include "header.html" %}
 <div class="main">
   <h1>Misc</h1>
   <div id="div_streak">
   <p>
     <label for="input_weight" >Weight</label>
-    <input id="input_weight" type="text" value="80.5">
+    <input id="input_weight" type="text" value="79.5">
   </p>
   <p>
   <label for="weight_range">Range</label>
-  <input id="weight_range" type="text" value="0.5">
+  <input id="weight_range" type="text" value="1">
   </p>
 
   <p id="current_streak">Current Streak:&nbsp; <span>0</span>&nbsp; days</p>
   <p id="streak_attemps">Streak Attempts:&nbsp;<span>0</span></p>
   <p id="longest_streak">Longest Streak:&nbsp; <span>0</span>&nbsp; days</p>
   <p id="avg_streak">Avg. Streak:&nbsp; <span>0</span>&nbsp; days</p>
+  <p id="remaining_days">Remaining Days:&nbsp; <span>0</span>&nbsp; days</p>
 
   </div>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
-  <button id="streak_btn" class="btn btn-primary" onclick="get_misc_streak()">Streak</button>
+  <button id="streak_btn" class="btn btn-primary" onclick="get_misc_streak(remaining_days())">Streak</button>
   <p id="msg_db"></p>
   <div id="table" class="table-editable">
     <span class="table-add glyphicon glyphicon-plus"></span>
