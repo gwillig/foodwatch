@@ -97,14 +97,16 @@ df = df.astype({'timestamp_unix': 'int64'})
 df_bulk["timestamp_obj"] = df["timestamp_unix"].apply(lambda x:datetime.utcfromtimestamp((x)))
 '#1.2.Step: convert to unix'
 df_bulk["timestamp_unix"] = df_bulk.timestamp_obj.apply(lambda x: x.timestamp())
-df_bulk["amount_weight"] = df["amount_weight"]
-df_bulk["amount_steps"] = df["amount_steps"]
+df_bulk["calorie"] = df["calorie"]
+df_bulk["name"] = df["name"]
 
 '#2.Step: Add data from df_bulk to db'
 bulk_list = df_bulk.to_dict("row")
-bulk_list_obj = [Misc(**x) for x in bulk_list]
+bulk_list_obj = [Food(**x) for x in bulk_list]
 session.bulk_save_objects(bulk_list_obj)
 session.commit()
+
+
 def convert_str_date_obj_utc(date_str):
     """
     Function converts a given string to a date obj with timezone utc
