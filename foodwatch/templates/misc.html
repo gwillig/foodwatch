@@ -6,6 +6,27 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <style>
+  #statistic {
+    padding-bottom: 6px;
+
+  }
+  #statistic th {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: #3C6B9E;
+    color: white;
+    border: 1px solid #ddd;
+    padding-left: 3px;
+  }
+
+  #statistic td, .table_area th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 9%;
+    border-radius: 5px;
+  }
+
   input{
    margin: 10px;
    }
@@ -87,12 +108,24 @@
 
   </div>
   <div id="statistic">
-        <p id="weight_7_d">Weight: Avg 7 days:&nbsp; <span>0</span></p>
-        <p id="weight_7_mean">Weight: Mean 7 days:&nbsp; <span>0</span></p>
-        <p id="weight_14_d">Weight: Avg 14 days:&nbsp; <span>0</span></p>
-        <p id="weight_14_mean">Weight: Mean 14 days:&nbsp; <span>0</span></p>
-        <p id="weight_30_d">Weight: Avg 30 days:&nbsp; <span>0</span></p>
-        <p id="weight_30_mean">Weight: Mean 30 days:&nbsp; <span>0</span></p>
+        <table style="width:100%">
+          <tr>
+            <th>A 7 d</th>
+            <th>M 7 d</th>
+            <th>A 14 d</th>
+            <th>M 14 d</th>
+            <th>A 30 d</th>
+            <th>M 30 d</th>
+          </tr>
+          <tr>
+            <td>80.5</td>
+            <td>81</td>
+            <td>81.2</td>
+            <td>81.3</td>
+            <td>84.3</td>
+            <td>84.2</td>
+          </tr>
+        </table>
   </div>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
   <button id="streak_btn" class="btn btn-primary" onclick="get_misc_streak(remaining_days)">Streak</button>
