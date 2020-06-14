@@ -2,7 +2,7 @@
          Icon name: computer-desktop
            Chassis: desktop
         Machine ID: 3d2e6947fbf8485c9136d3f6fdbcbed2
-           Boot ID: 213284ca12574ba1830a176bc6e2b017
+           Boot ID: 26de1ca4d3d2429b99fb863033305141
   Operating System: Ubuntu 18.04.4 LTS
-            Kernel: Linux 5.3.0-53-generic
+            Kernel: Linux 5.3.0-59-generic
       Architecture: x86-64
