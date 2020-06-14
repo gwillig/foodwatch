@@ -401,6 +401,32 @@ def create_app(dbms="sqlite3", test_config=None):
 
         return df_merge
 
+    @app.route("/misc_weigth", methods=["GET"])
+    def get_weigth_statistic():
+        """
+        Get the statics information about weight from db. (Avg. Mean for 7,14,30 days)
+        :return:
+        """
+        '#1.Step: Read data from database'
+
+        df = pd.read_sql_table("misc", db.session.bind)
+        '#2.1.Step: Convert column amount_weight to float and column date to datetime obj'
+        df['amount_weight'] = df['amount_weight'].astype(float)
+        df["timestamp_obj"] = pd.to_datetime(df["timestamp_obj"], format='%Y-%m/%d %h:%m:%s')
+        '#3.Step: Sort by day and reset index'
+        df_weight_sorted = df.sort_values(by=['timestamp_obj'], ascending=False)
+        df_weight_sorted = df_weight_sorted.reset_index(drop=True)
+        '#4.Step: Calculate the statistics'
+        statistics_dict = {'success': True}
+        for day_range in [7,14,30]:
+            statistics_dict[f'weight_{day_range}_max'] = df_weight_sorted.loc[:day_range].\
+                                                         describe().loc["max", "amount_weight"]
+            statistics_dict[f'weight_{day_range}_min'] = df_weight_sorted.loc[:day_range].\
+                                                         describe().loc["min", "amount_weight"]
+            statistics_dict[f'weight_{day_range}_mean'] = round(df_weight_sorted.loc[:day_range].\
+                                                          describe().loc["mean", "amount_weight"],2)
+        return (statistics_dict, 200)
+
     @app.route("/misc_streak/<weight_str>/<weight_range_str>", methods=["GET"])
     def get_misc_streak(weight_str, weight_range_str):
         """
@@ -421,7 +447,7 @@ def create_app(dbms="sqlite3", test_config=None):
         '#3.Step: Sort by day and reset index'
         df_weight_sorted = df.sort_values(by=['timestamp_obj'], ascending=False)
         df_weight_sorted  = df_weight_sorted.reset_index(drop=True)
-        '#4.Step: Select all rows which mean the condition'
+        '#4.Step: Select all rows which met the condition'
         df_weight = df.loc[(df_weight_sorted["amount_weight"] >= weight - weight_range) & (df_weight_sorted["amount_weight"] <= weight + weight_range)]
         '#5.Step: Now get the index of the df and find the longest index sequence'
         index_sequence = list(df_weight.index)

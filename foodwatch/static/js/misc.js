@@ -117,6 +117,25 @@ function get_misc_streak(callback){
   callback();
 }
 
+
+function weight_statistics(){
+       /*
+        Get the statics information about weight from db. (Avg. Mean for 7,14,30 days)
+       */
+      //1.Step: fetch "misc_weigth
+
+      fetch('/misc_weigth')
+      .then(response=>response.json())
+      .then(response=>{
+            [7,14,30].forEach(day_range=>{
+                    ["mean","max","min"].forEach(static_op=>{
+                    document.querySelector(`#weight_${day_range}_${static_op}`).innerText = response[`weight_${day_range}_${static_op}`]
+                    })
+                })
+            })
+
+}
+
 function remaining_days(goal=66){
     /*
     Function calculate the difference between the goal and another number

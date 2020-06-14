@@ -85,7 +85,7 @@
   }
     </style>
 </head>
-<body onload="get_misc_streak(remaining_days)">
+<body onload="get_misc_streak(remaining_days);weight_statistics()">
 {% include "header.html" %}
 <div class="main">
   <h1>Misc</h1>
@@ -110,25 +110,34 @@
   <div id="statistic">
         <table style="width:100%">
           <tr>
-            <th>A 7 d</th>
-            <th>M 7 d</th>
-            <th>A 14 d</th>
-            <th>M 14 d</th>
-            <th>A 30 d</th>
-            <th>M 30 d</th>
+            <th>Days</th>
+            <th>Mean</th>
+            <th>Max</th>
+            <th>Min</th>
+
           </tr>
           <tr>
-            <td>80.5</td>
-            <td>81</td>
-            <td>81.2</td>
-            <td>81.3</td>
-            <td>84.3</td>
-            <td>84.2</td>
+            <td>7 Days</td>
+            <td id="weight_7_mean">81</td>
+            <td id="weight_7_max">81.2</td>
+            <td id="weight_7_min">81.3</td>
+          </tr>
+          <tr>
+            <td>14 Days</td>
+            <td id="weight_14_mean">81</td>
+            <td id="weight_14_max">81.2</td>
+            <td id="weight_14_min">81.3</td>
+          </tr>
+          <tr>
+            <td>30 Days</td>
+            <td id="weight_30_mean">81</td>
+            <td id="weight_30_max">81.2</td>
+            <td id="weight_30_min">81.3</td>
           </tr>
         </table>
   </div>
   <button id="export-btn" class="btn btn-primary export_btn">Post</button>
-  <button id="streak_btn" class="btn btn-primary" onclick="get_misc_streak(remaining_days)">Streak</button>
+  <button id="streak_btn" class="btn btn-primary" onclick="get_misc_streak(remaining_days);weight_statistics()">Streak</button>
   <p id="msg_db"></p>
   <div id="table" class="table-editable">
     <span class="table-add glyphicon glyphicon-plus"></span>
