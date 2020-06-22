@@ -270,6 +270,26 @@ def create_app(dbms="sqlite3", test_config=None):
         return jsonify({
             'success': True,
         }, 204)
+
+    @app.route("/all_data/<table>/<keyword>")
+    def get_all_data(table,keyword):
+        """
+        Get all data of a specific field
+        :return:
+        """
+        df = pd.read_sql_table(table, db.session.bind)
+        '#2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        data_sorted = df.sort_values(by=['timestamp_unix'])
+        data_sorted["timestamp_unix"] = data_sorted["timestamp_unix"] * 1000
+        data_numpy = data_sorted[['timestamp_unix', keyword]].values
+        data_list = data_numpy.tolist()
+
+        return jsonify({
+            'success': True,
+            'data':data_list
+        }, 204)
+
+
     @app.route("/misc_data", methods=["POST"])
     @requires_auth('post')
     def misc_data(payload):

@@ -57,12 +57,14 @@
   </style>
 
 </head>
-<body onload="check_url()">
+<body onload='fetch_create_single_chart(0.2,"misc","amount_weight")'>
  {% include "header.html" %}
  <h3>
-     <span id="weight_title">Weight |&nbsp</span>
-     <span id="cal_title">Cal |&nbsp</span>
-     <span id="steps_title">Steps</span>
+     <span onclick='fetch_create_single_chart(0.2,"misc","amount_weight")'>
+            Weight |&nbsp
+     </span>
+     <span onclick='fetch_create_single_chart("misc","amount_steps")'>Cal |&nbsp</span>
+     <span onclick='create_weight_cal_step_chart()'>All</span>
  </h3>
   <div id="container"> </div>
   <div class="table_area">
