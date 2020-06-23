@@ -3,7 +3,7 @@
 // Create the chart
 
 function fetch_create_single_chart(tickInterval,table,keyword){
-    fetch(`http://localhost:5000/all_data/${table}/${keyword}`)
+    fetch(`/all_data/${table}/${keyword}`)
     .then(response=>response.json())
     .then(data=>create_single_chart(tickInterval,keyword,data[0].data))
 }

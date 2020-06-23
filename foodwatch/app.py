@@ -277,11 +277,15 @@ def create_app(dbms="sqlite3", test_config=None):
         Get all data of a specific field
         :return:
         """
+        '#1.Step: Get the data as df'
         df = pd.read_sql_table(table, db.session.bind)
-        '#2.Step: Convert the data into list so that highchart is able to interpret the data an create the line chart'
+        '#2.Step: Sort the data for highchart'
         data_sorted = df.sort_values(by=['timestamp_unix'])
-        data_sorted["timestamp_unix"] = data_sorted["timestamp_unix"] * 1000
-        data_numpy = data_sorted[['timestamp_unix', keyword]].values
+        '#3.Step: Delete the zeros'
+        data_non_zero = data_sorted[data_sorted["amount_weight"] != 0]
+        '#4.Step: Multipy by 1000 because highchart except epoch not unix'
+        data_non_zero["timestamp_unix"] = data_non_zero["timestamp_unix"] * 1000
+        data_numpy = data_non_zero[['timestamp_unix', keyword]].values
         data_list = data_numpy.tolist()
 
         return jsonify({

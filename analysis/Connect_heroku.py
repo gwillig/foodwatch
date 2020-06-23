@@ -116,7 +116,26 @@ def convert_str_date_obj_utc(date_str):
         date_obj_timezone(datetime.datetime)
     """
     '#1.Step: Convert string into datetime.datetime object'
-    date_obj = datetime.strptime(date_str, "%d/%m/%Y")
+    date_obj = datetime.strptime(date_str, "%Y-%m-%d")
     '#2.Step: Set timezone otherwise the conversion into unix can have some problems'
     date_obj_timezone = date_obj.replace(tzinfo=timezone.utc)
     return date_obj_timezone
+
+
+'########Insert historical food data'
+df = pd.read_csv('misc_2018_2020_06.csv')
+df_bulk = pd.DataFrame()
+
+'#1.1.Step: Convert date string into date obj'
+df_bulk["timestamp_obj"] = df["timestamp_obj"].apply(lambda x:convert_str_date_obj_utc(x))
+df_bulk["amount_weight"] = df["amount_weight"]
+df_bulk["amount_steps"] = df["amount_steps"]
+'#1.2.Step: convert to unix'
+df_bulk["timestamp_unix"] = df_bulk.timestamp_obj.apply(lambda x: x.timestamp())
+
+
+'#2.Step: Add data from df_bulk to db'
+bulk_list = df_bulk.to_dict("row")
+bulk_list_obj = [Misc(**x) for x in bulk_list]
+session.bulk_save_objects(bulk_list_obj)
+session.commit()
