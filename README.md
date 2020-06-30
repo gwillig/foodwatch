@@ -3,7 +3,10 @@
 http://foodwatchgw.herokuapp.com/
 
 
-Foodwatch is a private project which helps you to track the food you ate over the day.<br> Foodwatch is designed to help you to lose weight.<br> Foodwatch allows you to define total calories and total steps according to your needs (age, gender, etc.).<br> After your settings of total calories and total steps, you get a message if the ratio is sufficient to lose weight.<br>
+Foodwatch is a private project which helps you to track the food you ate over the day.<br> 
+Foodwatch is designed to help you to lose weight.<br> 
+Foodwatch allows you to define total calories and total steps according to your needs (age, gender, etc.).<br> 
+After your settings of total calories and total steps, you get a message if the ratio is sufficient to lose weight.<br>
 
 #todo:
 * Finish test
