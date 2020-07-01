@@ -117,6 +117,35 @@ function get_misc_streak(callback){
   callback();
 }
 
+function highlight_row(){
+    /*
+    @description:
+        Change the background color of a cell if the value is in a certain range
+        (basied on value of weight and range)
+
+    */
+    //1.Step: Find the limit
+    let input_weight = parseFloat(document.querySelector("#input_weight").value);
+    let weight_range = parseFloat(document.querySelector("#weight_range").value);
+    //1.1.Step: Define the upper and lower limit
+    let upper_limit = input_weight + weight_range;
+    let lower_limit = input_weight - weight_range;
+
+    //1.Step: Find the table body
+    let table_body = document.querySelector(".table tbody");
+    //2.Step
+    for (let el of table_body.children){
+        //Check if header row
+        if(el.id=="header_table"){
+            continue
+        }
+        ///2.1.Step: Always the third cell contains the weight value
+        let weight_value = parseFloat(el.querySelectorAll("td")[2].innerText);
+        if (weight_value<=upper_limit && weight_value>=lower_limit){
+            el.querySelectorAll("td")[2].style.backgroundColor="#33a7c1a6"
+        }
+    }
+}
 
 function weight_statistics(){
        /*
