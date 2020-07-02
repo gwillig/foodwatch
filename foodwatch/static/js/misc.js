@@ -112,9 +112,10 @@ function get_misc_streak(callback){
         document.querySelector("#streak_attemps span").innerText = response[0].streak_attempts;
         document.querySelector("#longest_streak span").innerText = response[0].longest_seq;
         document.querySelector("#avg_streak span").innerText = response[0].avg_streak;
+        callback();
     });
 
-  callback();
+
 }
 
 function highlight_row(){
