@@ -3,6 +3,7 @@ Foodwatch is a private project which helps you to track the food you have eating
 #todo:
 * Finish test
 * Finish media query
+* Add function to add to delete
 
 The CIpipline is realized with azure devops.
 

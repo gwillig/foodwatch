@@ -11,9 +11,10 @@ from datetime import datetime
 
 
 
+os.chdir("..")
 '#1.Step: Connect to database'
 '#1.1.Step: Get path from env.json'
-database = "sqllite"
+database = "heroku"
 if database=="heroku":
     with open('foodwatch/env.json','r') as env_file:
         env_dict = json.load(env_file)
@@ -22,7 +23,7 @@ else:
     database_path = "sqlite:///foodwatch/database.db"
 db_con = sqlalchemy.create_engine(database_path)
 
-
+os.chdir("analysis")
 '#1.2.Step: Define session'
 Session = sessionmaker(bind=db_con)
 session = Session()
