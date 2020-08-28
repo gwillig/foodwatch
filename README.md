@@ -11,7 +11,11 @@ After your settings of total calories and total steps, you get a message if the 
 #todo:
 * Finish test
 * Finish media query
+* Create a pwa app
 * Add function to add to delete
+* Add new tab to show the vitamin of each food
+* Add Multiuser again 
+* Impro
 
 The CIpipline is realized with azure devops.
 

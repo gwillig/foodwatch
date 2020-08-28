@@ -1,71 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-    <title>Foodwatchgw Login</title>
-    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/login.css')}}?">
+  <title>Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
+
+  <script src="{{url_for('static',filename='js/3.5.1/jquery.min.js')}}?"></script>
+    <script src="{{url_for('static',filename='js/login.js')}}?"></script>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/4.3.1/bootstrap.min.css')}}?">
+  <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/login.css')}}?">
 </head>
-
 <body onload="check_connection()">
-    <div class="desktop">
-        <div class="background_div">
-        <img src="{{ url_for('static', filename = 'img/login.gif') }}">
-            <video width="1100" height="1100"autoplay loop muted playsinline>
-                  <source src="{{ url_for('static', filename = 'img/foodwatch.mp4') }}" type="video/mp4">
-                  Your browser does not support the video tag.
-            </video>
-        </div>
-
-        <div class="header">
-            <p >Welcome to Foodwatch</p>
-        </div>
-        <div class="login">
-            <a  onclick="change_redirect()" id="loginlink" >
-            Login
-            </a>
-        </div>
-        </div>
-    <script>
-        function check_connection(){
-        /*
-        If mobile network is below 2g it should show the img instead of the video works only for CHROME
-        */
-        try{
-            let network_status = navigator.connection.effectiveType;
-            if(network_status == '2g' || network_status == 'slow-2g'){
-                //Remove video if connection is to slow
-                document.querySelector("video source").src=""
-            }}
-            catch(err) {
-              //Nothing will happen
-            }
-
-
-        }
-
-        function change_redirect(){
-            /*
-            @description:
-                Change the auth0 redirect. If the url contain localhost it change it to localhost
-            */
-
-            let current_url = window.location.href
-            let href='https://gwillig.eu.auth0.com/authorize?audience=foodwatchgw&response_type=token&client_id=YwBpDwZuXEuTNS5NKDJ54HR6DTOQN04l'
-
-            if (current_url.includes("localhost:5000")){
-                document.querySelector("#loginlink").href = href + "&redirect_uri=http://localhost:5000/home"
-            }
-            //Addresse of the testserver if a selenium test is running
-            else if(current_url.includes("localhost:7000")){
-                document.querySelector("#loginlink").href = href + "&redirect_uri=http://localhost:7000/home"
-            }
-            else {
-                document.querySelector("#loginlink").href = href + "&redirect_uri=https://foodwatchgw.herokuapp.com/home"
-            }
-        }
-
-    </script>
+    <header>
+  <div class="overlay"></div>
+  <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+     <source src="{{ url_for('static', filename = 'img/foodwatch.mp4') }}" type="video/mp4">
+  </video>
+  <div class="container h-100">
+    <div class="d-flex h-100 text-center align-items-center">
+      <div class="w-100 text-white">
+        <h1 class="display-4">Foodwatch</h1>
+        <a onclick="change_redirect()" id="loginlink" class="btn-get-started login_btn">Login</a>
+      </div>
+    </div>
+  </div>
+</header>
 </body>
 </html>
