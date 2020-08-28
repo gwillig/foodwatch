@@ -55,4 +55,6 @@ header .overlay {
 
 .login_btn:hover{
     background-color:#676161cf;
+    text-decoration: none;
+    color: white;
 }
