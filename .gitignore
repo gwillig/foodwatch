@@ -107,6 +107,7 @@ env.json
 .venv
 .env
 env/
+Scripts/
 venv/
 ENV/
 env.bak/
