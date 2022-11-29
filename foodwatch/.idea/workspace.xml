@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5eca626b-1990-46f8-bd0e-be99910f7d03" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.idea/foodwatch.iml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/foodwatch.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.db" beforeDir="false" afterPath="$PROJECT_DIR$/database.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/home.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,23 +26,23 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/projects/perso99"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Flask server.Flask">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="foodwatch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -57,6 +55,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -66,6 +65,36 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Flask" type="Python.FlaskServer" nameIsGenerated="true">
+      <module name="foodwatch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\projects\foodwatch\foodwatch\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="Python.FlaskServer">
+      <module name="foodwatch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="C:\projects\foodwatch\foodwatch\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Flask server.Flask" />
+      <item itemvalue="Python.app" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.app" />
@@ -75,6 +104,7 @@
   <component name="ServiceViewManager">
     <option name="showServicesTree" value="false" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -85,86 +115,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585203088253</updated>
+      <workItem from="1618769896889" duration="64000" />
+      <workItem from="1659852139554" duration="27000" />
     </task>
     <servers />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="699" y="357" width="568" height="390" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585231009893">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="699" y="357" width="568" height="390" key="#com.intellij.fileTypes.FileTypeChooser/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585231009893" />
-    <state x="1170" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585314984078">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="1170" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585314984078" />
-    <state x="461" y="359" width="1202" height="500" key="#xdebugger.evaluate" timestamp="1585314633196">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="461" y="359" width="1202" height="500" key="#xdebugger.evaluate/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585314633196" />
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1585384367903">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="776" y="310" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585384367903" />
-    <state width="1830" height="277" key="GridCell.Tab.0.bottom" timestamp="1585384369457">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="277" key="GridCell.Tab.0.bottom/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585384369457" />
-    <state width="1830" height="277" key="GridCell.Tab.0.center" timestamp="1585384369457">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="277" key="GridCell.Tab.0.center/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585384369457" />
-    <state width="1830" height="277" key="GridCell.Tab.0.left" timestamp="1585384369457">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="277" key="GridCell.Tab.0.left/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585384369457" />
-    <state width="1830" height="277" key="GridCell.Tab.0.right" timestamp="1585384369457">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="277" key="GridCell.Tab.0.right/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585384369457" />
-    <state width="1830" height="344" key="GridCell.Tab.1.bottom" timestamp="1585317546044">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="344" key="GridCell.Tab.1.bottom/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585317546044" />
-    <state width="1830" height="344" key="GridCell.Tab.1.center" timestamp="1585317546044">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="344" key="GridCell.Tab.1.center/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585317546044" />
-    <state width="1830" height="344" key="GridCell.Tab.1.left" timestamp="1585317546044">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="344" key="GridCell.Tab.1.left/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585317546044" />
-    <state width="1830" height="344" key="GridCell.Tab.1.right" timestamp="1585317546044">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state width="1830" height="344" key="GridCell.Tab.1.right/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585317546044" />
-    <state x="482" y="187" key="SettingsEditor" timestamp="1585245565045">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="482" y="187" key="SettingsEditor/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585245565045" />
-    <state x="1088" y="381" key="com.intellij.ide.util.TipDialog" timestamp="1585383103699">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="1088" y="381" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585383103699" />
-    <state x="647" y="170" width="683" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585308376406">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="647" y="170" width="683" height="764" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585308376406" />
-    <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1585319349053">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="761" y="472" width="464" height="160" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585319349053" />
-    <state x="67" y="27" width="943" height="639" key="dock-window-1" timestamp="1585264063064">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="67" y="27" width="943" height="639" key="dock-window-1/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585264063064" />
-    <state x="1025" y="110" width="863" height="885" key="find.popup" timestamp="1585312008437">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="1025" y="110" width="863" height="885" key="find.popup/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585312008437" />
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1585317558559">
-      <screen x="67" y="27" width="1853" height="1053" />
-    </state>
-    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053/1920.312.1366.768@67.27.1853.1053" timestamp="1585317558559" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -213,5 +170,8 @@
         </breakpoint>
       </default-breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/foodwatch$Flask.coverage" NAME="Flask Coverage Results" MODIFIED="1618769947267" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
   </component>
 </project>
